@@ -1,4 +1,4 @@
-// ===== QUIZ DATA - 16 Questions =====
+// ===== QUIZ DATA =====
 const quizData = [
     {
         code: `<!DOCTYPE html>
@@ -20,14 +20,14 @@ const quizData = [
         question: "What programming language is this code written in?",
         options: ["Python", "JavaScript", "Java"],
         correct: 1,
-        explanation: "This is JavaScript. console.log() outputs text to the console browser."
+        explanation: "This is JavaScript. console.log() outputs text to the browser console."
     },
     {
         code: `print('Hello, World!')`,
         question: "What programming language is this code written in?",
         options: ["C#", "Python", "JavaScript"],
         correct: 1,
-        explanation: "This is Python. The print() function outputs text and uses no semicolon."
+        explanation: "This is Python. The print() function outputs text."
     },
     {
         code: `def greet(name):
@@ -44,7 +44,7 @@ const quizData = [
         question: "What programming language is this code written in?",
         options: ["Python", "JavaScript", "Java"],
         correct: 1,
-        explanation: "This is JavaScript. Uses 'function' keyword and curly braces for code blocks."
+        explanation: "This is JavaScript. Uses 'function' keyword and curly braces."
     },
     {
         code: `<div class="container">
@@ -54,7 +54,7 @@ const quizData = [
         question: "What programming language is this code written in?",
         options: ["CSS", "Python", "HTML"],
         correct: 2,
-        explanation: "This is HTML. Uses tags like <div>, <p>, and <button> to create page structure."
+        explanation: "This is HTML. Uses tags like <div>, <p>, and <button> for structure."
     },
     {
         code: `body {
@@ -65,16 +65,16 @@ const quizData = [
         question: "What programming language is this code written in?",
         options: ["HTML", "CSS", "Python"],
         correct: 1,
-        explanation: "This is CSS. Used to style HTML elements with properties like background-color, color, and padding."
+        explanation: "This is CSS. Styles HTML elements with properties like background-color and color."
     },
     {
         code: `const numbers = [1, 2, 3, 4, 5];
 const doubled = numbers.map(n => n * 2);
 console.log(doubled);`,
         question: "What does this code do?",
-        options: ["Prints the array", "Multiplies each number by 2 creating [2,4,6,8,10]", "Adds all numbers"],
+        options: ["Prints [1,2,3,4,5]", "Multiplies each number by 2, creates [2,4,6,8,10]", "Adds numbers together"],
         correct: 1,
-        explanation: "This uses the map() function to create a new array where each number is multiplied by 2."
+        explanation: "Uses map() to create a new array where each element is multiplied by 2."
     },
     {
         code: `.header {
@@ -85,7 +85,7 @@ console.log(doubled);`,
         question: "What programming language is this code written in?",
         options: ["JavaScript", "CSS", "HTML"],
         correct: 1,
-        explanation: "This is CSS. The dot (.) is a class selector. It styles all elements with the 'header' class."
+        explanation: "This is CSS. The dot (.) is a class selector targeting elements with class='header'."
     },
     {
         code: `const age = 20;
@@ -93,9 +93,9 @@ if (age >= 18) {
     console.log("You are an adult");
 }`,
         question: "What does this code do?",
-        options: ["Prints 'You are an adult'", "Checks if age is 18 or older, prints message if true", "Stores age in a variable"],
+        options: ["Declares a variable", "Checks if age >= 18, prints 'You are an adult'", "Creates a function"],
         correct: 1,
-        explanation: "This checks if the age variable is 18 or greater. Since age is 20, it prints 'You are an adult'."
+        explanation: "Checks if age is 18 or older. Since age is 20, it prints the message."
     },
     {
         code: `<input type="text" placeholder="Enter your name" />
@@ -103,15 +103,15 @@ if (age >= 18) {
         question: "What programming language is this code written in?",
         options: ["CSS", "JavaScript", "HTML"],
         correct: 2,
-        explanation: "This is HTML. Creates a text input field and a submit button for user interaction."
+        explanation: "This is HTML. Creates a text input and button for user interaction."
     },
     {
         code: `const fruits = ['apple', 'banana', 'orange'];
 fruits.forEach(fruit => console.log(fruit));`,
         question: "What does this code do?",
-        options: ["Prints entire array", "Loops through each fruit and prints it", "Creates new array"],
+        options: ["Stores fruits in array", "Loops through and prints each fruit", "Creates a function"],
         correct: 1,
-        explanation: "Uses forEach() to loop through the array and print each fruit: apple, banana, orange."
+        explanation: "Uses forEach() to loop through the array and print each fruit name."
     },
     {
         code: `function isEven(num) {
@@ -119,23 +119,23 @@ fruits.forEach(fruit => console.log(fruit));`,
 }
 console.log(isEven(4));`,
         question: "What does this code do?",
-        options: ["Prints false", "Checks if 4 is even and prints true", "Divides 4 by 2"],
+        options: ["Prints false", "Checks if 4 is even and prints true", "Divides numbers"],
         correct: 1,
-        explanation: "The modulo operator (%) checks if a number is even. 4 % 2 === 0 is true, so it prints true."
+        explanation: "Uses modulo operator (%) to check if 4 is even. 4 % 2 === 0 is true."
     },
     {
         code: `const name = "Alice";
 const age = 25;
-const message = name + " is " + age + " years old";
-console.log(message);`,
+const msg = name + " is " + age + " years old";
+console.log(msg);`,
         question: "What does this code do?",
-        options: ["Prints variable names", "Combines strings and variables to print 'Alice is 25 years old'", "Creates an array"],
+        options: ["Prints variable names", "Combines strings to print 'Alice is 25 years old'", "Creates array"],
         correct: 1,
-        explanation: "Concatenates (combines) strings and variables to create: 'Alice is 25 years old'."
+        explanation: "Concatenates strings and variables to create a message."
     },
     {
         code: `const numbers = [1, 2, 3, 4, 5];
-const sum = numbers.reduce((acc, num) => acc + num, 0);
+const sum = numbers.reduce((acc, n) => acc + n, 0);
 console.log(sum);`,
         question: "What does this code do?",
         options: ["Prints array length", "Adds all numbers together and prints 15", "Multiplies numbers"],
@@ -150,7 +150,7 @@ console.log(sum);`,
         question: "What programming language is this code written in?",
         options: ["JavaScript", "CSS", "HTML"],
         correct: 1,
-        explanation: "This is CSS. The hash (#) is an ID selector that targets an element with id='header'."
+        explanation: "This is CSS. The hash (#) is an ID selector targeting id='header'."
     }
 ];
 
@@ -161,35 +161,12 @@ let answered = false;
 let selectedOptionIndex = null;
 
 // ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', initializeQuiz);
-
-function initializeQuiz() {
+document.addEventListener('DOMContentLoaded', function() {
     loadQuestion();
-    setupEventListeners();
-}
-
-function setupEventListeners() {
-    document.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && answered) nextQuestion();
-    });
-}
-
-// ===== SAFE DOM ACCESS =====
-function getElement(id) {
-    return document.getElementById(id) || null;
-}
-
-function getAllElements(selector) {
-    return document.querySelectorAll(selector) || [];
-}
-
-function getMainContent() {
-    return document.querySelector('main');
-}
+});
 
 // ===== LOAD QUESTION =====
 function loadQuestion() {
-    // Check if quiz complete
     if (currentQuestionIndex >= quizData.length) {
         showCompletion();
         return;
@@ -198,51 +175,43 @@ function loadQuestion() {
     const question = quizData[currentQuestionIndex];
     
     // Update code display
-    const codeDisplay = getElement('code-display');
+    const codeDisplay = document.getElementById('code-display');
     if (codeDisplay) {
         codeDisplay.textContent = question.code;
     }
     
     // Update question text
-    const questionText = getElement('question-text');
+    const questionText = document.getElementById('question-text');
     if (questionText) {
         questionText.textContent = question.question;
     }
     
     // Create option buttons
-    const optionsContainer = getElement('options-container');
+    const optionsContainer = document.getElementById('options-container');
     if (optionsContainer) {
         optionsContainer.innerHTML = '';
+        
         question.options.forEach((option, index) => {
             const button = document.createElement('button');
             button.className = 'option-btn';
             button.textContent = option;
-            button.setAttribute('data-index', index);
-            button.addEventListener('click', () => selectOption(index));
+            button.onclick = () => selectOption(index);
             optionsContainer.appendChild(button);
         });
     }
     
-    // Reset feedback display
-    const feedbackSection = getElement('feedback-section');
+    // Hide feedback
+    const feedbackSection = document.getElementById('feedback-section');
     if (feedbackSection) {
         feedbackSection.style.display = 'none';
     }
     
     // Reset button states
-    const submitBtn = getElement('submit-btn');
-    const nextBtn = getElement('next-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const nextBtn = document.getElementById('next-btn');
+    if (submitBtn) submitBtn.style.display = 'block';
+    if (nextBtn) nextBtn.style.display = 'none';
     
-    if (submitBtn) {
-        submitBtn.style.display = 'block';
-        submitBtn.disabled = false;
-    }
-    if (nextBtn) {
-        nextBtn.style.display = 'none';
-        nextBtn.disabled = false;
-    }
-    
-    // Reset quiz state
     answered = false;
     selectedOptionIndex = null;
 }
@@ -252,67 +221,47 @@ function selectOption(index) {
     if (answered) return;
     
     selectedOptionIndex = index;
-    const buttons = getAllElements('.option-btn');
+    const buttons = document.querySelectorAll('.option-btn');
     
-    buttons.forEach((btn, i) => {
-        btn.classList.toggle('selected', i === index);
-    });
+    buttons.forEach(btn => btn.classList.remove('selected'));
+    buttons[index].classList.add('selected');
 }
 
 // ===== SUBMIT ANSWER =====
 function submitAnswer() {
-    // Validate selection
     if (selectedOptionIndex === null) {
-        alert('Please select an answer first');
+        alert('Please select an answer');
         return;
     }
     
-    // Prevent double submission
     if (answered) return;
     
     answered = true;
-    
-    // Get current question
     const question = quizData[currentQuestionIndex];
-    const buttons = getAllElements('.option-btn');
-    const feedbackSection = getElement('feedback-section');
-    const feedbackText = getElement('feedback-text');
+    const buttons = document.querySelectorAll('.option-btn');
+    const feedbackSection = document.getElementById('feedback-section');
+    const feedbackText = document.getElementById('feedback-text');
     
-    // Validate feedback elements exist
-    if (!feedbackSection || !feedbackText) {
-        console.error('Feedback elements not found');
-        return;
-    }
+    if (!feedbackSection || !feedbackText) return;
     
-    // Disable all buttons
     buttons.forEach(btn => btn.disabled = true);
     
-    // Check if answer is correct
-    const isCorrect = selectedOptionIndex === question.correct;
-    
-    if (isCorrect) {
-        // Correct answer
+    if (selectedOptionIndex === question.correct) {
         buttons[selectedOptionIndex].classList.add('correct');
         totalCorrect++;
-        
         feedbackText.innerHTML = `<strong>✓ Correct!</strong><br><br>${question.explanation}`;
         feedbackSection.className = 'feedback correct';
     } else {
-        // Incorrect answer
         buttons[selectedOptionIndex].classList.add('incorrect');
         buttons[question.correct].classList.add('correct');
-        
         feedbackText.innerHTML = `<strong>✗ Incorrect</strong><br><br>The correct answer is: <strong>${question.options[question.correct]}</strong><br><br>${question.explanation}`;
         feedbackSection.className = 'feedback incorrect';
     }
     
-    // Show feedback
     feedbackSection.style.display = 'block';
     
-    // Update button visibility
-    const submitBtn = getElement('submit-btn');
-    const nextBtn = getElement('next-btn');
-    
+    const submitBtn = document.getElementById('submit-btn');
+    const nextBtn = document.getElementById('next-btn');
     if (submitBtn) submitBtn.style.display = 'none';
     if (nextBtn) nextBtn.style.display = 'block';
 }
@@ -325,30 +274,16 @@ function nextQuestion() {
 
 // ===== SHOW COMPLETION =====
 function showCompletion() {
-    const mainContent = getMainContent();
-    if (!mainContent) {
-        console.error('Main content not found');
-        return;
-    }
+    const mainContent = document.querySelector('main');
+    if (!mainContent) return;
     
     const percentage = Math.round((totalCorrect / quizData.length) * 100);
     
-    let performanceMessage = '';
-    let emoji = '';
-    
-    if (percentage === 100) {
-        performanceMessage = 'Perfect score! You are a programming language expert!';
-        emoji = '🚀';
-    } else if (percentage >= 80) {
-        performanceMessage = 'Excellent work! You know your programming languages well!';
-        emoji = '👏';
-    } else if (percentage >= 60) {
-        performanceMessage = 'Good job! Keep practicing to improve!';
-        emoji = '📚';
-    } else {
-        performanceMessage = 'Keep learning! Try again to improve your score!';
-        emoji = '💪';
-    }
+    let message = '';
+    if (percentage === 100) message = 'Perfect score! You are a programming language expert! 🚀';
+    else if (percentage >= 80) message = 'Excellent! You know your programming languages well! 👏';
+    else if (percentage >= 60) message = 'Good job! Keep practicing! 📚';
+    else message = 'Keep learning! Try again to improve! 💪';
     
     mainContent.innerHTML = `
         <div class="completion-screen">
@@ -358,7 +293,7 @@ function showCompletion() {
                 <p>Score: <span class="score-percentage">${percentage}%</span></p>
             </div>
             <div class="performance-message">
-                <p>${performanceMessage} ${emoji}</p>
+                <p>${message}</p>
             </div>
             <button class="restart-btn" onclick="restartQuiz()">Restart Quiz</button>
         </div>
@@ -367,14 +302,12 @@ function showCompletion() {
 
 // ===== RESTART QUIZ =====
 function restartQuiz() {
-    // Reset state
     currentQuestionIndex = 0;
     totalCorrect = 0;
     answered = false;
     selectedOptionIndex = null;
     
-    // Restore main content
-    const mainContent = getMainContent();
+    const mainContent = document.querySelector('main');
     if (mainContent) {
         mainContent.innerHTML = `
             <section class="code-section">
@@ -398,6 +331,5 @@ function restartQuiz() {
         `;
     }
     
-    // Load first question
     loadQuestion();
 }
