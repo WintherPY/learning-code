@@ -35,6 +35,8 @@ body {
     display: flex;
     flex-direction: column;
     box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 100;
 }
 
 .logo {
@@ -47,12 +49,14 @@ body {
     font-size: 1.8em;
     font-weight: 700;
     margin-bottom: 5px;
+    letter-spacing: -0.5px;
 }
 
 .tagline {
     font-size: 0.85em;
     opacity: 0.85;
     font-weight: 300;
+    letter-spacing: 0.3px;
 }
 
 .sidebar-nav {
@@ -72,11 +76,13 @@ body {
     transition: all 0.3s ease;
     opacity: 0.75;
     font-weight: 500;
+    user-select: none;
 }
 
 .nav-item:hover {
     opacity: 1;
     background: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
 }
 
 .nav-item.active {
@@ -145,6 +151,7 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    z-index: 50;
 }
 
 .breadcrumb {
@@ -162,6 +169,7 @@ body {
 .topbar-stats {
     display: flex;
     gap: 40px;
+    align-items: center;
 }
 
 .stat {
@@ -211,6 +219,7 @@ body {
     flex: 1;
     overflow-y: auto;
     padding: 30px;
+    background: #f5f7fa;
 }
 
 /* ===== LESSON CONTAINER ===== */
@@ -220,6 +229,18 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ===== LESSON PANEL ===== */
@@ -287,11 +308,13 @@ body {
     font-weight: 500;
     transition: all 0.3s ease;
     text-align: left;
+    font-family: 'Inter', sans-serif;
 }
 
-.option-button:hover {
+.option-button:hover:not(:disabled) {
     border-color: #667eea;
     background: #f9f9ff;
+    transform: translateX(4px);
 }
 
 .option-button.selected {
@@ -304,12 +327,14 @@ body {
     border-color: #10b981;
     background: #d1fae5;
     color: #065f46;
+    font-weight: 600;
 }
 
 .option-button.incorrect {
     border-color: #ef4444;
     background: #fee2e2;
     color: #991b1b;
+    font-weight: 600;
 }
 
 .option-button:disabled {
@@ -325,6 +350,18 @@ body {
     border-left: 4px solid #667eea;
     background: #f0f3ff;
     color: #1a1a1a;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .feedback-box.correct {
@@ -343,6 +380,12 @@ body {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
+}
+
+.feedback-details {
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin-top: 10px;
 }
 
 /* ===== CODE EDITOR PANEL ===== */
@@ -383,10 +426,21 @@ body {
     height: 8px;
     border-radius: 50%;
     background: #ef4444;
+    animation: pulse 2s infinite;
 }
 
 .status-dot.active {
     background: #10b981;
+    animation: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
 }
 
 .code-editor {
@@ -475,6 +529,7 @@ body {
     max-height: 150px;
     overflow-y: auto;
     display: none;
+    line-height: 1.5;
 }
 
 .output-header {
@@ -527,6 +582,142 @@ body {
 .btn-submit:disabled, .btn-next:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
+}
+
+/* ===== NAME ENTRY SCREEN ===== */
+.name-entry-screen {
+    max-width: 500px;
+    margin: 60px auto;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    padding: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.name-entry-screen h2 {
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+}
+
+.name-entry-screen .tagline {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1em;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.btn-start {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.leaderboard-section {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 2px solid #e0e0e0;
+}
+
+.leaderboard-section h3 {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #1a1a1a;
+}
+
+.leaderboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f9f9ff;
+    border-radius: 6px;
+    border-left: 3px solid #667eea;
+}
+
+.leaderboard-rank {
+    font-weight: 700;
+    color: #667eea;
+    min-width: 30px;
+}
+
+.leaderboard-name {
+    flex: 1;
+    margin-left: 15px;
+    font-weight: 500;
+}
+
+.leaderboard-score {
+    font-weight: 700;
+    color: #764ba2;
+}
+
+.empty-leaderboard {
+    padding: 20px;
+    text-align: center;
+    color: #999;
+    font-style: italic;
 }
 
 /* ===== COMPLETION SCREEN ===== */
@@ -539,6 +730,7 @@ body {
     border: 1px solid #e0e0e0;
     padding: 40px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    animation: slideUp 0.4s ease;
 }
 
 .completion-screen h2 {
@@ -576,6 +768,7 @@ body {
     font-weight: 600;
     font-size: 1em;
     transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
 }
 
 .btn-restart:hover {
@@ -596,6 +789,15 @@ body {
 
     .sidebar {
         width: 250px;
+        padding: 20px 15px;
+    }
+
+    .logo h2 {
+        font-size: 1.5em;
+    }
+
+    .topbar-stats {
+        gap: 30px;
     }
 }
 
@@ -609,13 +811,23 @@ body {
         padding: 15px;
         flex-direction: row;
         align-items: center;
+        gap: 20px;
+        order: 2;
+    }
+
+    .main-content {
+        order: 1;
     }
 
     .logo {
         margin-bottom: 0;
         padding-bottom: 0;
         border-bottom: none;
-        margin-right: 30px;
+        min-width: fit-content;
+    }
+
+    .logo h2 {
+        font-size: 1.3em;
     }
 
     .sidebar-nav {
@@ -625,6 +837,7 @@ body {
 
     .nav-item {
         padding: 8px 12px;
+        font-size: 0.9em;
     }
 
     .sidebar-footer {
@@ -637,6 +850,7 @@ body {
     .topbar {
         flex-direction: column;
         gap: 15px;
+        padding: 15px;
     }
 
     .topbar-stats {
@@ -658,5 +872,70 @@ body {
 
     .code-editor {
         min-height: 200px;
+        font-size: 0.85em;
+    }
+
+    .name-entry-screen {
+        margin: 30px auto;
+        padding: 25px;
+    }
+
+    .completion-screen {
+        margin: 30px auto;
+        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    .logo h2 {
+        font-size: 1.1em;
+    }
+
+    .logo p {
+        font-size: 0.75em;
+    }
+
+    .sidebar-nav {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .topbar {
+        padding: 10px;
+    }
+
+    .breadcrumb {
+        font-size: 0.8em;
+    }
+
+    .topbar-stats {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .progress-bar {
+        width: 100%;
+    }
+
+    .content-area {
+        padding: 10px;
+    }
+
+    .lesson-panel, .editor-panel {
+        padding: 15px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-submit, .btn-next {
+        width: 100%;
     }
 }
