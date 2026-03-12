@@ -1,238 +1,173 @@
-// ===== ENHANCED QUIZ DATA WITH CONCRETE CODE EXAMPLES IN SUGGESTIONS =====
-const quizData = [
+// ===== BEGINNER-FRIENDLY QUIZ DATA WITH RANDOMIZATION =====
+const allQuizQuestions = [
+    // EASY QUESTIONS (Start with these)
     {
         type: "identify",
-        code: `<!DOCTYPE html>
-<html>
-<head>
-    <title>My Page</title>
-</head>
-<body>
-    <h1>Hello World</h1>
-</body>
-</html>`,
-        question: "What programming language is this code written in?",
-        options: ["CSS", "HTML", "JavaScript"],
-        correct: 1,
-        explanation: "This is HTML (HyperText Markup Language).",
-        facts: "HTML is used by every website on the internet. Companies like Facebook, Google, and Amazon use HTML to structure their web pages.",
-        codeBehavior: "This code creates a basic web page with a title and a heading.",
-        codeEditor: true,
-        language: "html",
-        editorHint: "💡 Try adding a paragraph tag with text inside the body.",
-        suggestions: [
-            { example: "<p>This is a paragraph</p>", desc: "Creates text content" },
-            { example: "<button>Click Me</button>", desc: "Creates a clickable button" },
-            { example: "<h2>Subheading</h2>", desc: "Creates a smaller heading" }
-        ]
-    },
-    {
-        type: "behavior",
-        code: `const message = "Hello";
-console.log(message);`,
+        code: `<h1>Hello World</h1>`,
         question: "What does this code do?",
-        options: ["Creates a variable", "Prints 'Hello' to the console", "Creates a function"],
-        correct: 1,
-        explanation: "This code creates a variable and prints its value.",
-        facts: "JavaScript is used by 98% of all websites for interactivity. Google Chrome, Firefox, and Safari all run JavaScript.",
-        codeBehavior: "This code declares a variable 'message' with the value 'Hello', then outputs it to the browser console.",
-        codeEditor: true,
-        language: "javascript",
-        editorHint: "💡 Try logging different values or creating multiple variables.",
-        suggestions: [
-            { example: 'const name = "Alice";\nconsole.log(name);', desc: "Store a name and print it" },
-            { example: 'const age = 25;\nconsole.log(age);', desc: "Store a number and print it" },
-            { example: 'const x = 10;\nconst y = 20;\nconsole.log(x + y);', desc: "Add two numbers and print result" }
-        ]
-    },
-    {
-        type: "error",
-        code: `function greet(name) {
-    return "Hello, " + name
-}
-console.log(greet("Alice"));`,
-        question: "Find the error in this code (Click on the code snippet when found)",
-        options: ["Missing semicolon", "Missing curly brace", "No error"],
+        options: ["Creates a large heading", "Creates a paragraph", "Creates a button"],
         correct: 0,
-        explanation: "Line 2 is missing a semicolon at the end of the return statement.",
-        facts: "Python doesn't require semicolons, but JavaScript does. This is one of the most common beginner mistakes!",
-        codeBehavior: "This function would still work in many JavaScript environments, but proper syntax requires the semicolon.",
-        codeEditor: true,
-        language: "javascript",
-        editorHint: "💡 Always end statements with a semicolon (;) in JavaScript.",
-        suggestions: [
-            { example: 'return "Hello, " + name;', desc: "Fix: Add semicolon at end" },
-            { example: 'const x = 10;\nconst y = 20;', desc: "All statements need semicolons" },
-            { example: 'console.log("test");', desc: "Even console.log needs a semicolon" }
-        ]
-    },
-    {
-        type: "identify",
-        code: `def add(a, b):
-    return a + b`,
-        question: "What programming language is this code written in?",
-        options: ["JavaScript", "Python", "Java"],
-        correct: 1,
-        explanation: "This is Python, a simple and readable language.",
-        facts: "Python powers machine learning at Google, Instagram, Netflix, and Spotify. It's the language of AI and data science!",
-        codeBehavior: "This function takes two numbers and returns their sum.",
+        explanation: "This is HTML. The &lt;h1&gt; tag creates the largest heading on a webpage.",
+        facts: "Headings help organize content. H1 is the most important, H2 is smaller, H3 is even smaller!",
+        codeBehavior: "This displays: Hello World as a big title on the page.",
         codeEditor: false,
-        language: "python",
-        editorHint: "💡 Python code cannot be run in browsers, but you can learn the syntax here.",
+        language: "html",
+        editorHint: "Try different heading sizes: h1, h2, h3",
         suggestions: [
-            { example: 'def greet(name):\n    return "Hello, " + name', desc: "Function that returns greeting" },
-            { example: 'def multiply(a, b):\n    return a * b', desc: "Function that multiplies numbers" },
-            { example: 'result = add(5, 3)\nprint(result)', desc: "Call function and print result" }
-        ]
-    },
-    {
-        type: "behavior",
-        code: `const numbers = [1, 2, 3, 4, 5];
-const doubled = numbers.map(n => n * 2);
-console.log(doubled);`,
-        question: "What does this code output?",
-        options: ["[1,2,3,4,5]", "[2,4,6,8,10]", "Error"],
-        correct: 1,
-        explanation: "The map() function creates a new array with each element doubled.",
-        facts: "Array methods like map() are powerful in JavaScript, used by companies like Netflix for data processing.",
-        codeBehavior: "This code creates a new array where each number is multiplied by 2: [2, 4, 6, 8, 10].",
-        codeEditor: true,
-        language: "javascript",
-        editorHint: "💡 The map() function transforms each element in an array.",
-        suggestions: [
-            { example: 'const nums = [1,2,3];\nconst squared = nums.map(n => n * n);\nconsole.log(squared);', desc: "Square each number" },
-            { example: 'const nums = [1,2,3];\nconst tripled = nums.map(n => n * 3);\nconsole.log(tripled);', desc: "Multiply by 3" },
-            { example: 'const nums = [10,20,30];\nconst halved = nums.map(n => n / 2);\nconsole.log(halved);', desc: "Divide by 2" }
-        ]
-    },
-    {
-        type: "error",
-        code: `const x = 10
-const y = 20
-console.log(x + y)`,
-        question: "Find the error (Click when found)",
-        options: ["Missing semicolons", "Variable names are wrong", "No error"],
-        correct: 0,
-        explanation: "JavaScript code should end statements with semicolons (though often optional due to automatic insertion).",
-        facts: "Modern JavaScript tools can auto-format your code to add semicolons automatically.",
-        codeBehavior: "This code will still run correctly because JavaScript has automatic semicolon insertion.",
-        codeEditor: true,
-        language: "javascript",
-        editorHint: "💡 Best practice: Always add semicolons, even though they're sometimes optional.",
-        suggestions: [
-            { example: 'const x = 10;\nconst y = 20;\nconsole.log(x + y);', desc: "Properly formatted with semicolons" },
-            { example: 'const name = "Bob";\nconst age = 30;\nconst combined = name + age;', desc: "Multiple statements with semicolons" },
-            { example: 'const result = 5 + 5;\nconst final = result * 2;', desc: "Expressions need semicolons" }
+            { example: "<h2>Smaller heading</h2>", desc: "Makes a smaller heading" },
+            { example: "<h3>Even smaller</h3>", desc: "Makes an even smaller heading" }
         ]
     },
     {
         type: "identify",
-        code: `body {
-    background-color: #3498db;
-    color: white;
-    font-size: 16px;
-}`,
-        question: "What programming language is this code written in?",
-        options: ["HTML", "CSS", "JavaScript"],
-        correct: 1,
-        explanation: "This is CSS (Cascading Style Sheets), used for styling.",
-        facts: "CSS is used by every website to make things look beautiful. Bootstrap and Tailwind are popular CSS frameworks used by millions.",
-        codeBehavior: "This code sets the background color to blue, text color to white, and font size to 16 pixels.",
+        code: `<p>This is a paragraph</p>`,
+        question: "What does this code do?",
+        options: ["Creates text/paragraph", "Creates a heading", "Creates a button"],
+        correct: 0,
+        explanation: "The &lt;p&gt; tag creates a paragraph - normal text content.",
+        facts: "Paragraphs are used for regular text on websites. Every article you read uses &lt;p&gt; tags!",
+        codeBehavior: "This displays: This is a paragraph as normal readable text.",
         codeEditor: false,
-        language: "css",
-        editorHint: "💡 CSS cannot be executed in the browser editor, but you can learn the syntax.",
+        language: "html",
+        editorHint: "Paragraphs are just text containers",
         suggestions: [
-            { example: 'h1 {\n    color: red;\n    font-size: 32px;\n}', desc: "Style headings" },
-            { example: 'button {\n    background-color: #28a745;\n    padding: 10px 20px;\n}', desc: "Style buttons" },
-            { example: '.container {\n    width: 100%;\n    margin: 0 auto;\n}', desc: "Style containers" }
-        ]
-    },
-    {
-        type: "behavior",
-        code: `if (10 > 5) {
-    console.log("10 is greater than 5");
-} else {
-    console.log("5 is greater than 10");
-}`,
-        question: "What does this code output?",
-        options: ["5 is greater than 10", "10 is greater than 5", "Error"],
-        correct: 1,
-        explanation: "The if statement checks the condition (10 > 5), which is true.",
-        facts: "Conditional logic is used everywhere in programming - in video games, banking apps, and AI systems.",
-        codeBehavior: "Since 10 is indeed greater than 5, the code prints '10 is greater than 5'.",
-        codeEditor: true,
-        language: "javascript",
-        editorHint: "💡 Try changing the numbers or using different comparison operators.",
-        suggestions: [
-            { example: 'if (20 < 30) {\n    console.log("30 is bigger");\n}', desc: "Check if one number is smaller" },
-            { example: 'if (15 === 15) {\n    console.log("Equal");\n}', desc: "Check if numbers are equal" },
-            { example: 'if (5 !== 10) {\n    console.log("Not equal");\n}', desc: "Check if not equal" }
-        ]
-    },
-    {
-        type: "error",
-        code: `function sayHello {
-    return "Hello";
-}`,
-        question: "Find the error (Click when found)",
-        options: ["Missing parentheses after function name", "Missing return statement", "No error"],
-        correct: 0,
-        explanation: "JavaScript function syntax requires parentheses after the function name: function sayHello().",
-        facts: "Function syntax is strict in most programming languages to help avoid bugs.",
-        codeBehavior: "This code will throw a syntax error because parentheses are required.",
-        codeEditor: true,
-        language: "javascript",
-        editorHint: "💡 All functions need parentheses: function name() { ... }",
-        suggestions: [
-            { example: 'function sayHello() {\n    return "Hello";\n}', desc: "Fixed: Added parentheses" },
-            { example: 'function add(a, b) {\n    return a + b;\n}', desc: "Function with parameters" },
-            { example: 'function greet(name) {\n    return "Hi " + name;\n}', desc: "Function with parameter used" }
+            { example: "<p>My name is John</p>", desc: "A simple sentence" },
+            { example: "<p>I love coding!</p>", desc: "Text about feelings" }
         ]
     },
     {
         type: "identify",
-        code: `<div class="container">
-    <h1>Welcome</h1>
-    <p>This is a paragraph</p>
-    <button>Click Me</button>
+        code: `<button>Click me</button>`,
+        question: "What does this code create?",
+        options: ["A clickable button", "A text input", "A link"],
+        correct: 0,
+        explanation: "The &lt;button&gt; tag creates a button that users can click.",
+        facts: "Buttons are interactive! When you click 'Login' or 'Submit', that's a button!",
+        codeBehavior: "This displays: Click me as a clickable button.",
+        codeEditor: false,
+        language: "html",
+        editorHint: "Buttons need text inside them",
+        suggestions: [
+            { example: "<button>Submit</button>", desc: "A submit button" },
+            { example: "<button>Delete</button>", desc: "A delete button" }
+        ]
+    },
+    {
+        type: "error-find",
+        code: `<h1>Title</h1>`,
+        question: "There are NO errors in this code. Type: no error",
+        errorAnswer: "no error",
+        explanation: "Correct! This code is perfect - every tag is closed properly.",
+        facts: "Good HTML always closes every opening tag!",
+        codeBehavior: "This displays a proper heading with no issues.",
+        codeEditor: false,
+        language: "html"
+    },
+    {
+        type: "identify",
+        code: `console.log("Hello");`,
+        question: "What does this code do?",
+        options: ["Prints text to console", "Creates a variable", "Makes a button"],
+        correct: 0,
+        explanation: "console.log() prints/displays text to the browser console.",
+        facts: "Programmers use console.log() to see what their code is doing!",
+        codeBehavior: "This prints: Hello to the console for programmers to see.",
+        codeEditor: true,
+        language: "javascript",
+        editorHint: "Try typing different messages",
+        suggestions: [
+            { example: 'console.log("My name");', desc: "Print your name" },
+            { example: 'console.log("I am learning!");', desc: "Print a message" }
+        ]
+    },
+    // MEDIUM QUESTIONS (Introduced after easy ones)
+    {
+        type: "identify",
+        code: `const x = 5;
+console.log(x);`,
+        question: "What does this code do?",
+        options: ["Creates a container", "Stores the number 5 in a variable, then prints it", "Creates a button"],
+        correct: 1,
+        explanation: "const creates a variable (a container for data). x holds the value 5. console.log prints it.",
+        facts: "Variables are like labeled boxes - you put data in them and use the label later!",
+        codeBehavior: "This stores 5 in x, then prints: 5 to the console.",
+        codeEditor: true,
+        language: "javascript",
+        editorHint: "Try different numbers or names",
+        suggestions: [
+            { example: 'const age = 25;\nconsole.log(age);', desc: "Store and print an age" },
+            { example: 'const name = "Alice";\nconsole.log(name);', desc: "Store and print a name" }
+        ]
+    },
+    {
+        type: "error-find",
+        code: `const name = "John"
+console.log(name)`,
+        question: "Find the error - what's missing?",
+        errorAnswer: "semicolon",
+        explanation: "Both lines are missing semicolons (;) at the end. JavaScript statements should end with ;",
+        facts: "Semicolons tell JavaScript: 'This statement is complete!'",
+        codeBehavior: "Even though this might work, it's bad practice without semicolons.",
+        codeEditor: true,
+        language: "javascript"
+    },
+    {
+        type: "identify",
+        code: `<div>
+  <h1>Title</h1>
+  <p>Text here</p>
 </div>`,
-        question: "What programming language is this code written in?",
-        options: ["CSS", "JavaScript", "HTML"],
-        correct: 2,
-        explanation: "This is HTML, which structures web page content.",
-        facts: "HTML works together with CSS and JavaScript - HTML = structure, CSS = style, JavaScript = behavior.",
-        codeBehavior: "This creates a container with a heading, paragraph, and clickable button.",
-        codeEditor: true,
+        question: "What is the &lt;div&gt; doing?",
+        options: ["Creating a container to group other elements", "Creating a paragraph", "Creating a heading"],
+        correct: 0,
+        explanation: "&lt;div&gt; is a container/box. It groups other elements together for organization.",
+        facts: "Divs are like invisible boxes - they organize your webpage layout!",
+        codeBehavior: "This creates a box containing a heading and a paragraph.",
+        codeEditor: false,
         language: "html",
-        editorHint: "💡 Try adding more HTML elements to build your structure.",
+        editorHint: "Divs are containers",
         suggestions: [
-            { example: '<img src="image.jpg" alt="Picture">', desc: "Add an image" },
-            { example: '<a href="https://google.com">Link</a>', desc: "Create a clickable link" },
-            { example: '<input type="text" placeholder="Enter name">', desc: "Add an input field" }
+            { example: '<div>\n  <h1>Header</h1>\n</div>', desc: "Box with heading" },
+            { example: '<div>\n  <p>Text</p>\n  <p>More text</p>\n</div>', desc: "Box with paragraphs" }
         ]
     },
     {
-        type: "behavior",
-        code: `const fruits = ["apple", "banana", "orange"];
-fruits.forEach(fruit => {
-    console.log(fruit);
-});`,
+        type: "error-find",
+        code: `<h1>Title
+<p>Paragraph</p>`,
+        question: "Find the error - what tag is not closed?",
+        errorAnswer: "h1",
+        explanation: "The &lt;h1&gt; tag is missing its closing tag &lt;/h1&gt;",
+        facts: "In HTML, almost every opening tag needs a closing tag!",
+        codeBehavior: "Without proper closing, the page might look wrong.",
+        codeEditor: false,
+        language: "html"
+    },
+    {
+        type: "identify",
+        code: `if (5 > 3) {
+  console.log("5 is bigger");
+}`,
         question: "What does this code do?",
-        options: ["Creates an array", "Prints each fruit to the console", "Returns the first fruit"],
-        correct: 1,
-        explanation: "forEach() loops through each item in the array and executes the function.",
-        facts: "Loop methods like forEach() are fundamental in programming and used in every real-world application.",
-        codeBehavior: "This code prints: apple, banana, orange (each on a new line).",
+        options: ["Checks if 5 is bigger than 3, if yes, prints a message", "Creates a variable", "Creates a button"],
+        correct: 0,
+        explanation: "if() checks a condition. If true, it runs the code inside the braces {}",
+        facts: "Conditional logic makes programs smart - they can make decisions!",
+        codeBehavior: "Since 5 > 3 is true, this prints: '5 is bigger'",
         codeEditor: true,
         language: "javascript",
-        editorHint: "💡 forEach() loops through each item in an array.",
+        editorHint: "Try changing the numbers",
         suggestions: [
-            { example: 'const nums = [1, 2, 3];\nnums.forEach(n => console.log(n * 2));', desc: "Print each number doubled" },
-            { example: 'const colors = ["red", "blue"];\ncolors.forEach(c => console.log("Color: " + c));', desc: "Print with text" },
-            { example: 'const items = ["a", "b", "c"];\nitems.forEach((item, index) => console.log(index + ": " + item));', desc: "Print with position number" }
+            { example: 'if (10 > 5) {\n  console.log("yes");\n}', desc: "Check 10 vs 5" },
+            { example: 'if (3 > 5) {\n  console.log("no");\n}', desc: "Check 3 vs 5" }
         ]
     }
 ];
+
+// ===== LEADERBOARD STORAGE =====
+let leaderboard = JSON.parse(localStorage.getItem('codeQuizLeaderboard')) || [];
+let currentPlayerName = '';
+let shuffledQuestions = [];
 
 // ===== QUIZ STATE =====
 let currentQuestionIndex = 0;
@@ -242,56 +177,158 @@ let answered = false;
 let selectedOptionIndex = null;
 let currentQuestionCorrect = false;
 let codeSubmitted = false;
+let quizStarted = false;
 
 // ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', initializeQuiz);
+document.addEventListener('DOMContentLoaded', () => {
+    showNameEntry();
+});
+
+function showNameEntry() {
+    const mainContent = document.getElementById('main-content');
+    mainContent.innerHTML = `
+        <div style="text-align: center; padding: 50px 20px; background: #000; border-radius: 8px; max-width: 500px; margin: 50px auto;">
+            <h2 style="color: #fff; margin-bottom: 30px;">🚀 Welcome to Learning Code!</h2>
+            
+            <div style="margin-bottom: 30px;">
+                <input 
+                    type="text" 
+                    id="player-name-input" 
+                    placeholder="Enter your name..." 
+                    style="width: 100%; padding: 12px; font-size: 16px; border: 2px solid #00d4ff; 
+                           border-radius: 6px; background: #0f1419; color: #00ff41;"
+                    maxlength="20"
+                />
+            </div>
+            
+            <button 
+                onclick="startQuizWithName()" 
+                style="width: 100%; padding: 12px; font-size: 16px; font-weight: 600; 
+                       background: #00d4ff; color: #000; border: none; border-radius: 6px; 
+                       cursor: pointer; margin-bottom: 20px;"
+            >
+                Start Quiz
+            </button>
+            
+            <div id="leaderboard-container" style="margin-top: 40px; text-align: left; color: #fff;">
+                <h3 style="color: #00d4ff; margin-bottom: 15px;">🏆 Top 5 Players</h3>
+                <div id="leaderboard" style="background: #0f1419; padding: 15px; border-radius: 6px; border: 1px solid #2a2d3a;">
+                    ${getLeaderboardHTML()}
+                </div>
+            </div>
+        </div>
+    `;
+    document.getElementById('player-name-input').focus();
+}
+
+function getLeaderboardHTML() {
+    if (leaderboard.length === 0) {
+        return '<p style="color: #999; margin: 0;">No scores yet. Be the first!</p>';
+    }
+    
+    const top5 = leaderboard.sort((a, b) => b.score - a.score).slice(0, 5);
+    return top5.map((entry, index) => `
+        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2a2d3a;">
+            <span>#${index + 1} ${entry.name}</span>
+            <span style="color: #00d4ff; font-weight: 600;">${entry.score} pts</span>
+        </div>
+    `).join('');
+}
+
+function startQuizWithName() {
+    const nameInput = document.getElementById('player-name-input');
+    const name = nameInput.value.trim();
+    
+    if (!name) {
+        alert('Please enter your name!');
+        return;
+    }
+    
+    currentPlayerName = name;
+    quizStarted = true;
+    
+    // Shuffle questions
+    shuffledQuestions = [...allQuizQuestions].sort(() => Math.random() - 0.5);
+    
+    currentQuestionIndex = 0;
+    qaPoints = 0;
+    codePoints = 0;
+    
+    initializeQuiz();
+}
 
 function initializeQuiz() {
-    console.log('Quiz initializing...');
+    const mainContent = document.getElementById('main-content');
+    mainContent.innerHTML = `
+        <div class="score-display">
+            <span>Player: <strong id="player-name">${currentPlayerName}</strong></span>
+            <span>Q&A: <strong id="qa-points">0</strong></span>
+            <span>Code: <strong id="code-points">0</strong></span>
+            <span>Total: <strong id="total-points">0</strong></span>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="code-section">
+                <h2>Code Snippet:</h2>
+                <pre id="code-wrapper"><code id="code-display">// Loading...</code></pre>
+                <div id="error-input-section" style="display: none; margin-top: 15px;">
+                    <input 
+                        type="text" 
+                        id="error-answer-input" 
+                        placeholder="Type the error you found..."
+                        style="width: 100%; padding: 10px; border: 2px solid #00d4ff; border-radius: 6px; background: #000; color: #00ff41; font-family: monospace;"
+                    />
+                    <button 
+                        onclick="submitErrorAnswer()" 
+                        style="width: 100%; margin-top: 10px; padding: 10px; background: #00d4ff; color: #000; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;"
+                    >
+                        Submit Answer
+                    </button>
+                </div>
+            </div>
+
+            <section class="question-section">
+                <h3 id="question-text">Loading question...</h3>
+                <div class="options-container" id="options-container"></div>
+            </section>
+
+            <div class="feedback" id="feedback-section" style="display: none;">
+                <p id="feedback-text"></p>
+                <div id="additional-facts"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+                <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
+            </div>
+        </div>
+    `;
+    
     loadQuestion();
 }
 
-// ===== LOAD QUESTION =====
 function loadQuestion() {
-    console.log('Loading question', currentQuestionIndex);
-    
-    if (currentQuestionIndex >= quizData.length) {
+    if (currentQuestionIndex >= shuffledQuestions.length) {
         showCompletion();
         return;
     }
 
-    const question = quizData[currentQuestionIndex];
-    
-    if (!question || !question.code) {
-        console.error('Invalid question data');
-        return;
-    }
+    const question = shuffledQuestions[currentQuestionIndex];
     
     // Update code display
-    const codeDisplay = document.getElementById('code-display');
-    if (codeDisplay) {
-        codeDisplay.textContent = question.code;
-    }
+    document.getElementById('code-display').textContent = question.code;
+    document.getElementById('question-text').textContent = question.question;
     
-    // Update question text
-    const questionText = document.getElementById('question-text');
-    if (questionText) {
-        questionText.textContent = question.question;
-    }
-    
-    // Show/hide find error button for error questions
-    const findErrorBtn = document.getElementById('find-error-btn');
-    if (findErrorBtn) {
-        if (question.type === 'error') {
-            findErrorBtn.style.display = 'inline-block';
-        } else {
-            findErrorBtn.style.display = 'none';
-        }
-    }
-    
-    // Create option buttons
-    const optionsContainer = document.getElementById('options-container');
-    if (optionsContainer) {
+    // Show/hide error input
+    const errorSection = document.getElementById('error-input-section');
+    if (question.type === 'error-find') {
+        errorSection.style.display = 'block';
+        document.getElementById('error-answer-input').value = '';
+        document.getElementById('options-container').innerHTML = '';
+    } else {
+        errorSection.style.display = 'none';
+        
+        const optionsContainer = document.getElementById('options-container');
         optionsContainer.innerHTML = '';
         
         question.options.forEach((option, index) => {
@@ -304,96 +341,82 @@ function loadQuestion() {
         });
     }
     
-    // Hide feedback
-    const feedbackSection = document.getElementById('feedback-section');
-    if (feedbackSection) {
-        feedbackSection.style.display = 'none';
-    }
-    
-    // Disable code editor initially
-    const codeEditor = document.getElementById('code-editor');
-    if (codeEditor) {
-        codeEditor.disabled = true;
-        codeEditor.value = '';
-    }
-    
-    const runCodeBtn = document.getElementById('run-code-btn');
-    if (runCodeBtn) {
-        runCodeBtn.disabled = true;
-    }
-    
-    // Update editor info
-    const editorInfo = document.getElementById('editor-info');
-    if (editorInfo) {
-        editorInfo.textContent = '(Available after correct answer)';
-        editorInfo.style.color = '#999';
-    }
-    
-    // Clear hints
-    const editorHints = document.getElementById('editor-hints');
-    if (editorHints) {
-        editorHints.innerHTML = '';
-    }
-    
-    // Reset button states
-    const submitBtn = document.getElementById('submit-btn');
-    const nextBtn = document.getElementById('next-btn');
-    if (submitBtn) {
-        submitBtn.style.display = 'block';
-        submitBtn.disabled = false;
-    }
-    if (nextBtn) {
-        nextBtn.style.display = 'none';
-        nextBtn.disabled = false;
-    }
+    // Reset states
+    document.getElementById('feedback-section').style.display = 'none';
+    document.getElementById('submit-btn').style.display = 'block';
+    document.getElementById('next-btn').style.display = 'none';
     
     answered = false;
     selectedOptionIndex = null;
     currentQuestionCorrect = false;
-    codeSubmitted = false;
 }
 
-// ===== SELECT OPTION =====
 function selectOption(index) {
     if (answered) return;
     
     selectedOptionIndex = index;
     const buttons = document.querySelectorAll('.option-btn');
-    
     buttons.forEach(btn => btn.classList.remove('selected'));
     if (buttons[index]) {
         buttons[index].classList.add('selected');
     }
 }
 
-// ===== CHECK FOR ERROR =====
-function checkForError() {
-    const question = quizData[currentQuestionIndex];
-    if (question.type !== 'error') return;
+function submitErrorAnswer() {
+    const question = shuffledQuestions[currentQuestionIndex];
+    const userAnswer = document.getElementById('error-answer-input').value.trim().toLowerCase();
+    const correctAnswer = question.errorAnswer.toLowerCase();
     
-    selectedOptionIndex = question.correct;
-    submitAnswer();
+    const feedbackSection = document.getElementById('feedback-section');
+    const feedbackText = document.getElementById('feedback-text');
+    
+    answered = true;
+    
+    if (userAnswer === correctAnswer) {
+        qaPoints++;
+        currentQuestionCorrect = true;
+        feedbackText.innerHTML = `<strong style="color: #00ff41;">✓ Correct! Well done!</strong>`;
+        feedbackSection.className = 'feedback correct';
+    } else {
+        feedbackText.innerHTML = `<strong style="color: #ff5555;">✗ Incorrect</strong><br>The error was: <strong>${question.errorAnswer}</strong>`;
+        feedbackSection.className = 'feedback incorrect';
+        
+        // Restart on wrong answer
+        setTimeout(() => {
+            alert('Quiz restarting... Answer carefully next time!');
+            showNameEntry();
+        }, 2000);
+        return;
+    }
+    
+    feedbackSection.style.display = 'block';
+    updateScores();
+    
+    document.getElementById('submit-btn').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'block';
+    document.getElementById('next-btn').textContent = 'Next Question →';
+    
+    document.getElementById('error-answer-input').disabled = true;
 }
 
-// ===== SUBMIT ANSWER =====
 function submitAnswer() {
+    const question = shuffledQuestions[currentQuestionIndex];
+    
+    if (question.type === 'error-find') {
+        return;
+    }
+    
     if (selectedOptionIndex === null) {
-        alert('Please select an answer');
+        alert('Please select an answer!');
         return;
     }
     
     if (answered) return;
     
     answered = true;
-    const question = quizData[currentQuestionIndex];
     const buttons = document.querySelectorAll('.option-btn');
     const feedbackSection = document.getElementById('feedback-section');
     const feedbackText = document.getElementById('feedback-text');
-    
-    if (!feedbackSection || !feedbackText) {
-        console.error('Feedback elements not found');
-        return;
-    }
     
     buttons.forEach(btn => btn.disabled = true);
     
@@ -403,272 +426,71 @@ function submitAnswer() {
         buttons[selectedOptionIndex].classList.add('correct');
         qaPoints++;
         currentQuestionCorrect = true;
-        
-        feedbackText.innerHTML = `<strong>✓ Correct!</strong>`;
+        feedbackText.innerHTML = `<strong style="color: #00ff41;">✓ Correct!</strong>`;
         feedbackSection.className = 'feedback correct';
-        
-        // Enable code editor for correct answers
-        const codeEditor = document.getElementById('code-editor');
-        const runCodeBtn = document.getElementById('run-code-btn');
-        const editorInfo = document.getElementById('editor-info');
-        
-        if (codeEditor && question.codeEditor) {
-            codeEditor.disabled = false;
-            if (question.language === 'javascript') {
-                runCodeBtn.disabled = false;
-                editorInfo.textContent = '✨ JavaScript - Try the code!';
-            } else if (question.language === 'html') {
-                runCodeBtn.disabled = false;
-                editorInfo.textContent = '✨ HTML - Try the code!';
-            } else {
-                runCodeBtn.disabled = true;
-                editorInfo.textContent = '📖 View only (not executable)';
-            }
-            editorInfo.style.color = '#28a745';
-            
-            // Show hints
-            const editorHints = document.getElementById('editor-hints');
-            if (editorHints && question.editorHint) {
-                editorHints.innerHTML = question.editorHint;
-            }
-        }
     } else {
         buttons[selectedOptionIndex].classList.add('incorrect');
         buttons[question.correct].classList.add('correct');
-        feedbackText.innerHTML = `<strong>✗ Incorrect</strong><br><br>The correct answer is: <strong>${question.options[question.correct]}</strong>`;
+        feedbackText.innerHTML = `<strong style="color: #ff5555;">✗ Incorrect</strong><br>The correct answer is: <strong>${question.options[question.correct]}</strong>`;
         feedbackSection.className = 'feedback incorrect';
-    }
-    
-    // Add additional facts and suggestions
-    const additionalFacts = document.getElementById('additional-facts');
-    if (additionalFacts && isCorrect) {
-        let factsHTML = `
-            <strong>📌 What this code does:</strong>
-            <div class="fact-item">${question.codeBehavior}</div>
-            
-            <strong>🌍 Real-world facts:</strong>
-            <div class="fact-item">${question.facts}</div>
-        `;
-        additionalFacts.innerHTML = factsHTML;
-    }
-    
-    // Add code suggestions with actual examples
-    const codeSuggestions = document.getElementById('code-suggestions');
-    if (codeSuggestions && isCorrect && question.suggestions) {
-        let suggestionsHTML = '<strong>🎯 Examples to try:</strong>';
-        question.suggestions.forEach(sug => {
-            const codeExample = sug.example.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            suggestionsHTML += `
-                <div class="suggestion">
-                    <div style="margin-bottom: 5px; font-size: 0.9em;">${sug.desc}:</div>
-                    <span class="suggestion-code">${codeExample}</span>
-                </div>
-            `;
-        });
-        codeSuggestions.innerHTML = suggestionsHTML;
+        
+        // Restart on wrong answer
+        setTimeout(() => {
+            alert('Quiz restarting... Be more careful!');
+            showNameEntry();
+        }, 2000);
+        return;
     }
     
     feedbackSection.style.display = 'block';
-    
     updateScores();
     
-    const submitBtn = document.getElementById('submit-btn');
-    const nextBtn = document.getElementById('next-btn');
-    if (submitBtn) submitBtn.style.display = 'none';
-    if (nextBtn) {
-        nextBtn.style.display = 'block';
-        if (!currentQuestionCorrect) {
-            nextBtn.textContent = 'Next Question →';
-        } else if (quizData[currentQuestionIndex].codeEditor && quizData[currentQuestionIndex].language !== 'python' && quizData[currentQuestionIndex].language !== 'css') {
-            nextBtn.textContent = 'Skip Code (Next →)';
-        }
-    }
+    document.getElementById('submit-btn').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'block';
+    document.getElementById('next-btn').textContent = 'Next Question →';
 }
 
-// ===== RUN CODE =====
-function runCode() {
-    if (!currentQuestionCorrect) {
-        alert('You must answer the question correctly first!');
-        return;
-    }
-    
-    const question = quizData[currentQuestionIndex];
-    const codeEditor = document.getElementById('code-editor');
-    const userCode = codeEditor.value.trim();
-    
-    if (!userCode) {
-        alert('Please write some code to run!');
-        return;
-    }
-    
-    const outputText = document.getElementById('output-text');
-    const codeOutput = document.getElementById('code-output');
-    
-    try {
-        if (question.language === 'html') {
-            outputText.innerHTML = userCode;
-            codeOutput.style.display = 'block';
-            
-            if (!codeSubmitted) {
-                codePoints++;
-                codeSubmitted = true;
-                updateScores();
-                alert('🎉 Great job! Your HTML code is valid! +1 Code Point');
-            }
-        } 
-        else if (question.language === 'javascript') {
-            let output = '';
-            const originalLog = console.log;
-            console.log = function(...args) {
-                output += args.join(' ') + '\n';
-            };
-            
-            eval(userCode);
-            
-            console.log = originalLog;
-            
-            if (output) {
-                outputText.textContent = output.trim();
-            } else {
-                outputText.textContent = 'Code ran successfully (no output)';
-            }
-            codeOutput.style.display = 'block';
-            
-            if (!codeSubmitted) {
-                codePoints++;
-                codeSubmitted = true;
-                updateScores();
-                alert('🎉 Great job! Your code works! +1 Code Point');
-            }
-        }
-    } catch (error) {
-        outputText.textContent = 'Error: ' + error.message;
-        outputText.style.color = '#dc3545';
-        codeOutput.style.display = 'block';
-    }
-}
-
-// ===== CLEAR CODE =====
-function clearCode() {
-    const codeEditor = document.getElementById('code-editor');
-    if (codeEditor) {
-        codeEditor.value = '';
-    }
-    const codeOutput = document.getElementById('code-output');
-    if (codeOutput) {
-        codeOutput.style.display = 'none';
-    }
-}
-
-// ===== UPDATE SCORES =====
 function updateScores() {
     document.getElementById('qa-points').textContent = qaPoints;
     document.getElementById('code-points').textContent = codePoints;
     document.getElementById('total-points').textContent = qaPoints + codePoints;
 }
 
-// ===== NEXT QUESTION =====
 function nextQuestion() {
     currentQuestionIndex++;
     loadQuestion();
 }
 
-// ===== SHOW COMPLETION =====
 function showCompletion() {
+    const totalScore = qaPoints + codePoints;
+    
+    // Add to leaderboard
+    leaderboard.push({
+        name: currentPlayerName,
+        score: totalScore,
+        date: new Date().toLocaleDateString()
+    });
+    localStorage.setItem('codeQuizLeaderboard', JSON.stringify(leaderboard));
+    
     const mainContent = document.getElementById('main-content');
-    if (!mainContent) {
-        console.error('Main content not found');
-        return;
-    }
-    
-    const totalPoints = qaPoints + codePoints;
-    const maxPoints = quizData.length * 2;
-    const percentage = Math.round((totalPoints / maxPoints) * 100);
-    
-    let message = '';
-    if (percentage === 100) message = 'Perfect score! You are a programming expert! 🚀';
-    else if (percentage >= 80) message = 'Excellent! You have strong coding skills! 👏';
-    else if (percentage >= 60) message = 'Good job! Keep practicing! 📚';
-    else message = 'Keep learning and practicing! 💪';
-    
     mainContent.innerHTML = `
-        <div class="completion-screen">
-            <h2>Quiz Complete! 🎉</h2>
-            <div class="score-summary">
-                <p>Q&A Points: <strong>${qaPoints}</strong></p>
-                <p>Code Points: <strong>${codePoints}</strong></p>
-                <p>Total Points: <span class="score-percentage">${totalPoints}/${maxPoints}</span></p>
-                <p>Percentage: <strong>${percentage}%</strong></p>
+        <div style="text-align: center; padding: 50px 20px; background: #000; border-radius: 8px; max-width: 600px; margin: 50px auto;">
+            <h2 style="color: #00ff41; margin-bottom: 20px;">🎉 Quiz Complete!</h2>
+            
+            <div style="background: #0f1419; padding: 30px; border-radius: 6px; border: 1px solid #2a2d3a; margin-bottom: 30px;">
+                <p style="color: #fff; font-size: 18px; margin: 10px 0;">Player: <strong>${currentPlayerName}</strong></p>
+                <p style="color: #fff; font-size: 18px; margin: 10px 0;">Total Score: <strong style="color: #00d4ff;">${totalScore} points</strong></p>
+                <p style="color: #999; font-size: 14px; margin-top: 20px;">Questions answered: ${shuffledQuestions.length}</p>
             </div>
-            <div class="performance-message">
-                <p>${message}</p>
-            </div>
-            <button class="restart-btn" onclick="restartQuiz()">Restart Quiz</button>
+            
+            <button 
+                onclick="location.reload()" 
+                style="width: 100%; padding: 12px; font-size: 16px; font-weight: 600; 
+                       background: #00d4ff; color: #000; border: none; border-radius: 6px; 
+                       cursor: pointer; margin-bottom: 20px;"
+            >
+                Play Again
+            </button>
         </div>
     `;
-}
-
-// ===== RESTART QUIZ =====
-function restartQuiz() {
-    currentQuestionIndex = 0;
-    qaPoints = 0;
-    codePoints = 0;
-    answered = false;
-    selectedOptionIndex = null;
-    currentQuestionCorrect = false;
-    codeSubmitted = false;
-    
-    updateScores();
-    
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-        mainContent.innerHTML = `
-            <div class="quiz-container">
-                <div class="editor-section">
-                    <div class="editor-header">
-                        <h3>Virtual Code Editor</h3>
-                        <div class="editor-info" id="editor-info">(Available after correct answer)</div>
-                    </div>
-                    <textarea id="code-editor" class="code-editor" placeholder="Write your code here..." disabled></textarea>
-                    <div class="editor-buttons">
-                        <button id="run-code-btn" class="run-btn" onclick="runCode()" disabled>▶ Run Code</button>
-                        <button id="clear-code-btn" class="clear-btn" onclick="clearCode()">🗑 Clear</button>
-                    </div>
-                    <div id="editor-hints" class="editor-hints"></div>
-                    <div id="code-output" class="code-output" style="display: none;">
-                        <strong>📤 Output:</strong>
-                        <div id="output-text"></div>
-                    </div>
-                </div>
-
-                <div class="questions-section">
-                    <section class="code-section">
-                        <h2>Code Snippet:</h2>
-                        <div class="code-display-wrapper">
-                            <pre id="code-wrapper"><code id="code-display">// Loading...</code></pre>
-                            <button id="find-error-btn" class="find-error-btn" style="display: none;" onclick="checkForError()">🔍 Find Error</button>
-                        </div>
-                    </section>
-
-                    <section class="question-section">
-                        <h3 id="question-text">Loading question...</h3>
-                        <div class="options-container" id="options-container"></div>
-                    </section>
-
-                    <div class="feedback" id="feedback-section" style="display: none;">
-                        <p id="feedback-text"></p>
-                        <div id="additional-facts" class="additional-facts"></div>
-                        <div id="code-suggestions" class="code-suggestions"></div>
-                    </div>
-
-                    <div class="action-buttons">
-                        <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
-                        <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-    
-    loadQuestion();
 }
