@@ -1,481 +1,357 @@
-// ===== COURSES DATABASE =====
-const coursesDatabase = {
-    'html-css': {
-        id: 'html-css',
-        title: 'HTML & CSS Basics',
-        description: 'Learn the fundamentals of web structure and styling',
-        difficulty: 'Beginner',
-        duration: '2 hours',
-        icon: '🌐',
-        questions: [
-            {
-                type: "identify",
-                code: `<h1>Hello World</h1>`,
-                question: "What does this code do?",
-                options: ["Creates a large heading", "Creates a paragraph", "Creates a button"],
-                correct: 0,
-                explanation: "This is HTML. The <h1> tag creates the largest heading on a webpage.",
-                facts: "Headings help organize content. H1 is the most important!",
-                codeBehavior: "This displays: Hello World as a big title on the page.",
-                codeEditor: false,
-                language: "html"
-            },
-            {
-                type: "identify",
-                code: `<p>This is a paragraph</p>`,
-                question: "What does this code do?",
-                options: ["Creates text/paragraph", "Creates a heading", "Creates a button"],
-                correct: 0,
-                explanation: "The <p> tag creates a paragraph - normal text content.",
-                facts: "Paragraphs are used for regular text on websites.",
-                codeBehavior: "This displays: This is a paragraph as normal readable text.",
-                codeEditor: false,
-                language: "html"
-            },
-            {
-                type: "identify",
-                code: `<button>Click me</button>`,
-                question: "What does this code create?",
-                options: ["A clickable button", "A text input", "A link"],
-                correct: 0,
-                explanation: "The <button> tag creates a button that users can click.",
-                facts: "Buttons are interactive elements on websites!",
-                codeBehavior: "This displays: Click me as a clickable button.",
-                codeEditor: false,
-                language: "html"
-            },
-            {
-                type: "error-find",
-                code: `<h1>Title</h1>`,
-                question: "There are NO errors in this code. Type: no error",
-                errorAnswer: "no error",
-                explanation: "Correct! This code is perfect - every tag is closed properly.",
-                facts: "Good HTML always closes every opening tag!",
-                codeBehavior: "This displays a proper heading with no issues.",
-                codeEditor: false,
-                language: "html"
-            },
-            {
-                type: "identify",
-                code: `<div>
-  <h1>Title</h1>
-  <p>Text here</p>
-</div>`,
-                question: "What is the <div> doing?",
-                options: ["Creating a container to group other elements", "Creating a paragraph", "Creating a heading"],
-                correct: 0,
-                explanation: "<div> is a container/box. It groups other elements together for organization.",
-                facts: "Divs are like invisible boxes - they organize your webpage layout!",
-                codeBehavior: "This creates a box containing a heading and a paragraph.",
-                codeEditor: false,
-                language: "html"
-            }
+// ===== BEGINNER-FRIENDLY QUIZ DATA - ORIGINAL WORKING VERSION =====
+const quizData = [
+    {
+        type: "identify",
+        code: `<!DOCTYPE html>
+<html>
+<head>
+    <title>My Page</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+</body>
+</html>`,
+        question: "What programming language is this code written in?",
+        options: ["CSS", "HTML", "JavaScript"],
+        correct: 1,
+        explanation: "This is HTML (HyperText Markup Language).",
+        facts: "HTML is used by every website on the internet. Companies like Facebook, Google, and Amazon use HTML to structure their web pages.",
+        codeBehavior: "This code creates a basic web page with a title and a heading.",
+        codeEditor: true,
+        language: "html",
+        editorHint: "💡 Try adding a paragraph tag with text inside the body.",
+        suggestions: [
+            { example: "<p>This is a paragraph</p>", desc: "Creates text content" },
+            { example: "<button>Click Me</button>", desc: "Creates a clickable button" },
+            { example: "<h2>Subheading</h2>", desc: "Creates a smaller heading" }
         ]
     },
-    'javascript': {
-        id: 'javascript',
-        title: 'JavaScript Fundamentals',
-        description: 'Master the basics of JavaScript programming',
-        difficulty: 'Beginner',
-        duration: '3 hours',
-        icon: '⚡',
-        questions: [
-            {
-                type: "identify",
-                code: `console.log("Hello");`,
-                question: "What does this code do?",
-                options: ["Prints text to console", "Creates a variable", "Makes a button"],
-                correct: 0,
-                explanation: "console.log() prints/displays text to the browser console.",
-                facts: "Programmers use console.log() to debug their code!",
-                codeBehavior: "This prints: Hello to the console for programmers to see.",
-                codeEditor: true,
-                language: "javascript"
-            },
-            {
-                type: "identify",
-                code: `const x = 5;
-console.log(x);`,
-                question: "What does this code do?",
-                options: ["Creates a container", "Stores the number 5 in a variable, then prints it", "Creates a button"],
-                correct: 1,
-                explanation: "const creates a variable. x holds the value 5. console.log prints it.",
-                facts: "Variables are like labeled boxes!",
-                codeBehavior: "This stores 5 in x, then prints: 5 to the console.",
-                codeEditor: true,
-                language: "javascript"
-            },
-            {
-                type: "error-find",
-                code: `const name = "John"
-console.log(name)`,
-                question: "Find the error - what's missing?",
-                errorAnswer: "semicolon",
-                explanation: "Both lines are missing semicolons (;) at the end.",
-                facts: "Semicolons tell JavaScript: 'This statement is complete!'",
-                codeBehavior: "Even though this might work, it's bad practice without semicolons.",
-                codeEditor: true,
-                language: "javascript"
-            },
-            {
-                type: "identify",
-                code: `if (5 > 3) {
-  console.log("5 is bigger");
-}`,
-                question: "What does this code do?",
-                options: ["Checks if 5 is bigger than 3, if yes, prints a message", "Creates a variable", "Creates a button"],
-                correct: 0,
-                explanation: "if() checks a condition. If true, it runs the code inside the braces {}",
-                facts: "Conditional logic makes programs smart!",
-                codeBehavior: "Since 5 > 3 is true, this prints: '5 is bigger'",
-                codeEditor: true,
-                language: "javascript"
-            },
-            {
-                type: "identify",
-                code: `const numbers = [1, 2, 3];
-console.log(numbers[0]);`,
-                question: "What does this code output?",
-                options: ["[1, 2, 3]", "1", "3"],
-                correct: 1,
-                explanation: "Arrays store multiple values. numbers[0] gets the first element (1).",
-                facts: "Arrays are counted starting from 0, not 1!",
-                codeBehavior: "This prints: 1 (the first element of the array)",
-                codeEditor: true,
-                language: "javascript"
-            }
+    {
+        type: "behavior",
+        code: `const message = "Hello";
+console.log(message);`,
+        question: "What does this code do?",
+        options: ["Creates a variable", "Prints 'Hello' to the console", "Creates a function"],
+        correct: 1,
+        explanation: "This code creates a variable and prints its value.",
+        facts: "JavaScript is used by 98% of all websites for interactivity. Google Chrome, Firefox, and Safari all run JavaScript.",
+        codeBehavior: "This code declares a variable 'message' with the value 'Hello', then outputs it to the browser console.",
+        codeEditor: true,
+        language: "javascript",
+        editorHint: "💡 Try logging different values or creating multiple variables.",
+        suggestions: [
+            { example: 'const name = "Alice";\\nconsole.log(name);', desc: "Store a name and print it" },
+            { example: 'const age = 25;\\nconsole.log(age);', desc: "Store a number and print it" },
+            { example: 'const x = 10;\\nconst y = 20;\\nconsole.log(x + y);', desc: "Add two numbers and print result" }
         ]
     },
-    'web-dev': {
-        id: 'web-dev',
-        title: 'Web Development Essentials',
-        description: 'Combine HTML, CSS, and JavaScript to build websites',
-        difficulty: 'Intermediate',
-        duration: '4 hours',
-        icon: '🚀',
-        questions: [
-            {
-                type: "identify",
-                code: `<form>
-  <input type="text" placeholder="Enter name">
-  <button type="submit">Submit</button>
-</form>`,
-                question: "What does this code create?",
-                options: ["A form with an input field and submit button", "A paragraph", "A heading"],
-                correct: 0,
-                explanation: "Forms allow users to input data and submit it.",
-                facts: "Forms are essential for user interaction on websites!",
-                codeBehavior: "This creates a form where users can enter text and submit.",
-                codeEditor: false,
-                language: "html"
-            },
-            {
-                type: "error-find",
-                code: `function greet(name) {
+    {
+        type: "error",
+        code: `function greet(name) {
     return "Hello, " + name
-}`,
-                question: "Find the error - what's missing?",
-                errorAnswer: "semicolon",
-                explanation: "Line 2 is missing a semicolon at the end of the return statement.",
-                facts: "Every statement should end with a semicolon!",
-                codeBehavior: "This function would still work in many environments, but it's not proper syntax.",
-                codeEditor: true,
-                language: "javascript"
-            },
-            {
-                type: "identify",
-                code: `const handleClick = () => {
-  console.log("Button clicked!");
-};`,
-                question: "What is this code?",
-                options: ["A class definition", "An arrow function", "An HTML element"],
-                correct: 1,
-                explanation: "Arrow functions are a modern way to write functions in JavaScript.",
-                facts: "Arrow functions are concise and commonly used in modern web development!",
-                codeBehavior: "This creates a function that logs a message when called.",
-                codeEditor: true,
-                language: "javascript"
-            },
-            {
-                type: "identify",
-                code: `<style>
-  body {
-    background-color: blue;
+}
+console.log(greet("Alice"));`,
+        question: "Find the error in this code - Type the error you found",
+        errorAnswer: "semicolon",
+        explanation: "Line 2 is missing a semicolon at the end of the return statement.",
+        facts: "Python doesn't require semicolons, but JavaScript does. This is one of the most common beginner mistakes!",
+        codeBehavior: "This function would still work in many JavaScript environments, but proper syntax requires the semicolon.",
+        codeEditor: true,
+        language: "javascript",
+        editorHint: "💡 Always end statements with a semicolon (;) in JavaScript.",
+        suggestions: [
+            { example: 'return "Hello, " + name;', desc: "Fix: Add semicolon at end" },
+            { example: 'const x = 10;\\nconst y = 20;', desc: "All statements need semicolons" },
+            { example: 'console.log("test");', desc: "Even console.log needs a semicolon" }
+        ]
+    },
+    {
+        type: "identify",
+        code: `def add(a, b):
+    return a + b`,
+        question: "What programming language is this code written in?",
+        options: ["JavaScript", "Python", "Java"],
+        correct: 1,
+        explanation: "This is Python, a simple and readable language.",
+        facts: "Python powers machine learning at Google, Instagram, Netflix, and Spotify. It's the language of AI and data science!",
+        codeBehavior: "This function takes two numbers and returns their sum.",
+        codeEditor: false,
+        language: "python",
+        editorHint: "💡 Python code cannot be run in browsers, but you can learn the syntax here.",
+        suggestions: [
+            { example: 'def greet(name):\\n    return "Hello, " + name', desc: "Function that returns greeting" },
+            { example: 'def multiply(a, b):\\n    return a * b', desc: "Function that multiplies numbers" },
+            { example: 'result = add(5, 3)\\nprint(result)', desc: "Call function and print result" }
+        ]
+    },
+    {
+        type: "behavior",
+        code: `const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(n => n * 2);
+console.log(doubled);`,
+        question: "What does this code output?",
+        options: ["[1,2,3,4,5]", "[2,4,6,8,10]", "Error"],
+        correct: 1,
+        explanation: "The map() function creates a new array with each element doubled.",
+        facts: "Array methods like map() are powerful in JavaScript, used by companies like Netflix for data processing.",
+        codeBehavior: "This code creates a new array where each number is multiplied by 2: [2, 4, 6, 8, 10].",
+        codeEditor: true,
+        language: "javascript",
+        editorHint: "💡 The map() function transforms each element in an array.",
+        suggestions: [
+            { example: 'const nums = [1,2,3];\\nconst squared = nums.map(n => n * n);\\nconsole.log(squared);', desc: "Square each number" },
+            { example: 'const nums = [1,2,3];\\nconst tripled = nums.map(n => n * 3);\\nconsole.log(tripled);', desc: "Multiply by 3" },
+            { example: 'const nums = [10,20,30];\\nconst halved = nums.map(n => n / 2);\\nconsole.log(halved);', desc: "Divide by 2" }
+        ]
+    },
+    {
+        type: "error",
+        code: `const x = 10
+const y = 20
+console.log(x + y)`,
+        question: "Find the error - Type what's missing",
+        errorAnswer: "semicolon",
+        explanation: "JavaScript code should end statements with semicolons (though often optional due to automatic insertion).",
+        facts: "Modern JavaScript tools can auto-format your code to add semicolons automatically.",
+        codeBehavior: "This code will still run correctly because JavaScript has automatic semicolon insertion.",
+        codeEditor: true,
+        language: "javascript",
+        editorHint: "💡 Best practice: Always add semicolons, even though they're sometimes optional.",
+        suggestions: [
+            { example: 'const x = 10;\\nconst y = 20;\\nconsole.log(x + y);', desc: "Properly formatted with semicolons" },
+            { example: 'const name = "Bob";\\nconst age = 30;\\nconst combined = name + age;', desc: "Multiple statements with semicolons" },
+            { example: 'const result = 5 + 5;\\nconst final = result * 2;', desc: "Expressions need semicolons" }
+        ]
+    },
+    {
+        type: "identify",
+        code: `body {
+    background-color: #3498db;
     color: white;
-  }
-</style>`,
-                question: "What does this code do?",
-                options: ["Styles the body element", "Creates a form", "Creates a button"],
-                correct: 0,
-                explanation: "<style> tags contain CSS rules that style HTML elements.",
-                facts: "CSS makes websites look beautiful!",
-                codeBehavior: "This makes the page background blue and text white.",
-                codeEditor: false,
-                language: "html"
-            },
-            {
-                type: "error-find",
-                code: `<div class=container>
-  <h1>Title</h1>
+    font-size: 16px;
+}`,
+        question: "What programming language is this code written in?",
+        options: ["HTML", "CSS", "JavaScript"],
+        correct: 1,
+        explanation: "This is CSS (Cascading Style Sheets), used for styling.",
+        facts: "CSS is used by every website to make things look beautiful. Bootstrap and Tailwind are popular CSS frameworks used by millions.",
+        codeBehavior: "This code sets the background color to blue, text color to white, and font size to 16 pixels.",
+        codeEditor: false,
+        language: "css",
+        editorHint: "💡 CSS cannot be executed in the browser editor, but you can learn the syntax.",
+        suggestions: [
+            { example: 'h1 {\\n    color: red;\\n    font-size: 32px;\\n}', desc: "Style headings" },
+            { example: 'button {\\n    background-color: #28a745;\\n    padding: 10px 20px;\\n}', desc: "Style buttons" },
+            { example: '.container {\\n    width: 100%;\\n    margin: 0 auto;\\n}', desc: "Style containers" }
+        ]
+    },
+    {
+        type: "behavior",
+        code: `if (10 > 5) {
+    console.log("10 is greater than 5");
+} else {
+    console.log("5 is greater than 10");
+}`,
+        question: "What does this code output?",
+        options: ["5 is greater than 10", "10 is greater than 5", "Error"],
+        correct: 1,
+        explanation: "The if statement checks the condition (10 > 5), which is true.",
+        facts: "Conditional logic is used everywhere in programming - in video games, banking apps, and AI systems.",
+        codeBehavior: "Since 10 is indeed greater than 5, the code prints '10 is greater than 5'.",
+        codeEditor: true,
+        language: "javascript",
+        editorHint: "💡 Try changing the numbers or using different comparison operators.",
+        suggestions: [
+            { example: 'if (20 < 30) {\\n    console.log("30 is bigger");\\n}', desc: "Check if one number is smaller" },
+            { example: 'if (15 === 15) {\\n    console.log("Equal");\\n}', desc: "Check if numbers are equal" },
+            { example: 'if (5 !== 10) {\\n    console.log("Not equal");\\n}', desc: "Check if not equal" }
+        ]
+    },
+    {
+        type: "error",
+        code: `function sayHello {
+    return "Hello";
+}`,
+        question: "Find the error - Type what's missing",
+        errorAnswer: "parentheses",
+        explanation: "JavaScript function syntax requires parentheses after the function name: function sayHello().",
+        facts: "Function syntax is strict in most programming languages to help avoid bugs.",
+        codeBehavior: "This code will throw a syntax error because parentheses are required.",
+        codeEditor: true,
+        language: "javascript",
+        editorHint: "💡 All functions need parentheses: function name() { ... }",
+        suggestions: [
+            { example: 'function sayHello() {\\n    return "Hello";\\n}', desc: "Fixed: Added parentheses" },
+            { example: 'function add(a, b) {\\n    return a + b;\\n}', desc: "Function with parameters" },
+            { example: 'function greet(name) {\\n    return "Hi " + name;\\n}', desc: "Function with parameter used" }
+        ]
+    },
+    {
+        type: "identify",
+        code: `<div class="container">
+    <h1>Welcome</h1>
+    <p>This is a paragraph</p>
+    <button>Click Me</button>
 </div>`,
-                question: "Find the error - what's wrong?",
-                errorAnswer: "quotes",
-                explanation: "The class attribute value should be in quotes: class=\"container\"",
-                facts: "HTML attributes must always have quoted values!",
-                codeBehavior: "This would cause an HTML parsing error.",
-                codeEditor: false,
-                language: "html"
-            }
+        question: "What programming language is this code written in?",
+        options: ["CSS", "JavaScript", "HTML"],
+        correct: 2,
+        explanation: "This is HTML, which structures web page content.",
+        facts: "HTML works together with CSS and JavaScript - HTML = structure, CSS = style, JavaScript = behavior.",
+        codeBehavior: "This creates a container with a heading, paragraph, and clickable button.",
+        codeEditor: true,
+        language: "html",
+        editorHint: "💡 Try adding more HTML elements to build your structure.",
+        suggestions: [
+            { example: '<img src="image.jpg" alt="Picture">', desc: "Add an image" },
+            { example: '<a href="https://google.com">Link</a>', desc: "Create a clickable link" },
+            { example: '<input type="text" placeholder="Enter name">', desc: "Add an input field" }
+        ]
+    },
+    {
+        type: "behavior",
+        code: `const fruits = ["apple", "banana", "orange"];
+fruits.forEach(fruit => {
+    console.log(fruit);
+});`,
+        question: "What does this code do?",
+        options: ["Creates an array", "Prints each fruit to the console", "Returns the first fruit"],
+        correct: 1,
+        explanation: "forEach() loops through each item in the array and executes the function.",
+        facts: "Loop methods like forEach() are fundamental in programming and used in every real-world application.",
+        codeBehavior: "This code prints: apple, banana, orange (each on a new line).",
+        codeEditor: true,
+        language: "javascript",
+        editorHint: "💡 forEach() loops through each item in an array.",
+        suggestions: [
+            { example: 'const nums = [1, 2, 3];\\nnums.forEach(n => console.log(n * 2));', desc: "Print each number doubled" },
+            { example: 'const colors = ["red", "blue"];\\ncolors.forEach(c => console.log("Color: " + c));', desc: "Print with text" },
+            { example: 'const items = ["a", "b", "c"];\\nitems.forEach((item, index) => console.log(index + ": " + item));', desc: "Print with position number" }
         ]
     }
-};
+];
 
-// ===== Q&A DATABASE =====
-const qaDatabase = {
-    'html-css': [
-        {
-            q: "What is HTML?",
-            a: "HTML (HyperText Markup Language) is the standard markup language for creating web pages. It provides the structure and content of a website."
-        },
-        {
-            q: "What is CSS?",
-            a: "CSS (Cascading Style Sheets) is used to style HTML elements. It controls the layout, colors, fonts, and overall appearance of a website."
-        },
-        {
-            q: "What's the difference between div and span?",
-            a: "div is a block-level element that takes up the full width available, while span is an inline element that only takes up as much space as necessary."
-        }
-    ],
-    'javascript': [
-        {
-            q: "What are variables in JavaScript?",
-            a: "Variables are containers for storing data values. You can declare variables using const, let, or var, and assign values to them."
-        },
-        {
-            q: "What's the difference between == and ===?",
-            a: "== checks for value equality (with type coercion), while === checks for both value and type equality (strict comparison)."
-        },
-        {
-            q: "What are arrow functions?",
-            a: "Arrow functions (=>) are a concise syntax for writing functions in JavaScript. They are commonly used in modern web development."
-        }
-    ],
-    'web-dev': [
-        {
-            q: "What is the DOM?",
-            a: "The DOM (Document Object Model) is a programming interface for web documents. It represents the page so programs can change the document structure and content."
-        },
-        {
-            q: "What is responsive design?",
-            a: "Responsive design means a website looks good and functions properly on all devices (desktop, tablet, mobile) by using flexible layouts and media queries."
-        },
-        {
-            q: "What is Git?",
-            a: "Git is a version control system that allows developers to track changes in code, collaborate with others, and manage different versions of a project."
-        }
-    ]
-};
-
-// ===== TASKS DATABASE =====
-const tasksDatabase = {
-    'html-css': [
-        {
-            title: "Create a Simple Webpage",
-            description: "Create an HTML page with a heading, paragraph, and button",
-            difficulty: "easy",
-            points: 50
-        },
-        {
-            title: "Style a Form",
-            description: "Create a form and style it using CSS to make it look professional",
-            difficulty: "medium",
-            points: 100
-        },
-        {
-            title: "Build a Responsive Layout",
-            description: "Create a 2-column layout that becomes 1-column on mobile devices",
-            difficulty: "hard",
-            points: 150
-        }
-    ],
-    'javascript': [
-        {
-            title: "Calculator App",
-            description: "Build a simple calculator that performs basic arithmetic",
-            difficulty: "easy",
-            points: 50
-        },
-        {
-            title: "Todo List",
-            description: "Create a todo list app where users can add and delete tasks",
-            difficulty: "medium",
-            points: 100
-        },
-        {
-            title: "Weather App",
-            description: "Build an app that fetches and displays weather data from an API",
-            difficulty: "hard",
-            points: 150
-        }
-    ],
-    'web-dev': [
-        {
-            title: "Personal Portfolio",
-            description: "Build your personal website showcasing your projects",
-            difficulty: "medium",
-            points: 100
-        },
-        {
-            title: "E-commerce Product Page",
-            description: "Create a product page with images, description, and add to cart button",
-            difficulty: "hard",
-            points: 150
-        },
-        {
-            title: "Blog Platform",
-            description: "Build a blog where users can create, read, and delete posts",
-            difficulty: "hard",
-            points: 200
-        }
-    ]
-};
-
-// ===== RESOURCES DATABASE =====
-const resourcesDatabase = {
-    'html-css': [
-        {
-            title: "MDN Web Docs - HTML",
-            description: "Comprehensive HTML documentation and guides"
-        },
-        {
-            title: "CSS Tricks",
-            description: "Articles and tutorials about CSS techniques and best practices"
-        },
-        {
-            title: "HTML5 Specification",
-            description: "Official HTML5 standards and specifications"
-        }
-    ],
-    'javascript': [
-        {
-            title: "JavaScript.info",
-            description: "Complete JavaScript tutorial from basics to advanced"
-        },
-        {
-            title: "MDN JavaScript Guide",
-            description: "Official Mozilla guide to JavaScript"
-        },
-        {
-            title: "Eloquent JavaScript",
-            description: "Free online book about JavaScript programming"
-        }
-    ],
-    'web-dev': [
-        {
-            title: "Web Development Roadmap",
-            description: "A guide to becoming a full-stack web developer"
-        },
-        {
-            title: "DEV Community",
-            description: "A community of developers sharing articles and tips"
-        },
-        {
-            title: "Codepen",
-            description: "Showcase and explore HTML, CSS, and JavaScript creations"
-        }
-    ]
-};
-
-// ===== QUIZ STATE =====
+// ===== LEADERBOARD STORAGE =====
 let leaderboard = [];
 let currentPlayerName = '';
-let currentCourseId = '';
 let shuffledQuestions = [];
 let currentQuestionIndex = 0;
 let totalScore = 0;
 let answered = false;
 let selectedOptionIndex = null;
+let errorInputValue = '';
 let quizInProgress = false;
-let currentSection = 'course';
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
     loadLeaderboard();
-    setupNavigation();
-    showCourseSelection();
+    showNameEntryScreen();
 });
 
-// ===== NAVIGATION SETUP =====
-function setupNavigation() {
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            if (!quizInProgress) {
-                navItems.forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-                currentSection = item.dataset.section;
-                showSection(currentSection);
-            }
-        });
+// ===== LEADERBOARD FUNCTIONS =====
+function loadLeaderboard() {
+    const stored = localStorage.getItem('codemaster-leaderboard');
+    leaderboard = stored ? JSON.parse(stored) : [];
+}
+
+function saveLeaderboard() {
+    localStorage.setItem('codemaster-leaderboard', JSON.stringify(leaderboard));
+}
+
+function addToLeaderboard(name, score) {
+    leaderboard.push({
+        name: name,
+        score: score,
+        date: new Date().toLocaleDateString()
     });
+    saveLeaderboard();
 }
 
-// ===== SHOW SECTION =====
-function showSection(section) {
-    const contentArea = document.getElementById('content-area');
-    
-    switch(section) {
-        case 'course':
-            showCourseSelection();
-            break;
-        case 'qa':
-            showQASection();
-            break;
-        case 'tasks':
-            showTasksSection();
-            break;
-        case 'resources':
-            showResourcesSection();
-            break;
+function getTop5Leaderboard() {
+    return leaderboard
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5);
+}
+
+function renderLeaderboard() {
+    const top5 = getTop5Leaderboard();
+    if (top5.length === 0) {
+        return '<div class="empty-leaderboard">No scores yet. Be the first to take the course!</div>';
     }
+    
+    return top5.map((entry, index) => `
+        <div class="leaderboard-item">
+            <span class="leaderboard-rank">#${index + 1}</span>
+            <span class="leaderboard-name">${escapeHtml(entry.name)}</span>
+            <span class="leaderboard-score">${entry.score} pts</span>
+        </div>
+    `).join('');
 }
 
-// ===== SHOW COURSE SELECTION =====
-function showCourseSelection() {
+// ===== SHOW NAME ENTRY SCREEN =====
+function showNameEntryScreen() {
     const contentArea = document.getElementById('content-area');
     contentArea.innerHTML = `
-        <div class="course-selection-screen">
-            <h2>📚 Choose Your Course</h2>
-            <div class="courses-grid">
-                ${Object.values(coursesDatabase).map(course => `
-                    <div class="course-card" onclick="startCourse('${course.id}')">
-                        <span class="course-badge">${course.difficulty}</span>
-                        <h3 class="course-title">${course.icon} ${escapeHtml(course.title)}</h3>
-                        <p class="course-description">${escapeHtml(course.description)}</p>
-                        <div class="course-info">
-                            <div class="info-item">⏱️ ${course.duration}</div>
-                            <div class="info-item">📖 ${course.questions.length} lessons</div>
-                        </div>
-                        <button class="btn-start-course">Start Course</button>
-                    </div>
-                `).join('')}
+        <div class="name-entry-screen">
+            <h2>Welcome to Learning Code</h2>
+            <p class="tagline">Master Programming - Interactive Quiz</p>
+            
+            <div class="input-group">
+                <label for="player-name">Enter Your Name</label>
+                <input 
+                    type="text" 
+                    id="player-name" 
+                    placeholder="Your name..." 
+                    maxlength="30"
+                    autocomplete="off"
+                />
+            </div>
+            
+            <button class="btn-start" onclick="startQuizWithName()">Start Quiz</button>
+            
+            <div class="leaderboard-section">
+                <h3>🏆 Top Players</h3>
+                <div class="leaderboard-list">
+                    ${renderLeaderboard()}
+                </div>
             </div>
         </div>
     `;
+    
+    const nameInput = document.getElementById('player-name');
+    nameInput.focus();
+    nameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') startQuizWithName();
+    });
 }
 
-// ===== START COURSE =====
-function startCourse(courseId) {
-    currentCourseId = courseId;
-    const course = coursesDatabase[courseId];
-    shuffledQuestions = [...course.questions].sort(() => Math.random() - 0.5);
+// ===== START QUIZ WITH NAME =====
+function startQuizWithName() {
+    const nameInput = document.getElementById('player-name');
+    const name = nameInput.value.trim();
+    
+    if (!name || name.length < 2) {
+        alert('Please enter a valid name (at least 2 characters)');
+        return;
+    }
+    
+    currentPlayerName = name;
+    shuffledQuestions = [...quizData].sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
     totalScore = 0;
     quizInProgress = true;
     
-    document.getElementById('breadcrumb-course').textContent = course.title;
-    updateProgress();
+    updateUserInfo();
     loadQuestion();
+}
+
+// ===== UPDATE USER INFO =====
+function updateUserInfo() {
+    const avatar = document.getElementById('user-avatar');
+    const username = document.getElementById('current-username');
+    
+    if (avatar) avatar.textContent = currentPlayerName.charAt(0).toUpperCase();
+    if (username) username.textContent = currentPlayerName;
 }
 
 // ===== LOAD QUESTION =====
@@ -489,12 +365,12 @@ function loadQuestion() {
     const contentArea = document.getElementById('content-area');
     const lessonNumber = currentQuestionIndex + 1;
     
-    document.getElementById('lesson-title').textContent = `Lesson ${lessonNumber}`;
+    document.getElementById('lesson-title').textContent = `Question ${lessonNumber}`;
     updateProgress();
     
     let questionContent = '';
     
-    if (question.type === 'error-find') {
+    if (question.type === 'error') {
         questionContent = `
             <div class="lesson-container">
                 <div class="lesson-panel">
@@ -503,8 +379,13 @@ function loadQuestion() {
                         <pre>${escapeHtml(question.code)}</pre>
                     </div>
                     <p class="question-title">${escapeHtml(question.question)}</p>
-                    <div class="input-group">
-                        <input type="text" id="error-input" placeholder="Type the error you found..." class="error-input"/>
+                    <div class="options-list">
+                        <input 
+                            type="text" 
+                            id="error-input" 
+                            placeholder="Type the error you found..."
+                            style="padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1em; font-family: 'Inter', sans-serif; width: 100%; margin-bottom: 15px;"
+                        />
                     </div>
                     <div id="feedback-error" style="display: none;"></div>
                     <div class="action-buttons">
@@ -513,7 +394,7 @@ function loadQuestion() {
                     </div>
                 </div>
                 <div class="editor-panel">
-                    <h3><span class="icon">📝</span> Code Playground</h3>
+                    <h3><span class="icon">💻</span> Code Playground</h3>
                     <div class="editor-status">
                         <span class="status-dot"></span>
                         <span>Complete lesson to unlock</span>
@@ -538,7 +419,7 @@ function loadQuestion() {
                     </div>
                 </div>
                 <div class="editor-panel">
-                    <h3><span class="icon">📝</span> Code Playground</h3>
+                    <h3><span class="icon">💻</span> Code Playground</h3>
                     <div class="editor-status" id="editor-status">
                         <span class="status-dot"></span>
                         <span>Complete lesson to unlock</span>
@@ -550,19 +431,25 @@ function loadQuestion() {
     
     contentArea.innerHTML = questionContent;
     
-    if (question.type === 'error-find') {
-        document.getElementById('error-input').focus();
+    if (question.type === 'error') {
+        const errorInput = document.getElementById('error-input');
+        if (errorInput) {
+            errorInput.focus();
+        }
     } else {
         renderOptions(question);
     }
     
     answered = false;
     selectedOptionIndex = null;
+    errorInputValue = '';
 }
 
 // ===== RENDER OPTIONS =====
 function renderOptions(question) {
     const optionsList = document.getElementById('options-list');
+    if (!optionsList) return;
+    
     optionsList.innerHTML = '';
     
     question.options.forEach((option, index) => {
@@ -578,10 +465,13 @@ function renderOptions(question) {
 // ===== SELECT OPTION =====
 function selectOption(index) {
     if (answered) return;
+    
     selectedOptionIndex = index;
     const buttons = document.querySelectorAll('.option-button');
     buttons.forEach(btn => btn.classList.remove('selected'));
-    buttons[index].classList.add('selected');
+    if (buttons[index]) {
+        buttons[index].classList.add('selected');
+    }
 }
 
 // ===== SUBMIT ANSWER =====
@@ -590,6 +480,7 @@ function submitAnswer() {
         alert('Please select an answer first');
         return;
     }
+    
     if (answered) return;
     
     answered = true;
@@ -626,7 +517,7 @@ function submitAnswer() {
         setTimeout(() => {
             alert('Quiz restarting. Answer carefully next time!');
             quizInProgress = false;
-            showCourseSelection();
+            showNameEntryScreen();
         }, 2000);
         return;
     }
@@ -634,6 +525,7 @@ function submitAnswer() {
     feedbackDiv.style.display = 'block';
     document.getElementById('btn-submit').style.display = 'none';
     document.getElementById('btn-next').style.display = 'block';
+    document.getElementById('btn-next').focus();
 }
 
 // ===== SUBMIT ERROR ANSWER =====
@@ -647,6 +539,7 @@ function submitErrorAnswer() {
         alert('Please type your answer');
         return;
     }
+    
     if (answered) return;
     
     answered = true;
@@ -676,7 +569,7 @@ function submitErrorAnswer() {
         setTimeout(() => {
             alert('Quiz restarting. Answer carefully next time!');
             quizInProgress = false;
-            showCourseSelection();
+            showNameEntryScreen();
         }, 2000);
         return;
     }
@@ -685,6 +578,7 @@ function submitErrorAnswer() {
     document.querySelector('.btn-submit').style.display = 'none';
     document.getElementById('next-btn-error').style.display = 'block';
     document.getElementById('next-btn-error').onclick = nextQuestion;
+    document.getElementById('next-btn-error').focus();
 }
 
 // ===== NEXT QUESTION =====
@@ -707,13 +601,12 @@ function updateProgress() {
 function showCompletion() {
     const contentArea = document.getElementById('content-area');
     const total = shuffledQuestions.length;
-    const course = coursesDatabase[currentCourseId];
     
-    addToLeaderboard(currentPlayerName, totalScore, course.title);
+    addToLeaderboard(currentPlayerName, totalScore);
     
     let message = '';
     if (totalScore === total) {
-        message = 'Perfect score! You are a coding master! 🚀';
+        message = 'Perfect score! You are a code master! 🚀';
     } else if (totalScore >= Math.ceil(total * 0.8)) {
         message = 'Excellent! You have strong coding skills! 👏';
     } else if (totalScore >= Math.ceil(total * 0.6)) {
@@ -725,8 +618,7 @@ function showCompletion() {
     contentArea.innerHTML = `
         <div class="completion-screen">
             <div class="completion-badge">🎉</div>
-            <h2>Course Complete!</h2>
-            <p style="color: #666; margin-bottom: 10px;">${escapeHtml(course.title)}</p>
+            <h2>Quiz Complete!</h2>
             
             <div class="completion-score">
                 Your Score: ${totalScore}/${total} points
@@ -734,101 +626,11 @@ function showCompletion() {
             
             <p class="completion-message">${message}</p>
             
-            <button class="btn-restart" onclick="backToCourses()">Back to Courses</button>
+            <button class="btn-restart" onclick="location.reload()">Play Again</button>
         </div>
     `;
     
     quizInProgress = false;
-}
-
-// ===== BACK TO COURSES =====
-function backToCourses() {
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(i => i.classList.remove('active'));
-    navItems[0].classList.add('active');
-    currentSection = 'course';
-    showCourseSelection();
-}
-
-// ===== SHOW Q&A SECTION =====
-function showQASection() {
-    const contentArea = document.getElementById('content-area');
-    const qaDatas = qaDatabase[currentCourseId] || qaDatabase['html-css'];
-    
-    contentArea.innerHTML = `
-        <div class="qa-section">
-            <h2>❓ Questions & Answers</h2>
-            <div class="qa-list">
-                ${qaDatas.map((item, index) => `
-                    <div class="qa-card">
-                        <div class="qa-question" onclick="toggleQA(${index})">
-                            <span>${escapeHtml(item.q)}</span>
-                            <span class="qa-toggle" id="toggle-${index}">▼</span>
-                        </div>
-                        <div class="qa-answer" id="answer-${index}">
-                            ${escapeHtml(item.a)}
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-}
-
-// ===== TOGGLE Q&A =====
-function toggleQA(index) {
-    const answer = document.getElementById(`answer-${index}`);
-    const toggle = document.getElementById(`toggle-${index}`);
-    answer.classList.toggle('show');
-    toggle.classList.toggle('open');
-}
-
-// ===== SHOW TASKS SECTION =====
-function showTasksSection() {
-    const contentArea = document.getElementById('content-area');
-    const tasks = tasksDatabase[currentCourseId] || tasksDatabase['html-css'];
-    
-    contentArea.innerHTML = `
-        <div class="tasks-section">
-            <h2>✅ Daily Tasks & Challenges</h2>
-            <div class="tasks-list">
-                ${tasks.map(task => `
-                    <div class="task-card">
-                        <span class="task-difficulty ${task.difficulty}">${task.difficulty.toUpperCase()}</span>
-                        <h3 class="task-title">${escapeHtml(task.title)}</h3>
-                        <p class="task-description">${escapeHtml(task.description)}</p>
-                        <p class="task-points">+${task.points} points</p>
-                        <button class="btn-task" onclick="startTask('${escapeHtml(task.title)}')">Start Task</button>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-}
-
-// ===== START TASK =====
-function startTask(taskTitle) {
-    alert(`Starting task: ${taskTitle}\n\nThis would open the task in a code editor. Great job focusing on challenges!`);
-}
-
-// ===== SHOW RESOURCES SECTION =====
-function showResourcesSection() {
-    const contentArea = document.getElementById('content-area');
-    const resources = resourcesDatabase[currentCourseId] || resourcesDatabase['html-css'];
-    
-    contentArea.innerHTML = `
-        <div class="resources-section">
-            <h2>📖 Learning Resources</h2>
-            <div class="resources-grid">
-                ${resources.map(resource => `
-                    <div class="resource-card">
-                        <h3 class="resource-title">${escapeHtml(resource.title)}</h3>
-                        <p class="resource-description">${escapeHtml(resource.description)}</p>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
 }
 
 // ===== EDIT NAME MODAL =====
@@ -855,35 +657,6 @@ function confirmEditName() {
     closeEditNameModal();
 }
 
-// ===== UPDATE USER INFO =====
-function updateUserInfo() {
-    const avatar = document.getElementById('user-avatar');
-    const username = document.getElementById('current-username');
-    
-    if (avatar) avatar.textContent = currentPlayerName.charAt(0).toUpperCase();
-    if (username) username.textContent = currentPlayerName;
-}
-
-// ===== LEADERBOARD FUNCTIONS =====
-function loadLeaderboard() {
-    const stored = localStorage.getItem('codemaster-leaderboard');
-    leaderboard = stored ? JSON.parse(stored) : [];
-}
-
-function saveLeaderboard() {
-    localStorage.setItem('codemaster-leaderboard', JSON.stringify(leaderboard));
-}
-
-function addToLeaderboard(name, score, course) {
-    leaderboard.push({
-        name: name,
-        score: score,
-        course: course,
-        date: new Date().toLocaleDateString()
-    });
-    saveLeaderboard();
-}
-
 // ===== UTILITY FUNCTION =====
 function escapeHtml(text) {
     const map = {
@@ -895,75 +668,3 @@ function escapeHtml(text) {
     };
     return text.replace(/[&<>"']/g, m => map[m]);
 }
-
-// ===== INITIAL SETUP =====
-function initializeApp() {
-    // Show name entry or course selection
-    if (!currentPlayerName) {
-        showNameEntry();
-    } else {
-        showCourseSelection();
-    }
-}
-
-function showNameEntry() {
-    const contentArea = document.getElementById('content-area');
-    contentArea.innerHTML = `
-        <div class="name-entry-screen">
-            <h2>Welcome to CodeMaster</h2>
-            <p class="tagline">Master Programming with Professional Courses</p>
-            
-            <div class="input-group">
-                <label for="player-name">Enter Your Name</label>
-                <input type="text" id="player-name" placeholder="Your name..." maxlength="30" autocomplete="off" />
-            </div>
-            
-            <button class="btn-start" onclick="startWithName()">Continue</button>
-            
-            <div class="leaderboard-section" style="margin-top: 40px; text-align: center;">
-                <h3 style="margin-bottom: 20px;">🏆 Top Players</h3>
-                <div class="leaderboard-list" style="background: #f0f9ff; padding: 20px; border-radius: 8px;">
-                    ${renderTopPlayers()}
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.getElementById('player-name').focus();
-    document.getElementById('player-name').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') startWithName();
-    });
-}
-
-function startWithName() {
-    const nameInput = document.getElementById('player-name');
-    const name = nameInput.value.trim();
-    
-    if (!name || name.length < 2) {
-        alert('Please enter a valid name (at least 2 characters)');
-        return;
-    }
-    
-    currentPlayerName = name;
-    updateUserInfo();
-    showCourseSelection();
-}
-
-function renderTopPlayers() {
-    const top5 = leaderboard.sort((a, b) => b.score - a.score).slice(0, 5);
-    
-    if (top5.length === 0) {
-        return '<p style="color: #999; font-style: italic;">No scores yet. Start a course to be #1!</p>';
-    }
-    
-    return top5.map((entry, index) => `
-        <div class="leaderboard-item">
-            <span class="leaderboard-rank">#${index + 1}</span>
-            <span class="leaderboard-name">${escapeHtml(entry.name)}</span>
-            <span class="leaderboard-score">${entry.score} pts</span>
-        </div>
-    `).join('');
-}
-
-// Start the app
-setTimeout(initializeApp, 100);
