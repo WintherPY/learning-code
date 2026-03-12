@@ -183,7 +183,7 @@ code {
 }
 
 .submit-btn, .next-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     color: white;
 }
 
@@ -197,7 +197,7 @@ code {
 }
 
 .restart-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     color: white;
 }
 
@@ -218,7 +218,7 @@ code {
 }
 
 .score-summary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     color: white;
     padding: 30px;
     border-radius: 12px;
@@ -271,4 +271,5 @@ footer {
         font-size: 0.85em;
     }
 }
+
 
