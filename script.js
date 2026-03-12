@@ -1,7 +1,6 @@
 // ===== QUIZ DATA - Mixed Question Types =====
 
 const quizData = [
-    // LANGUAGE IDENTIFICATION QUESTIONS
     {
         type: "language",
         code: `<!DOCTYPE html>
@@ -159,88 +158,5 @@ console.log(isEven(7));`,
         question: "What does this code do?",
         options: ["Divides numbers by 2", "Checks if a number is even using modulo operator, prints true for 4 and false for 7", "Multiplies numbers"],
         correct: 1,
-        explanation: "This function checks if a number is even using the modulo operator (%). If num % 2 === 0, it's even. 4 is even (prints true), 7 is odd (prints false)."
-    },
-    {
-        type: "language",
-        code: `<input type="text" placeholder="Enter your name" />
-<select>
-    <option>Option 1</option>
-    <option>Option 2</option>
-</select>`,
-        question: "What programming language is this code written in?",
-        options: ["CSS", "JavaScript", "HTML"],
-        correct: 2,
-        explanation: "This is HTML. It defines form elements like <input> and <select> tags for user interaction."
-    },
-    {
-        type: "function",
-        code: `const prices = [10, 20, 30];
-const total = prices.reduce((sum, price) => sum + price, 0);
-console.log("Total: $" + total);`,
-        question: "What does this code do?",
-        options: ["Prints each price", "Adds all prices together and prints 'Total: $60'", "Divides prices by 2"],
-        correct: 1,
-        explanation: "This code calculates the total of all prices: 10 + 20 + 30 = 60, then prints 'Total: $60'."
-    }
-];
-
-// ===== QUIZ STATE =====
-let currentQuestionIndex = 0;
-let totalCorrect = 0;
-let answered = false;
-let selectedOptionIndex = null;
-
-// ===== UTILITY FUNCTIONS - Safe DOM Access =====
-function getElement(id) {
-    const element = document.getElementById(id);
-    if (!element) {
-        console.warn(`Element with id '${id}' not found`);
-        return null;
-    }
-    return element;
-}
-
-function getAllElements(selector) {
-    return document.querySelectorAll(selector);
-}
-
-function getMainContent() {
-    return document.querySelector('main');
-}
-
-// ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', function() {
-    loadQuestion();
-});
-
-// ===== LOAD QUESTION =====
-function loadQuestion() {
-    // Check if quiz is complete
-    if (currentQuestionIndex >= quizData.length) {
-        showCompletion();
-        return;
-    }
-
-    const question = quizData[currentQuestionIndex];
-    
-    // Update code display
-    const codeDisplay = getElement('code-display');
-    if (codeDisplay) {
-        codeDisplay.textContent = question.code;
-    }
-    
-    // Update question text
-    const questionText = getElement('question-text');
-    if (questionText) {
-        questionText.textContent = question.question;
-    }
-    
-    // Clear and populate options
-    const optionsContainer = getElement('options-container');
-    if (optionsContainer) {
-        optionsContainer.innerHTML = '';
-        
-        question.options.forEach((option, index) => {
-            const button*
+        explanation: "This function checks if a number is even using the modulo operator (%). If num % 2 === 0, it's even. 4 is even (prints*
 
