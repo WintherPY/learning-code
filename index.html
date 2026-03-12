@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Code - Interactive Quiz</title>
+    <title>Learning Code - Multi-Course Platform</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,11 +14,8 @@
                 <h2>Learning Code</h2>
             </div>
             
-            <nav class="sidebar-nav">
-                <div class="nav-item active">
-                    <span class="icon">📚</span>
-                    <span>Course</span>
-                </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <!-- Courses populated by JavaScript -->
             </nav>
 
             <div class="sidebar-footer">
@@ -26,7 +23,7 @@
                     <div class="avatar" id="user-avatar">U</div>
                     <div class="user-details">
                         <p class="username" id="current-username">Guest</p>
-                        <p class="user-level">Beginner</p>
+                        <p class="user-level">Select Course</p>
                     </div>
                 </div>
             </div>
@@ -37,7 +34,7 @@
             <!-- TOP BAR -->
             <div class="topbar">
                 <div class="breadcrumb">
-                    <span>Course</span>
+                    <span id="breadcrumb-course">Courses</span>
                     <span class="separator">/</span>
                     <span id="lesson-title">Welcome</span>
                 </div>
