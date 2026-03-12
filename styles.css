@@ -20,7 +20,7 @@ body {
 
 header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     padding: 40px 0;
     color: white;
 }
@@ -36,37 +36,6 @@ header p {
     font-size: 1.15em;
     opacity: 0.95;
     font-weight: 300;
-}
-
-.progress-section {
-    margin-bottom: 30px;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.progress-bar {
-    width: 100%;
-    height: 8px;
-    background-color: #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 15px;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-    transition: width 0.4s ease;
-    border-radius: 10px;
-}
-
-.progress-text {
-    text-align: center;
-    color: #666;
-    font-size: 0.95em;
-    font-weight: 600;
 }
 
 main {
@@ -213,24 +182,18 @@ code {
     transition: all 0.3s ease;
 }
 
-.submit-btn {
+.submit-btn, .next-btn {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
 }
 
-.submit-btn:hover {
+.submit-btn:hover, .next-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 }
 
-.next-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.next-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+.submit-btn:active, .next-btn:active {
+    transform: translateY(0);
 }
 
 .restart-btn {
