@@ -3,109 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Code - Interactive Q&A Platform</title>
+    <title>Learning Code - Multi-Course Platform</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>🎓 Learning Code - Interactive Q&A Platform</h1>
-        <p>Master code reading and writing through progressive challenges</p>
-    </header>
+    <div class="app-wrapper">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo" onclick="confirmExitCourse()">
+                <h2>Learning Code</h2>
+            </div>
+            
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <!-- Courses populated by JavaScript -->
+            </nav>
 
-    <main>
-        <div class="container">
-            <!-- Score Display -->
-            <div class="score-section">
-                <div class="score-display">
-                    <span>Score: <span class="score-value" id="score">0</span></span>
-                    <span class="difficulty-badge" id="difficulty-badge">Level: Beginner</span>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar" id="user-avatar">U</div>
+                    <div class="user-details">
+                        <p class="username" id="current-username">Guest</p>
+                        <p class="user-level">Select Course</p>
+                    </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill" style="width: 0%">
-                        <span id="progress-text">0%</span>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <div class="topbar">
+                <div class="breadcrumb">
+                    <span id="breadcrumb-course">Courses</span>
+                    <span class="separator">/</span>
+                    <span id="lesson-title">Welcome</span>
+                </div>
+                
+                <div class="topbar-stats">
+                    <div class="stat">
+                        <label>Progress</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <span id="progress-text">0/10</span>
+                    </div>
+                    <div class="stat">
+                        <label>Score</label>
+                        <span class="score-value" id="total-score">0</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Main Content Grid -->
-            <div class="content-grid">
-                <!-- Left Column: Code and Question -->
-                <div class="left-column">
-                    <!-- Code Snippet Display -->
-                    <section class="code-snippet-section">
-                        <h2>📝 Code Snippet</h2>
-                        <div class="code-snippet-container">
-                            <pre><code id="code-display">// Your code snippet will appear here</code></pre>
-                        </div>
-                    </section>
-
-                    <!-- Question Panel -->
-                    <section class="question-section">
-                        <h2>❓ Question</h2>
-                        <div class="question-panel">
-                            <p class="question-text" id="question-text">Loading question...</p>
-                            <div class="options-container" id="options-container">
-                                <!-- Options will be inserted here -->
-                            </div>
-                            <button class="hint-btn" id="hint-btn" onclick="showHint()">💡 Get Hint</button>
-                            <div class="hint-box" id="hint-box" style="display: none;">
-                                <p id="hint-text"></p>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <!-- Right Column: Code Editor -->
-                <div class="right-column">
-                    <section class="editor-section">
-                        <h2>💻 Virtual Code Editor</h2>
-                        <div class="editor-container">
-                            <textarea class="code-editor" id="code-editor" placeholder="Write your JavaScript code here...
-// Example:
-function add(a, b) {
-    return a + b;
-}
-
-console.log(add(5, 3));" spellcheck="false"></textarea>
-                            <button class="run-btn" id="run-code" onclick="runCode()">▶️ Run Code</button>
-                        </div>
-                        <div class="output-container">
-                            <h3>Output:</h3>
-                            <div id="output"></div>
-                        </div>
-                    </section>
-                </div>
+            <!-- MAIN CONTENT AREA -->
+            <div class="content-area" id="content-area">
+                <!-- JavaScript populates this -->
             </div>
+        </main>
+    </div>
 
-            <!-- Feedback Section -->
-            <div class="feedback-section" id="feedback-section" style="display: none;">
-                <div class="feedback" id="feedback-message"></div>
+    <!-- COURSE EXIT CONFIRMATION MODAL -->
+    <div class="modal" id="exit-course-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Leave Course?</h3>
             </div>
-
-            <!-- Control Buttons -->
-            <div class="control-buttons">
-                <button class="btn btn-primary" id="submit-btn" onclick="submitAnswer()">✓ Submit Answer</button>
-                <button class="btn btn-secondary" id="next-btn" onclick="nextQuestion()" style="display: none;">→ Next Question</button>
-                <button class="btn btn-reset" id="reset-btn" onclick="resetQuiz()">↻ Start Over</button>
+            <div class="modal-body">
+                <p>You are about to leave this course - Continue?</p>
+                <p style="font-size: 0.9em; color: #999; margin-top: 10px;">Any progress will not be saved.</p>
             </div>
-
-            <!-- Tips Section -->
-            <section class="tips-section">
-                <h2>📚 Learning Tips</h2>
-                <ul>
-                    <li>Read the code carefully before answering</li>
-                    <li>Use the code editor to test your understanding</li>
-                    <li>Click "Get Hint" if you're stuck</li>
-                    <li>Wrong answers reset your progress - that's part of learning!</li>
-                    <li>Each difficulty level has harder challenges</li>
-                </ul>
-            </section>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeCourseExitModal()">No</button>
+                <button class="btn-danger" onclick="exitCourse()">Yes, Leave</button>
+            </div>
         </div>
-    </main>
+    </div>
 
-    <footer>
-        <p>&copy; 2026 Learning Code Platform | Created by WintherPY</p>
-    </footer>
+    <!-- CODE VALIDATION MODAL -->
+    <div class="modal" id="code-check-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Code Check Result</h3>
+                <button class="modal-close" onclick="closeCodeCheckModal()">✕</button>
+            </div>
+            <div class="modal-body" id="code-check-result">
+                <!-- Populated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="closeCodeCheckModal()">Got it!</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
