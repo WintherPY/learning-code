@@ -3,30 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeMaster - Professional Coding Course</title>
+    <title>CodeMaster - Professional Coding Courses</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="app-wrapper">
+    <div class="app-wrapper" id="app-wrapper">
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="logo">
                 <h2>CodeMaster</h2>
-                <p class="tagline">Professional Coding Training</p>
+                <p class="tagline">Master Programming</p>
             </div>
             
-            <nav class="sidebar-nav">
-                <div class="nav-item active">
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <div class="nav-item active" data-section="course">
                     <span class="icon">📚</span>
                     <span>Course</span>
                 </div>
-                <div class="nav-item">
-                    <span class="icon">📊</span>
-                    <span>Progress</span>
+                <div class="nav-item" data-section="qa">
+                    <span class="icon">❓</span>
+                    <span>Q&A</span>
                 </div>
-                <div class="nav-item">
-                    <span class="icon">🏆</span>
-                    <span>Leaderboard</span>
+                <div class="nav-item" data-section="tasks">
+                    <span class="icon">✅</span>
+                    <span>Tasks</span>
+                </div>
+                <div class="nav-item" data-section="resources">
+                    <span class="icon">📖</span>
+                    <span>Resources</span>
                 </div>
             </nav>
 
@@ -38,6 +42,7 @@
                         <p class="user-level">Beginner</p>
                     </div>
                 </div>
+                <button class="btn-edit-name" id="btn-edit-name" onclick="showEditNameModal()">✏️ Edit Name</button>
             </div>
         </aside>
 
@@ -46,7 +51,7 @@
             <!-- TOP BAR -->
             <div class="topbar">
                 <div class="breadcrumb">
-                    <span>Course</span>
+                    <span id="breadcrumb-course">Course</span>
                     <span class="separator">/</span>
                     <span id="lesson-title">Welcome</span>
                 </div>
@@ -71,6 +76,28 @@
                 <!-- JavaScript populates this -->
             </div>
         </main>
+    </div>
+
+    <!-- EDIT NAME MODAL -->
+    <div class="modal" id="edit-name-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Your Name</h3>
+                <button class="modal-close" onclick="closeEditNameModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <input 
+                    type="text" 
+                    id="edit-name-input" 
+                    placeholder="Enter new name"
+                    maxlength="30"
+                />
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeEditNameModal()">Cancel</button>
+                <button class="btn-primary" onclick="confirmEditName()">Save</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
