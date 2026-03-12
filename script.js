@@ -1,237 +1,159 @@
-// ===== QUIZ DATA - Progressive Difficulty =====
-
-const quizData = [
-    // LEVEL 1 - BEGINNER (Questions 1-5)
-    {
-        difficulty: 1,
-        code: `let name = "Alice";\nconsole.log(name);`,
-        question: "What will this code print?",
-        options: ["Alice", "name", "undefined", "null"],
-        correct: 0,
-        hint: "The variable 'name' contains the string 'Alice'. Console.log prints its value.",
-        explanation: "This code prints 'Alice' because the variable name holds that string value."
-    },
-    {
-        difficulty: 1,
-        code: `let num = 5;\nlet result = num + 3;\nconsole.log(result);`,
-        question: "What is the output?",
-        options: ["5", "3", "8", "53"],
-        correct: 2,
-        hint: "Add 5 + 3 together.",
-        explanation: "5 + 3 = 8. The variable 'result' stores this sum."
-    },
-    {
-        difficulty: 1,
-        code: `let x = 10;\nlet y = 20;\nconsole.log(x + y);`,
-        question: "What does console.log display?",
-        options: ["10", "20", "30", "1020"],
-        correct: 2,
-        hint: "10 + 20 equals what?",
-        explanation: "10 + 20 = 30. This is basic addition in JavaScript."
-    },
-    {
-        difficulty: 1,
-        code: `let fruit = "apple";\nconsole.log(fruit.length);`,
-        question: "What does .length return?",
-        options: ["a", "5", "apple", "error"],
-        correct: 1,
-        hint: "Count the characters in 'apple': a-p-p-l-e",
-        explanation: "The string 'apple' has 5 characters, so .length returns 5."
-    },
-    {
-        difficulty: 1,
-        code: `let age = 25;\nif (age > 18) {\n    console.log("Adult");\n} else {\n    console.log("Not Adult");\n}`,
-        question: "What will print?",
-        options: ["Not Adult", "Adult", "25", "error"],
-        correct: 1,
-        hint: "Is 25 greater than 18?",
-        explanation: "Since 25 > 18 is true, the if block executes and prints 'Adult'."
-    },
+// ===== SIDEBAR NAVIGATION WITH COLOR CODING (UPDATED) =====
+function updateSidebarCourses() {
+    const sidebarNav = document.getElementById('sidebar-nav');
+    if (!sidebarNav) return;
     
-    // LEVEL 2 - EASY (Questions 6-10)
-    {
-        difficulty: 2,
-        code: `let numbers = [1, 2, 3, 4, 5];\nconsole.log(numbers[2]);`,
-        question: "What is printed?",
-        options: ["1", "2", "3", "5"],
-        correct: 2,
-        hint: "Arrays start at index 0. Index 2 is the third element.",
-        explanation: "Arrays are zero-indexed. Index 0=1, 1=2, 2=3. So numbers[2] is 3."
-    },
-    {
-        difficulty: 2,
-        code: `for (let i = 0; i < 3; i++) {\n    console.log(i);\n}`,
-        question: "What is the output?",
-        options: ["0 1 2", "1 2 3", "0 1 2 3", "3"],
-        correct: 0,
-        hint: "The loop runs while i < 3, starting from 0.",
-        explanation: "i starts at 0. Loop runs: i=0, i=1, i=2. Then i=3 stops the loop."
-    },
-    {
-        difficulty: 2,
-        code: `function greet(name) {\n    return "Hello " + name;\n}\nconsole.log(greet("Bob"));`,
-        question: "What is the output?",
-        options: ["Hello", "Bob", "Hello Bob", "function"],
-        correct: 2,
-        hint: "The function concatenates 'Hello ' with the name parameter.",
-        explanation: "The function returns 'Hello ' + 'Bob' = 'Hello Bob'."
-    },
-    {
-        difficulty: 2,
-        code: `let obj = {name: "John", age: 30};\nconsole.log(obj.name);`,
-        question: "What prints?",
-        options: ["John", "{name: 'John'}", "30", "undefined"],
-        correct: 0,
-        hint: "Use dot notation to access object properties.",
-        explanation: "obj.name accesses the 'name' property of the object, which is 'John'."
-    },
-    {
-        difficulty: 2,
-        code: `let arr = [10, 20, 30];\narr.push(40);\nconsole.log(arr.length);`,
-        question: "What is arr.length?",
-        options: ["3", "4", "40", "undefined"],
-        correct: 1,
-        hint: "push() adds an element to the array. What's the new length?",
-        explanation: "The array started with 3 elements. push(40) adds one more, so length is 4."
-    }
-];
-
-// Initialize quiz on page load
-document.addEventListener('DOMContentLoaded', initializeQuiz);
-
-let currentQuestionIndex = 0;
-let score = 0;
-let answeredCorrectly = false;
-
-function initializeQuiz() {
-    loadQuestion();
+    const courses = Object.values(coursesData);
+    
+    sidebarNav.innerHTML = courses.map(course => {
+        const isActive = currentCourseId === course.id ? 'active' : '';
+        let navItemHTML = `<div class="nav-item ${isActive}" onclick="handleCourseNavClick('${course.id}')"`;
+        
+        // Apply inline styles for language courses - COLOR THE TEXT
+        let textColor = '#fff';
+        let borderColor = 'transparent';
+        
+        if (course.id === 'html-course') {
+            textColor = '#E34C26';
+            borderColor = '#E34C26';
+        } else if (course.id === 'javascript-course') {
+            textColor = '#F7DF1E';
+            borderColor = '#F7DF1E';
+        } else if (course.id === 'css-course') {
+            textColor = '#1572B6';
+            borderColor = '#1572B6';
+        }
+        
+        navItemHTML += ` style="border-left-color: ${borderColor};">
+            <div class="nav-category" style="color: ${textColor};">${course.category}</div>
+            <div class="nav-name" style="color: ${textColor};">${escapeHtml(course.name)}</div>
+        </div>`;
+        
+        return navItemHTML;
+    }).join('');
 }
 
-function loadQuestion() {
-    if (currentQuestionIndex >= quizData.length) {
-        showCompletion();
+// ===== CONFIRM EXIT COURSE (UPDATED) =====
+function confirmExitCourse() {
+    if (!quizInProgress && !currentPlayerName) {
+        // No name entered - go to name entry
+        showNameEntryScreen();
         return;
     }
     
-    const question = quizData[currentQuestionIndex];
-    document.getElementById('code-display').textContent = question.code;
-    document.getElementById('question-text').textContent = question.question;
-    
-    const optionsContainer = document.getElementById('options-container');
-    optionsContainer.innerHTML = '';
-    
-    question.options.forEach((option, index) => {
-        const button = document.createElement('button');
-        button.className = 'option-btn';
-        button.textContent = option;
-        button.onclick = () => selectOption(index, question);
-        optionsContainer.appendChild(button);
-    });
-    
-    updateProgress();
-    answeredCorrectly = false;
-    document.getElementById('hint-box').style.display = 'none';
-}
-
-function selectOption(index, question) {
-    const buttons = document.querySelectorAll('.option-btn');
-    buttons.forEach(btn => btn.classList.remove('selected'));
-    buttons[index].classList.add('selected');
-}
-
-function submitAnswer() {
-    const selectedButton = document.querySelector('.option-btn.selected');
-    if (!selectedButton) {
-        alert('Please select an option');
+    if (!quizInProgress) {
+        // Name entered, not in quiz - show main page confirmation
+        document.getElementById('main-page-exit-modal').style.display = 'flex';
         return;
     }
     
-    const question = quizData[currentQuestionIndex];
-    const buttons = document.querySelectorAll('.option-btn');
-    const selectedIndex = Array.from(buttons).indexOf(selectedButton);
-    
-    const feedbackDiv = document.getElementById('feedback-message');
-    const feedbackSection = document.getElementById('feedback-section');
-    
-    if (selectedIndex === question.correct) {
-        score++;
-        answeredCorrectly = true;
-        selectedButton.classList.add('correct');
-        feedbackDiv.textContent = '✓ Correct! ' + question.explanation;
-        feedbackDiv.className = 'feedback correct';
-    } else {
-        selectedButton.classList.add('incorrect');
-        buttons[question.correct].classList.add('correct');
-        feedbackDiv.textContent = '✗ Incorrect. ' + question.explanation;
-        feedbackDiv.className = 'feedback incorrect';
-    }
-    
-    feedbackSection.style.display = 'block';
-    document.getElementById('score').textContent = score;
-    document.getElementById('submit-btn').style.display = 'none';
-    document.getElementById('next-btn').style.display = 'block';
-    buttons.forEach(btn => btn.disabled = true);
+    // Logo click when in quiz - show exit confirmation
+    const courseName = coursesData[currentCourseId].name;
+    document.querySelector('#exit-course-modal .modal-body p:first-child').textContent = `You are exiting "${courseName}" course - Continue?`;
+    document.getElementById('exit-course-modal').style.display = 'flex';
+    window.pendingCourseId = '';
 }
 
-function nextQuestion() {
-    currentQuestionIndex++;
-    document.getElementById('feedback-section').style.display = 'none';
-    document.getElementById('submit-btn').style.display = 'block';
-    document.getElementById('next-btn').style.display = 'none';
-    loadQuestion();
+function closeCourseExitModal() {
+    document.getElementById('exit-course-modal').style.display = 'none';
+    window.pendingCourseId = '';
 }
 
-function updateProgress() {
-    const progress = ((currentQuestionIndex) / quizData.length) * 100;
-    document.getElementById('progress-fill').style.width = progress + '%';
-    document.getElementById('progress-text').textContent = Math.round(progress) + '%';
+function closeMainPageExitModal() {
+    document.getElementById('main-page-exit-modal').style.display = 'none';
 }
 
-function showHint() {
-    const question = quizData[currentQuestionIndex];
-    document.getElementById('hint-text').textContent = question.hint;
-    document.getElementById('hint-box').style.display = 'block';
-}
-
-function runCode() {
-    const code = document.getElementById('code-editor').value;
-    const outputDiv = document.getElementById('output');
-    
-    try {
-        let output = '';
-        const originalLog = console.log;
-        console.log = function(...args) {
-            output += args.join(' ') + '\n';
-        };
-        
-        eval(code);
-        console.log = originalLog;
-        
-        outputDiv.innerHTML = '<span class="success">' + (output || 'Code executed successfully') + '</span>';
-    } catch (e) {
-        outputDiv.innerHTML = '<span class="error">Error: ' + e.message + '</span>';
-    }
-}
-
-function resetQuiz() {
+function exitCourse() {
+    quizInProgress = false;
+    answered = false;
     currentQuestionIndex = 0;
-    score = 0;
-    document.getElementById('score').textContent = '0';
-    document.getElementById('feedback-section').style.display = 'none';
-    document.getElementById('submit-btn').style.display = 'block';
-    document.getElementById('next-btn').style.display = 'none';
-    loadQuestion();
+    currentSessionScore = 0;
+    
+    const pendingCourseId = window.pendingCourseId;
+    closeCourseExitModal();
+    
+    if (pendingCourseId === '') {
+        // Refresh page to exit course
+        location.reload();
+    } else {
+        // Switching to another course
+        currentCourseId = pendingCourseId;
+        updateUserInfo();
+        updateSidebarCourses();
+        showCourseSelection();
+    }
 }
 
-function showCompletion() {
-    const percentage = (score / quizData.length) * 100;
-    const mainContent = document.querySelector('main');
-    mainContent.innerHTML = `
-        <div style="text-align: center; padding: 50px;">
-            <h2>Quiz Complete! 🎉</h2>
-            <p style="font-size: 24px; color: #00d4ff;">Score: ${score}/${quizData.length}</p>
-            <p style="font-size: 18px;">Percentage: ${Math.round(percentage)}%</p>
-            <button class="btn btn-reset" onclick="location.reload()">Try Again</button>
-        </div>
-    `;
+function confirmMainPageExit() {
+    currentPlayerName = '';
+    currentCourseId = '';
+    closeMainPageExitModal();
+    showNameEntryScreen();
+}
+
+// ===== SHOW COURSE SELECTION (UPDATED WITH EXIT BUTTON) =====
+function showCourseSelection() {
+    const contentArea = document.getElementById('content-area');
+    
+    if (!currentCourseId) {
+        // Show all courses
+        const courses = Object.values(coursesData);
+        contentArea.innerHTML = `
+            <div class="course-selection-screen">
+                <h2>📚 Select Your Course</h2>
+                <div class="courses-grid">
+                    ${courses.map(course => `
+                        <div class="course-card" onclick="startCourse('${course.id}')">
+                            <span class="course-badge ${course.difficulty.toLowerCase()}">${course.difficulty}</span>
+                            <h3 class="course-title">${escapeHtml(course.name)}</h3>
+                            <p class="course-description">${escapeHtml(course.description)}</p>
+                            <div class="course-info">
+                                <div class="info-item">📝 ${course.questions.length} questions</div>
+                            </div>
+                            <button class="btn-start-course">Start Course</button>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    } else {
+        // Show selected course WITH EXIT BUTTON
+        const course = coursesData[currentCourseId];
+        contentArea.innerHTML = `
+            <div class="course-selection-screen">
+                <h2>📚 ${escapeHtml(course.name)}</h2>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <span class="course-badge ${course.difficulty.toLowerCase()}">${course.difficulty}</span>
+                        <h3 class="course-title">${escapeHtml(course.name)}</h3>
+                        <p class="course-description">${escapeHtml(course.description)}</p>
+                        <div class="course-info">
+                            <div class="info-item">📝 ${course.questions.length} questions</div>
+                        </div>
+                        <button class="btn-start-course" onclick="startCourse('${course.id}')">Start Quiz</button>
+                        <button class="btn-start-course" style="margin-top: 10px; background: #0369a1;" onclick="backToCourseSelection()">← Back to Courses</button>
+                        <button class="btn-start-course" style="margin-top: 10px; background: #dc2626;" onclick="exitCourseSelection()">❌ Exit Course</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    document.getElementById('breadcrumb-course').textContent = currentCourseId ? coursesData[currentCourseId].name : 'Courses';
+    document.getElementById('lesson-title').textContent = 'Select';
+}
+
+function backToCourseSelection() {
+    currentCourseId = '';
+    updateUserInfo();
+    updateSidebarCourses();
+    showCourseSelection();
+}
+
+function exitCourseSelection() {
+    currentCourseId = '';
+    currentPlayerName = '';
+    updateUserInfo();
+    updateSidebarCourses();
+    showNameEntryScreen();
 }
