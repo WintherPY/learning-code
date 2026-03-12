@@ -3,39 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Catalog</title>
-    <style>
-        body {
-            display: flex;
-        }
-        .sidebar {
-            width: 200px;
-            border-right: 2px solid black;
-            padding: 1em;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-        }
-        .main-content {
-            padding: 1em;
-            flex-grow: 1;
-        }
-    </style>
+    <title>Learning Code - Multi-Course Platform</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Programming Language Courses</h2>
-        <ul>
-            <li><a href="#python">Python</a></li>
-            <li><a href="#javascript">JavaScript</a></li>
-            <li><a href="#java">Java</a></li>
-            <li><a href="#cplusplus">C++</a></li>
-            <li><a href="#htmlcss">HTML/CSS</a></li>
-            <li><a href="#ruby">Ruby</a></li>
-        </ul>
+    <div class="app-wrapper">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Learning Code</h2>
+            </div>
+            
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <!-- Courses populated by JavaScript -->
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar" id="user-avatar">U</div>
+                    <div class="user-details">
+                        <p class="username" id="current-username">Guest</p>
+                        <p class="user-level">Select Course</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <div class="topbar">
+                <div class="breadcrumb">
+                    <span id="breadcrumb-course">Courses</span>
+                    <span class="separator">/</span>
+                    <span id="lesson-title">Welcome</span>
+                </div>
+                
+                <div class="topbar-stats">
+                    <div class="stat">
+                        <label>Progress</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <span id="progress-text">0/10</span>
+                    </div>
+                    <div class="stat">
+                        <label>Score</label>
+                        <span class="score-value" id="total-score">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAIN CONTENT AREA -->
+            <div class="content-area" id="content-area">
+                <!-- JavaScript populates this -->
+            </div>
+        </main>
     </div>
-    <div class="main-content">
-        <h2>Course Details</h2>
-        <p>Select a course from the sidebar to see the details.</p>
-        <!-- Detailed content goes here -->
-    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
