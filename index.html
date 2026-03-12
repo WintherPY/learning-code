@@ -3,72 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Code - Interactive Quiz</title>
+    <title>CodeMaster - Professional Coding Course</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Learning Code</h1>
-            <div class="score-display">
-                <span>Q&A Points: <strong id="qa-points">0</strong></span>
-                <span>Code Points: <strong id="code-points">0</strong></span>
-                <span>Total: <strong id="total-points">0</strong></span>
+    <div class="app-wrapper">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>CodeMaster</h2>
+                <p class="tagline">Professional Coding Training</p>
             </div>
-        </header>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-item active">
+                    <span class="icon">📚</span>
+                    <span>Course</span>
+                </div>
+                <div class="nav-item">
+                    <span class="icon">📊</span>
+                    <span>Progress</span>
+                </div>
+                <div class="nav-item">
+                    <span class="icon">🏆</span>
+                    <span>Leaderboard</span>
+                </div>
+            </nav>
 
-        <main id="main-content">
-            <div class="quiz-container">
-                <!-- LEFT SIDE: VIRTUAL CODE EDITOR -->
-                <div class="editor-section">
-                    <div class="editor-header">
-                        <h3>Virtual Code Editor</h3>
-                        <div class="editor-info" id="editor-info">(Available after correct answer)</div>
-                    </div>
-                    <textarea id="code-editor" class="code-editor" placeholder="Write your code here..." disabled></textarea>
-                    <div class="editor-buttons">
-                        <button id="run-code-btn" class="run-btn" onclick="runCode()" disabled>▶ Run Code</button>
-                        <button id="clear-code-btn" class="clear-btn" onclick="clearCode()">🗑 Clear</button>
-                    </div>
-                    <div id="editor-hints" class="editor-hints"></div>
-                    <div id="code-output" class="code-output" style="display: none;">
-                        <strong>📤 Output:</strong>
-                        <div id="output-text"></div>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar" id="user-avatar">U</div>
+                    <div class="user-details">
+                        <p class="username" id="current-username">Guest</p>
+                        <p class="user-level">Beginner</p>
                     </div>
                 </div>
+            </div>
+        </aside>
 
-                <!-- RIGHT SIDE: QUESTIONS -->
-                <div class="questions-section">
-                    <section class="code-section">
-                        <h2>Code Snippet:</h2>
-                        <div class="code-display-wrapper">
-                            <pre id="code-wrapper"><code id="code-display">// Loading...</code></pre>
-                            <button id="find-error-btn" class="find-error-btn" style="display: none;" onclick="checkForError()">🔍 Find Error</button>
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <div class="topbar">
+                <div class="breadcrumb">
+                    <span>Course</span>
+                    <span class="separator">/</span>
+                    <span id="lesson-title">Lesson 1</span>
+                </div>
+                
+                <div class="topbar-stats">
+                    <div class="stat">
+                        <label>Progress</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
                         </div>
-                    </section>
-
-                    <section class="question-section">
-                        <h3 id="question-text">Loading question...</h3>
-                        <div class="options-container" id="options-container"></div>
-                    </section>
-
-                    <div class="feedback" id="feedback-section" style="display: none;">
-                        <p id="feedback-text"></p>
-                        <div id="additional-facts" class="additional-facts"></div>
-                        <div id="code-suggestions" class="code-suggestions"></div>
+                        <span id="progress-text">0/10</span>
                     </div>
-
-                    <div class="action-buttons">
-                        <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
-                        <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
+                    <div class="stat">
+                        <label>Score</label>
+                        <span class="score-value" id="total-score">0</span>
                     </div>
                 </div>
+            </div>
+
+            <!-- MAIN CONTENT AREA -->
+            <div class="content-area" id="content-area">
+                <!-- This gets populated by JavaScript -->
             </div>
         </main>
-
-        <footer>
-            <p>&copy; 2026 Learning Code - Interactive Programming Quiz</p>
-        </footer>
     </div>
 
     <script src="script.js"></script>
