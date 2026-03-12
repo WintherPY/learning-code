@@ -1,99 +1,46 @@
-// ===== SHOW COURSE SELECTION (UPDATED) =====
-function showCourseSelection() {
-    const contentArea = document.getElementById('content-area');
+// ===== SIDEBAR NAVIGATION WITH COLOR CODING =====
+function updateSidebarCourses() {
+    const sidebarNav = document.getElementById('sidebar-nav');
+    if (!sidebarNav) return;
     
-    if (!currentCourseId) {
-        // Show all courses
-        const courses = Object.values(coursesData);
-        contentArea.innerHTML = `
-            <div class="course-selection-screen">
-                <h2>📚 Select Your Course</h2>
-                <div class="courses-grid">
-                    ${courses.map(course => {
-                        let badgeClass = course.difficulty.toLowerCase();
-                        let cardClass = '';
-                        let titleClass = '';
-                        let badgeHTML = '';
-                        
-                        // Add language-specific styling
-                        if (course.id === 'html-course') {
-                            badgeClass = 'html';
-                            cardClass = ' html-course';
-                            titleClass = ' html-title';
-                            badgeHTML = `<span style="color: #E34C26; font-size: 1.3em;">📄</span>`;
-                        } else if (course.id === 'javascript-course') {
-                            badgeClass = 'javascript';
-                            cardClass = ' javascript-course';
-                            titleClass = ' javascript-title';
-                            badgeHTML = `<span style="color: #F7DF1E; font-size: 1.3em;">⚡</span>`;
-                        } else if (course.id === 'css-course') {
-                            badgeClass = 'css';
-                            cardClass = ' css-course';
-                            titleClass = ' css-title';
-                            badgeHTML = `<span style="color: #1572B6; font-size: 1.3em;">🎨</span>`;
-                        }
-                        
-                        return `
-                            <div class="course-card${cardClass}" onclick="startCourse('${course.id}')">
-                                ${badgeHTML}
-                                <span class="course-badge ${badgeClass}">${course.difficulty}</span>
-                                <h3 class="course-title${titleClass}">${escapeHtml(course.name)}</h3>
-                                <p class="course-description">${escapeHtml(course.description)}</p>
-                                <div class="course-info">
-                                    <div class="info-item">📝 ${course.questions.length} questions</div>
-                                </div>
-                                <button class="btn-start-course">Start Course</button>
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-            </div>
-        `;
-    } else {
-        // Show selected course
-        const course = coursesData[currentCourseId];
-        let badgeClass = course.difficulty.toLowerCase();
-        let cardClass = '';
-        let titleClass = '';
-        let badgeHTML = '';
+    const courses = Object.values(coursesData);
+    
+    sidebarNav.innerHTML = courses.map(course => {
+        const isActive = currentCourseId === course.id ? 'active' : '';
         
-        if (currentCourseId === 'html-course') {
-            badgeClass = 'html';
-            cardClass = ' html-course';
-            titleClass = ' html-title';
-            badgeHTML = `<span style="color: #E34C26; font-size: 1.3em;">📄</span>`;
-        } else if (currentCourseId === 'javascript-course') {
-            badgeClass = 'javascript';
-            cardClass = ' javascript-course';
-            titleClass = ' javascript-title';
-            badgeHTML = `<span style="color: #F7DF1E; font-size: 1.3em;">⚡</span>`;
-        } else if (currentCourseId === 'css-course') {
-            badgeClass = 'css';
-            cardClass = ' css-course';
-            titleClass = ' css-title';
-            badgeHTML = `<span style="color: #1572B6; font-size: 1.3em;">🎨</span>`;
+        // Determine color and styling based on course
+        let bgColor = '#333';
+        let borderColor = '#555';
+        let hoverBgColor = 'rgba(255, 255, 255, 0.1)';
+        
+        if (course.id === 'html-course') {
+            bgColor = 'rgba(227, 76, 38, 0.15)';
+            borderColor = '#E34C26';
+            hoverBgColor = 'rgba(227, 76, 38, 0.25)';
+        } else if (course.id === 'javascript-course') {
+            bgColor = 'rgba(247, 223, 30, 0.15)';
+            borderColor = '#F7DF1E';
+            hoverBgColor = 'rgba(247, 223, 30, 0.25)';
+        } else if (course.id === 'css-course') {
+            bgColor = 'rgba(21, 114, 182, 0.15)';
+            borderColor = '#1572B6';
+            hoverBgColor = 'rgba(21, 114, 182, 0.25)';
         }
         
-        contentArea.innerHTML = `
-            <div class="course-selection-screen">
-                <h2>📚 ${escapeHtml(course.name)}</h2>
-                <div class="courses-grid">
-                    <div class="course-card${cardClass}">
-                        ${badgeHTML}
-                        <span class="course-badge ${badgeClass}">${course.difficulty}</span>
-                        <h3 class="course-title${titleClass}">${escapeHtml(course.name)}</h3>
-                        <p class="course-description">${escapeHtml(course.description)}</p>
-                        <div class="course-info">
-                            <div class="info-item">📝 ${course.questions.length} questions</div>
-                        </div>
-                        <button class="btn-start-course" onclick="startCourse('${course.id}')">Start Quiz</button>
-                        <button class="btn-start-course" style="margin-top: 10px; background: #999;" onclick="backToCourseSelection()">← Back</button>
-                    </div>
-                </div>
+        const activeStyle = isActive ? `background: ${bgColor} !important; border-left: 3px solid ${borderColor};` : '';
+        
+        return `
+            <div class="nav-item ${isActive}" 
+                 onclick="handleCourseNavClick('${course.id}')"
+                 style="
+                     border-left: 3px solid transparent;
+                     ${activeStyle}
+                 "
+                 onmouseover="this.style.borderLeftColor='${borderColor}'; this.style.background='${hoverBgColor}';"
+                 onmouseout="this.style.borderLeftColor='${isActive ? borderColor : 'transparent'}'; this.style.background='${isActive ? bgColor : 'transparent'}';">
+                <div class="nav-category" style="color: ${isActive ? borderColor : '#999'};">${course.category}</div>
+                <div class="nav-name" style="color: ${isActive ? borderColor : '#fff'};">${escapeHtml(course.name)}</div>
             </div>
         `;
-    }
-    
-    document.getElementById('breadcrumb-course').textContent = currentCourseId ? coursesData[currentCourseId].name : 'Courses';
-    document.getElementById('lesson-title').textContent = 'Select';
+    }).join('');
 }
