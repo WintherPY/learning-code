@@ -1,7 +1,6 @@
 // ===== QUIZ DATA - Beginner to Intermediate Programming =====
 
 const quizData = [
-    // BEGINNER LEVEL
     {
         code: `<!DOCTYPE html>
 <html>
@@ -106,7 +105,6 @@ for num in numbers:
         correct: 1,
         explanation: "This is CSS. The ':hover' pseudo-class applies styles when a user hovers over a button element."
     },
-    // INTERMEDIATE LEVEL
     {
         code: `function fibonacci(n) {
     if (n <= 1) return n;
@@ -171,6 +169,24 @@ let totalCorrect = 0;
 let answered = false;
 let selectedOptionIndex = null;
 
+// ===== UTILITY FUNCTIONS - Safe DOM Access =====
+function getElement(id) {
+    const element = document.getElementById(id);
+    if (!element) {
+        console.warn(`Element with id '${id}' not found`);
+        return null;
+    }
+    return element;
+}
+
+function getAllElements(selector) {
+    return document.querySelectorAll(selector);
+}
+
+function getMainContent() {
+    return document.querySelector('main');
+}
+
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     loadQuestion();
@@ -178,6 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== LOAD QUESTION =====
 function loadQuestion() {
+    // Check if quiz is complete
     if (currentQuestionIndex >= quizData.length) {
         showCompletion();
         return;
@@ -186,29 +203,45 @@ function loadQuestion() {
     const question = quizData[currentQuestionIndex];
     
     // Update code display
-    document.getElementById('code-display').textContent = question.code;
+    const codeDisplay = getElement('code-display');
+    if (codeDisplay) {
+        codeDisplay.textContent = question.code;
+    }
     
     // Update question text
-    document.getElementById('question-text').textContent = question.question;
+    const questionText = getElement('question-text');
+    if (questionText) {
+        questionText.textContent = question.question;
+    }
     
-    // Clear previous options
-    const optionsContainer = document.getElementById('options-container');
-    optionsContainer.innerHTML = '';
+    // Clear and populate options
+    const optionsContainer = getElement('options-container');
+    if (optionsContainer) {
+        optionsContainer.innerHTML = '';
+        
+        question.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.className = 'option-btn';
+            button.textContent = option;
+            button.setAttribute('data-index', index);
+            button.addEventListener('click', () => selectOption(index));
+            optionsContainer.appendChild(button);
+        });
+    }
     
-    // Create option buttons
-    question.options.forEach((option, index) => {
-        const button = document.createElement('button');
-        button.className = 'option-btn';
-        button.textContent = option;
-        button.onclick = () => selectOption(index);
-        optionsContainer.appendChild(button);
-    });
+    // Reset feedback
+    const feedbackSection = getElement('feedback-section');
+    if (feedbackSection) {
+        feedbackSection.style.display = 'none';
+    }
     
-    // Hide feedback and reset buttons
-    document.getElementById('feedback-section').style.display = 'none';
-    document.getElementById('submit-btn').style.display = 'block';
-    document.getElementById('next-btn').style.display = 'none';
+    // Reset button states
+    const submitBtn = getElement('submit-btn');
+    const nextBtn = getElement('next-btn');
+    if (submitBtn) submitBtn.style.display = 'block';
+    if (nextBtn) nextBtn.style.display = 'none';
     
+    // Reset state
     answered = false;
     selectedOptionIndex = null;
 }
@@ -218,58 +251,77 @@ function selectOption(index) {
     if (answered) return;
     
     selectedOptionIndex = index;
-    const buttons = document.querySelectorAll('.option-btn');
+    const buttons = getAllElements('.option-btn');
     
     // Remove previous selection
     buttons.forEach(btn => btn.classList.remove('selected'));
     
     // Mark selected button
-    buttons[index].classList.add('selected');
+    if (buttons[index]) {
+        buttons[index].classList.add('selected');
+    }
 }
 
 // ===== SUBMIT ANSWER =====
 function submitAnswer() {
+    // Validate selection
     if (selectedOptionIndex === null) {
-        alert('Please select an answer');
+        alert('Please select an answer first');
         return;
     }
     
+    // Prevent double submission
     if (answered) return;
     
     answered = true;
+    
+    // Get current question
     const question = quizData[currentQuestionIndex];
-    const buttons = document.querySelectorAll('.option-btn');
-    const feedbackSection = document.getElementById('feedback-section');
-    const feedbackText = document.getElementById('feedback-text');
+    const buttons = getAllElements('.option-btn');
+    
+    // Get feedback elements
+    const feedbackSection = getElement('feedback-section');
+    const feedbackText = getElement('feedback-text');
+    
+    // Safety check
+    if (!feedbackSection || !feedbackText) return;
     
     // Disable all buttons
     buttons.forEach(btn => btn.disabled = true);
     
-    if (selectedOptionIndex === question.correct) {
+    // Check answer
+    const isCorrect = selectedOptionIndex === question.correct;
+    
+    if (isCorrect) {
         // Correct answer
-        buttons[selectedOptionIndex].classList.add('correct');
+        if (buttons[selectedOptionIndex]) {
+            buttons[selectedOptionIndex].classList.add('correct');
+        }
         totalCorrect++;
         
         feedbackText.innerHTML = `<strong>✓ Correct!</strong><br>${question.explanation}`;
         feedbackSection.className = 'feedback correct';
-        
-        // Show next button
-        document.getElementById('submit-btn').style.display = 'none';
-        document.getElementById('next-btn').style.display = 'block';
     } else {
         // Incorrect answer
-        buttons[selectedOptionIndex].classList.add('incorrect');
-        buttons[question.correct].classList.add('correct');
+        if (buttons[selectedOptionIndex]) {
+            buttons[selectedOptionIndex].classList.add('incorrect');
+        }
+        if (buttons[question.correct]) {
+            buttons[question.correct].classList.add('correct');
+        }
         
         feedbackText.innerHTML = `<strong>✗ Incorrect</strong><br>The correct answer is: <strong>${question.options[question.correct]}</strong><br><br>${question.explanation}`;
         feedbackSection.className = 'feedback incorrect';
-        
-        // Show next button anyway to continue
-        document.getElementById('submit-btn').style.display = 'none';
-        document.getElementById('next-btn').style.display = 'block';
     }
     
+    // Show feedback
     feedbackSection.style.display = 'block';
+    
+    // Update button visibility
+    const submitBtn = getElement('submit-btn');
+    const nextBtn = getElement('next-btn');
+    if (submitBtn) submitBtn.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'block';
 }
 
 // ===== NEXT QUESTION =====
@@ -280,59 +332,26 @@ function nextQuestion() {
 
 // ===== SHOW COMPLETION =====
 function showCompletion() {
-    const mainContent = document.querySelector('main');
+    const mainContent = getMainContent();
+    if (!mainContent) return;
+    
     const percentage = Math.round((totalCorrect / quizData.length) * 100);
+    
+    let message = '';
+    if (percentage === 100) {
+        message = '<p>Perfect score! You are a programming language expert! 🚀</p>';
+    } else if (percentage >= 80) {
+        message = '<p>Excellent work! You know your programming languages well! 👏</p>';
+    } else if (percentage >= 60) {
+        message = '<p>Good job! Keep practicing to improve! 📚</p>';
+    } else {
+        message = '<p>Keep learning! Try again to improve your score! 💪</p>';
+    }
     
     mainContent.innerHTML = `
         <div class="completion-screen">
             <h2>Quiz Complete! 🎉</h2>
             <div class="score-summary">
                 <p>You got <strong>${totalCorrect} out of ${quizData.length}</strong> questions correct</p>
-                <p>Score: <span class="score-percentage">${percentage}%</span></p>
-            </div>
-            <div class="performance-message">
-                ${percentage === 100 ? '<p>Perfect score! You are a programming language expert! 🚀</p>' : 
-                  percentage >= 80 ? '<p>Excellent work! You know your programming languages well! 👏</p>' :
-                  percentage >= 60 ? '<p>Good job! Keep practicing to improve! 📚</p>' :
-                  '<p>Keep learning! Try again to improve your score! 💪</p>'}
-            </div>
-            <button class="restart-btn" onclick="restartQuiz()">Restart Quiz</button>
-        </div>
-    `;
-}
-
-// ===== RESTART QUIZ =====
-function restartQuiz() {
-    currentQuestionIndex = 0;
-    totalCorrect = 0;
-    answered = false;
-    selectedOptionIndex = null;
-    
-    // Restore main content
-    const mainContent = document.querySelector('main');
-    mainContent.innerHTML = `
-        <section class="code-section">
-            <h2>Code Snippet:</h2>
-            <pre><code id="code-display">// Loading...</code></pre>
-        </section>
-
-        <section class="question-section">
-            <h3 id="question-text">What programming language is this code written in?</h3>
-            
-            <div class="options-container" id="options-container">
-                <!-- Options will be generated here -->
-            </div>
-        </section>
-
-        <div class="feedback" id="feedback-section" style="display: none;">
-            <p id="feedback-text"></p>
-        </div>
-
-        <div class="action-buttons">
-            <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
-            <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
-        </div>
-    `;
-    
-    loadQuestion();
-}
+                <p>Score: <span`*
+
