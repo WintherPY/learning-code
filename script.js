@@ -1,12 +1,12 @@
-// ===== COURSES DATABASE =====
+// ===== COURSES DATABASE WITH COLOR CODING =====
 const coursesData = {
-    // BEGINNER COURSES
     'beginner-general': {
         id: 'beginner-general',
         name: 'Beginner: General',
         category: 'Beginner',
         difficulty: 'Beginner',
         description: 'Start from scratch with basic programming concepts',
+        color: '#8B5CF6',
         questions: [
             {
                 type: "identify",
@@ -27,6 +27,18 @@ const coursesData = {
                 codeBehavior: "Displays: Hello in the developer console"
             },
             {
+                type: "code-task",
+                question: "Write code to print 'Hello World' to the console",
+                expectedCode: `console.log("Hello World")`,
+                language: "javascript",
+                hints: [
+                    { code: `console.log("message");`, desc: "Use console.log to print" },
+                    { code: `console.log("Hello World");`, desc: "Print exactly this message" }
+                ],
+                explanation: "console.log() is the basic way to print text in JavaScript.",
+                codeBehavior: "Will output: Hello World"
+            },
+            {
                 type: "identify",
                 code: `const x = 5;`,
                 question: "What is this code doing?",
@@ -36,33 +48,27 @@ const coursesData = {
                 codeBehavior: "Stores the value 5 in a container called x"
             },
             {
-                type: "identify",
-                code: `body { background-color: blue; }`,
-                question: "What does this code do?",
-                options: ["Changes background to blue", "Changes text to blue", "Creates a button"],
-                correct: 0,
-                explanation: "This CSS rule changes the page background color to blue.",
-                codeBehavior: "Makes the entire webpage background blue"
-            },
-            {
-                type: "identify",
-                code: `<button>Click Me</button>`,
-                question: "What does this create?",
-                options: ["A clickable button", "A text field", "A heading"],
-                correct: 0,
-                explanation: "This creates an interactive button on the webpage.",
-                codeBehavior: "Shows a button labeled 'Click Me'"
+                type: "code-task",
+                question: "Create a variable called name with the value 'John'",
+                expectedCode: `const name = "John"`,
+                language: "javascript",
+                hints: [
+                    { code: `const variableName = "value";`, desc: "Use const to create a variable" },
+                    { code: `const name = "John";`, desc: "Create name with value John" }
+                ],
+                explanation: "Variables store data that you can use later in your code.",
+                codeBehavior: "Creates a variable that can be used throughout the code"
             }
         ]
     },
     
-    // NOVICE COURSES
     'novice-general': {
         id: 'novice-general',
         name: 'Novice: General',
         category: 'Novice',
         difficulty: 'Novice',
         description: 'Build on basics with variables, functions, and logic',
+        color: '#F59E0B',
         questions: [
             {
                 type: "behavior",
@@ -75,12 +81,37 @@ console.log(message);`,
                 codeBehavior: "Outputs: Hello"
             },
             {
+                type: "code-task",
+                question: "Create two variables and add them together",
+                expectedCode: `const x = 10;
+const y = 20;
+console.log(x + y);`,
+                language: "javascript",
+                hints: [
+                    { code: `const a = 5;
+const b = 3;`, desc: "Create two variables" },
+                    { code: `console.log(a + b);`, desc: "Add and print them" }
+                ],
+                explanation: "You can perform math operations on variables.",
+                codeBehavior: "Will output: 30"
+            },
+            {
                 type: "error",
                 code: `const x = 10
 const y = 20
 console.log(x + y)`,
                 question: "Find the error - Type what's missing",
                 errorAnswer: "semicolon",
+                errorInfo: {
+                    errorType: "Missing Semicolons",
+                    description: "All three lines are missing semicolons at the end of statements.",
+                    errorLines: [
+                        { line: 1, original: "const x = 10", corrected: "const x = 10;", position: "end of line" },
+                        { line: 2, original: "const y = 20", corrected: "const y = 20;", position: "end of line" },
+                        { line: 3, original: "console.log(x + y)", corrected: "console.log(x + y);", position: "end of line" }
+                    ],
+                    tip: "In JavaScript, statements should end with a semicolon (;)"
+                },
                 explanation: "All statements need semicolons.",
                 codeBehavior: "Code will work but violates JavaScript best practices"
             },
@@ -101,28 +132,33 @@ console.log(x + y)`,
                 correct: 0,
                 explanation: "This function takes two inputs and returns their sum.",
                 codeBehavior: "When called with add(3,4), returns 7"
-            },
-            {
-                type: "behavior",
-                code: `const arr = [1, 2, 3];
-console.log(arr[0]);`,
-                question: "What does this output?",
-                options: ["1", "3", "undefined"],
-                correct: 0,
-                explanation: "Arrays are indexed starting at 0.",
-                codeBehavior: "Outputs: 1"
             }
         ]
     },
-    
-    // EXPERT COURSES
+
     'expert-general': {
         id: 'expert-general',
         name: 'Expert: General',
         category: 'Expert',
         difficulty: 'Expert',
         description: 'Master advanced concepts and optimization',
+        color: '#EF4444',
         questions: [
+            {
+                type: "code-task",
+                question: "Write a function that returns the square of a number",
+                expectedCode: `function square(num) {
+  return num * num;
+}`,
+                language: "javascript",
+                hints: [
+                    { code: `function square(n) { return n * n; }`, desc: "Function that multiplies num by itself" },
+                    { code: `const result = num * num;
+return result;`, desc: "Multiply the number by itself and return" }
+                ],
+                explanation: "Functions can take parameters and return computed values.",
+                codeBehavior: "square(5) will return 25"
+            },
             {
                 type: "behavior",
                 code: `const nums = [1,2,3,4,5];
@@ -140,6 +176,14 @@ const doubled = nums.map(n => n * 2);`,
 }`,
                 question: "Find the error - Type what's missing",
                 errorAnswer: "parentheses",
+                errorInfo: {
+                    errorType: "Missing Parentheses",
+                    description: "Function declaration requires parentheses after the function name.",
+                    errorLines: [
+                        { line: 1, original: "function test {", corrected: "function test() {", position: "after 'test'" }
+                    ],
+                    tip: "All functions need parentheses: function name() { ... }"
+                },
                 explanation: "Functions require parentheses: function name()",
                 codeBehavior: "Syntax error - code won't run"
             },
@@ -164,28 +208,45 @@ console.log(obj.name);`,
                 correct: 0,
                 explanation: "Async/await handles asynchronous operations.",
                 codeBehavior: "Fetches data asynchronously"
-            },
-            {
-                type: "behavior",
-                code: `const users = [{id:1},{id:2}];
-const ids = users.map(u => u.id);`,
-                question: "What is ids?",
-                options: ["[1, 2]", "[[1],[2]]", "undefined"],
-                correct: 0,
-                explanation: "map() extracts properties from object arrays.",
-                codeBehavior: "ids = [1, 2]"
             }
         ]
     },
 
-    // HTML COURSE
     'html-course': {
         id: 'html-course',
         name: 'HTML',
         category: 'Language',
         difficulty: 'Mixed',
         description: 'Master HTML markup and semantic elements',
+        color: '#E34C26',
+        badge: '📄',
         questions: [
+            {
+                type: "code-task",
+                question: "Write an HTML page with a title and heading",
+                expectedCode: `<!DOCTYPE html>
+<html>
+<head>
+  <title>My Page</title>
+</head>
+<body>
+  <h1>Welcome</h1>
+</body>
+</html>`,
+                language: "html",
+                hints: [
+                    { code: `<!DOCTYPE html>
+<html>
+<head>
+  <title>Title</title>
+</head>
+<body></body>
+</html>`, desc: "Basic HTML structure" },
+                    { code: `<h1>Your heading here</h1>`, desc: "Add a heading in body" }
+                ],
+                explanation: "A proper HTML page has DOCTYPE, html, head, and body tags.",
+                codeBehavior: "Creates a valid HTML document"
+            },
             {
                 type: "identify",
                 code: `<!DOCTYPE html>
@@ -218,6 +279,14 @@ const ids = users.map(u => u.id);`,
 </div>`,
                 question: "Find the error - Type what's wrong",
                 errorAnswer: "quotes",
+                errorInfo: {
+                    errorType: "Missing Quotes",
+                    description: "HTML attribute values must be enclosed in quotes.",
+                    errorLines: [
+                        { line: 1, original: '<div class=container>', corrected: '<div class="container">', position: "around 'container'" }
+                    ],
+                    tip: "Always wrap attribute values in quotes: class=\"value\""
+                },
                 explanation: "Attribute values must be in quotes.",
                 codeBehavior: "class=container should be class=\"container\""
             },
@@ -229,27 +298,32 @@ const ids = users.map(u => u.id);`,
                 correct: 0,
                 explanation: "alt provides alternative text for accessibility.",
                 codeBehavior: "Shows text if image fails to load"
-            },
-            {
-                type: "identify",
-                code: `<section><article><h2>News</h2></article></section>`,
-                question: "What is this semantic structure?",
-                options: ["Proper semantic HTML", "Invalid nesting", "Style tags"],
-                correct: 0,
-                explanation: "Semantic tags improve structure and SEO.",
-                codeBehavior: "Good practice for organization"
             }
         ]
     },
 
-    // JAVASCRIPT COURSE
     'javascript-course': {
         id: 'javascript-course',
         name: 'JavaScript',
         category: 'Language',
         difficulty: 'Mixed',
         description: 'Learn JavaScript ES6+ and advanced concepts',
+        color: '#F7DF1E',
+        badge: '⚡',
         questions: [
+            {
+                type: "code-task",
+                question: "Create an array and print the first element",
+                expectedCode: `const fruits = ["apple", "banana", "orange"];
+console.log(fruits[0]);`,
+                language: "javascript",
+                hints: [
+                    { code: `const arr = [item1, item2, item3];`, desc: "Create an array with brackets []" },
+                    { code: `console.log(arr[0]);`, desc: "Print first element using index 0" }
+                ],
+                explanation: "Arrays store multiple values. Index 0 is the first element.",
+                codeBehavior: "Will output: apple"
+            },
             {
                 type: "behavior",
                 code: `const x = "5";
@@ -267,6 +341,16 @@ arr.push(4)
 console.log(arr)`,
                 question: "Find the error - Type what's missing",
                 errorAnswer: "semicolon",
+                errorInfo: {
+                    errorType: "Missing Semicolons",
+                    description: "All three statements are missing semicolons.",
+                    errorLines: [
+                        { line: 1, original: "const arr = [1,2,3]", corrected: "const arr = [1,2,3];", position: "end of line" },
+                        { line: 2, original: "arr.push(4)", corrected: "arr.push(4);", position: "end of line" },
+                        { line: 3, original: "console.log(arr)", corrected: "console.log(arr);", position: "end of line" }
+                    ],
+                    tip: "Missing semicolons violate JavaScript best practices"
+                },
                 explanation: "Missing semicolons.",
                 codeBehavior: "Code still runs due to automatic insertion"
             },
@@ -288,612 +372,40 @@ console.log(name);`,
                 correct: 0,
                 explanation: "Destructuring extracts values from objects.",
                 codeBehavior: "Outputs: John"
-            },
-            {
-                type: "identify",
-                code: `class User {
-    constructor(name) { this.name = name; }
-}`,
-                question: "What is this?",
-                options: ["Class definition", "Object", "Function"],
-                correct: 0,
-                explanation: "Classes are blueprints for objects.",
-                codeBehavior: "Creates reusable object templates"
             }
         ]
     },
 
-    // CSS COURSE
     'css-course': {
         id: 'css-course',
         name: 'CSS',
         category: 'Language',
         difficulty: 'Mixed',
         description: 'Master CSS styling and layout techniques',
+        color: '#1572B6',
+        badge: '🎨',
         questions: [
+            {
+                type: "code-task",
+                question: "Write CSS to make text red and centered",
+                expectedCode: `body {
+  color: red;
+  text-align: center;
+}`,
+                language: "css",
+                hints: [
+                    { code: `selector {
+  property: value;
+}`, desc: "CSS syntax with curly braces" },
+                    { code: `color: red;
+text-align: center;`, desc: "Add these properties" }
+                ],
+                explanation: "CSS rules use property: value syntax inside curly braces.",
+                codeBehavior: "Makes all text red and centered"
+            },
             {
                 type: "identify",
                 code: `#header { color: red; }`,
                 question: "What does # mean?",
-                options: ["ID selector", "Class selector", "Tag selector"],
-                correct: 0,
-                explanation: "# selects elements by ID.",
-                codeBehavior: "Targets element with id=\"header\""
-            },
-            {
-                type: "behavior",
-                code: `.box { 
-    display: flex;
-    justify-content: center;
-}`,
-                question: "What does this do?",
-                options: ["Centers content horizontally", "Makes box red", "Hides box"],
-                correct: 0,
-                explanation: "Flexbox centers items.",
-                codeBehavior: "Centers child elements"
-            },
-            {
-                type: "identify",
-                code: `button:hover { background: blue; }`,
-                question: "What is :hover?",
-                options: ["Pseudo-class for mouse over", "Class name", "ID selector"],
-                correct: 0,
-                explanation: "Pseudo-classes target element states.",
-                codeBehavior: "Changes background when hovering"
-            },
-            {
-                type: "error",
-                code: `body color: red;`,
-                question: "Find the error - Type what's missing",
-                errorAnswer: "braces",
-                explanation: "CSS needs { } for rules.",
-                codeBehavior: "Should be body { color: red; }"
-            },
-            {
-                type: "identify",
-                code: `div { grid-template-columns: 1fr 1fr 1fr; }`,
-                question: "What layout is this?",
-                options: ["CSS Grid with 3 equal columns", "Flexbox", "Float layout"],
-                correct: 0,
-                explanation: "Grid creates responsive layouts.",
-                codeBehavior: "Creates 3-column layout"
-            }
-        ]
-    }
-};
-
-// ===== QUIZ STATE =====
-let leaderboard = [];
-let currentPlayerName = '';
-let currentCourseId = '';
-let shuffledQuestions = [];
-let currentQuestionIndex = 0;
-let currentSessionScore = 0;
-let answered = false;
-let selectedOptionIndex = null;
-let quizInProgress = false;
-
-// ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', () => {
-    loadLeaderboard();
-    showNameEntryScreen();
-});
-
-// ===== LEADERBOARD FUNCTIONS =====
-function loadLeaderboard() {
-    const stored = localStorage.getItem('learning-code-leaderboard');
-    leaderboard = stored ? JSON.parse(stored) : [];
-}
-
-function saveLeaderboard() {
-    localStorage.setItem('learning-code-leaderboard', JSON.stringify(leaderboard));
-}
-
-function addOrUpdateLeaderboard(name, scoreToAdd) {
-    let playerEntry = leaderboard.find(entry => entry.name.toLowerCase() === name.toLowerCase());
-    
-    if (playerEntry) {
-        playerEntry.score += scoreToAdd;
-        playerEntry.attempts = (playerEntry.attempts || 0) + 1;
-        playerEntry.lastUpdate = new Date().toLocaleDateString();
-    } else {
-        leaderboard.push({
-            name: name,
-            score: scoreToAdd,
-            attempts: 1,
-            lastUpdate: new Date().toLocaleDateString()
-        });
-    }
-    
-    saveLeaderboard();
-    updateSidebarCourses();
-}
-
-function getTop10Leaderboard() {
-    return leaderboard
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 10);
-}
-
-function renderLeaderboard() {
-    const top10 = getTop10Leaderboard();
-    if (top10.length === 0) {
-        return '<div class="empty-leaderboard">No scores yet. Be the first!</div>';
-    }
-    
-    return top10.map((entry, index) => `
-        <div class="leaderboard-item">
-            <span class="leaderboard-rank">#${index + 1}</span>
-            <span class="leaderboard-name">${escapeHtml(entry.name)}</span>
-            <span class="leaderboard-score">${entry.score} pts</span>
-        </div>
-    `).join('');
-}
-
-// ===== SIDEBAR NAVIGATION =====
-function updateSidebarCourses() {
-    const sidebarNav = document.getElementById('sidebar-nav');
-    if (!sidebarNav) return;
-    
-    const courses = Object.values(coursesData);
-    
-    sidebarNav.innerHTML = courses.map(course => {
-        const isActive = currentCourseId === course.id ? 'active' : '';
-        return `
-            <div class="nav-item ${isActive}" onclick="selectCourse('${course.id}')">
-                <div class="nav-category">${course.category}</div>
-                <div class="nav-name">${escapeHtml(course.name)}</div>
-            </div>
-        `;
-    }).join('');
-}
-
-function selectCourse(courseId) {
-    if (quizInProgress) return;
-    currentCourseId = courseId;
-    updateSidebarCourses();
-    showCourseSelection();
-}
-
-// ===== SHOW NAME ENTRY SCREEN =====
-function showNameEntryScreen() {
-    const contentArea = document.getElementById('content-area');
-    contentArea.innerHTML = `
-        <div class="name-entry-screen">
-            <h2>Welcome to Learning Code</h2>
-            <p class="tagline">Interactive Programming Quiz</p>
-            
-            <div class="input-group">
-                <label for="player-name">Enter Your Name</label>
-                <input 
-                    type="text" 
-                    id="player-name" 
-                    placeholder="Your name..." 
-                    maxlength="30"
-                    autocomplete="off"
-                />
-            </div>
-            
-            <button class="btn-start" onclick="proceedToCourses()">Continue</button>
-            
-            <div class="leaderboard-section">
-                <h3>🏆 Top 10 Players</h3>
-                <div class="leaderboard-list">
-                    ${renderLeaderboard()}
-                </div>
-            </div>
-        </div>
-    `;
-    
-    const nameInput = document.getElementById('player-name');
-    if (nameInput) {
-        nameInput.focus();
-        nameInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') proceedToCourses();
-        });
-    }
-}
-
-function proceedToCourses() {
-    const nameInput = document.getElementById('player-name');
-    const name = nameInput.value.trim();
-    
-    if (!name || name.length < 2) {
-        alert('Please enter a valid name (at least 2 characters)');
-        return;
-    }
-    
-    currentPlayerName = name;
-    updateUserInfo();
-    updateSidebarCourses();
-    showCourseSelection();
-}
-
-// ===== UPDATE USER INFO =====
-function updateUserInfo() {
-    const avatar = document.getElementById('user-avatar');
-    const username = document.getElementById('current-username');
-    const userLevel = document.querySelector('.user-level');
-    
-    if (avatar) avatar.textContent = currentPlayerName.charAt(0).toUpperCase();
-    if (username) username.textContent = currentPlayerName;
-    if (userLevel) userLevel.textContent = currentCourseId ? 'In Course' : 'Select Course';
-}
-
-// ===== SHOW COURSE SELECTION =====
-function showCourseSelection() {
-    const contentArea = document.getElementById('content-area');
-    
-    if (!currentCourseId) {
-        // Show all courses
-        const courses = Object.values(coursesData);
-        contentArea.innerHTML = `
-            <div class="course-selection-screen">
-                <h2>📚 Select Your Course</h2>
-                <div class="courses-grid">
-                    ${courses.map(course => `
-                        <div class="course-card" onclick="startCourse('${course.id}')">
-                            <span class="course-badge ${course.difficulty.toLowerCase()}">${course.difficulty}</span>
-                            <h3 class="course-title">${escapeHtml(course.name)}</h3>
-                            <p class="course-description">${escapeHtml(course.description)}</p>
-                            <div class="course-info">
-                                <div class="info-item">📝 ${course.questions.length} questions</div>
-                            </div>
-                            <button class="btn-start-course">Start Course</button>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-    } else {
-        // Show selected course
-        const course = coursesData[currentCourseId];
-        contentArea.innerHTML = `
-            <div class="course-selection-screen">
-                <h2>📚 ${escapeHtml(course.name)}</h2>
-                <div class="courses-grid">
-                    <div class="course-card">
-                        <span class="course-badge ${course.difficulty.toLowerCase()}">${course.difficulty}</span>
-                        <h3 class="course-title">${escapeHtml(course.name)}</h3>
-                        <p class="course-description">${escapeHtml(course.description)}</p>
-                        <div class="course-info">
-                            <div class="info-item">📝 ${course.questions.length} questions</div>
-                        </div>
-                        <button class="btn-start-course" onclick="startCourse('${course.id}')">Start Quiz</button>
-                        <button class="btn-start-course" style="margin-top: 10px; background: #999;" onclick="backToCourseSelection()">← Back</button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-    
-    document.getElementById('breadcrumb-course').textContent = currentCourseId ? coursesData[currentCourseId].name : 'Courses';
-    document.getElementById('lesson-title').textContent = 'Select';
-}
-
-function backToCourseSelection() {
-    currentCourseId = '';
-    updateUserInfo();
-    updateSidebarCourses();
-    showCourseSelection();
-}
-
-// ===== START COURSE =====
-function startCourse(courseId) {
-    currentCourseId = courseId;
-    const course = coursesData[courseId];
-    shuffledQuestions = [...course.questions].sort(() => Math.random() - 0.5);
-    currentQuestionIndex = 0;
-    currentSessionScore = 0;
-    quizInProgress = true;
-    answered = false;
-    
-    document.getElementById('breadcrumb-course').textContent = course.name;
-    updateUserInfo();
-    updateSidebarCourses();
-    loadQuestion();
-}
-
-// ===== LOAD QUESTION =====
-function loadQuestion() {
-    if (currentQuestionIndex >= shuffledQuestions.length) {
-        showCompletion();
-        return;
-    }
-    
-    const question = shuffledQuestions[currentQuestionIndex];
-    const contentArea = document.getElementById('content-area');
-    const lessonNumber = currentQuestionIndex + 1;
-    
-    document.getElementById('lesson-title').textContent = `Question ${lessonNumber}`;
-    updateProgress();
-    
-    let questionContent = '';
-    
-    if (question.type === 'error') {
-        questionContent = `
-            <div class="lesson-container">
-                <div class="lesson-panel">
-                    <h3><span class="icon">🔍</span> Find the Error</h3>
-                    <div class="code-display">
-                        <pre>${escapeHtml(question.code)}</pre>
-                    </div>
-                    <p class="question-title">${escapeHtml(question.question)}</p>
-                    <div class="options-list">
-                        <input 
-                            type="text" 
-                            id="error-input" 
-                            placeholder="Type what is missing or wrong..."
-                            class="error-input-field"
-                        />
-                    </div>
-                    <div id="feedback-error" style="display: none;"></div>
-                    <div class="action-buttons">
-                        <button class="btn-submit" onclick="submitErrorAnswer()">Submit Answer</button>
-                        <button class="btn-next" id="next-btn-error">Next Question</button>
-                    </div>
-                </div>
-                <div class="editor-panel">
-                    <h3><span class="icon">💻</span> Code Playground</h3>
-                    <div class="editor-status">
-                        <span class="status-dot"></span>
-                        <span>Complete to proceed</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    } else {
-        questionContent = `
-            <div class="lesson-container">
-                <div class="lesson-panel">
-                    <h3><span class="icon">❓</span> Question</h3>
-                    <div class="code-display">
-                        <pre>${escapeHtml(question.code)}</pre>
-                    </div>
-                    <p class="question-title">${escapeHtml(question.question)}</p>
-                    <div class="options-list" id="options-list"></div>
-                    <div id="feedback" style="display: none;"></div>
-                    <div class="action-buttons">
-                        <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">Submit Answer</button>
-                        <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question</button>
-                    </div>
-                </div>
-                <div class="editor-panel">
-                    <h3><span class="icon">💻</span> Code Playground</h3>
-                    <div class="editor-status">
-                        <span class="status-dot"></span>
-                        <span>Complete to proceed</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-    
-    contentArea.innerHTML = questionContent;
-    
-    if (question.type === 'error') {
-        const errorInput = document.getElementById('error-input');
-        if (errorInput) {
-            errorInput.focus();
-        }
-    } else {
-        renderOptions(question);
-    }
-    
-    answered = false;
-    selectedOptionIndex = null;
-}
-
-// ===== RENDER OPTIONS =====
-function renderOptions(question) {
-    const optionsList = document.getElementById('options-list');
-    if (!optionsList) return;
-    
-    optionsList.innerHTML = '';
-    
-    question.options.forEach((option, index) => {
-        const button = document.createElement('button');
-        button.className = 'option-button';
-        button.textContent = option;
-        button.onclick = () => selectOption(index);
-        button.dataset.index = index;
-        optionsList.appendChild(button);
-    });
-}
-
-// ===== SELECT OPTION =====
-function selectOption(index) {
-    if (answered) return;
-    
-    selectedOptionIndex = index;
-    const buttons = document.querySelectorAll('.option-button');
-    buttons.forEach(btn => btn.classList.remove('selected'));
-    if (buttons[index]) {
-        buttons[index].classList.add('selected');
-    }
-}
-
-// ===== SUBMIT ANSWER =====
-function submitAnswer() {
-    if (selectedOptionIndex === null) {
-        alert('Please select an answer first');
-        return;
-    }
-    
-    if (answered) return;
-    
-    answered = true;
-    const question = shuffledQuestions[currentQuestionIndex];
-    const buttons = document.querySelectorAll('.option-button');
-    const feedbackDiv = document.getElementById('feedback');
-    const submitBtn = document.getElementById('btn-submit');
-    const nextBtn = document.getElementById('btn-next');
-    
-    buttons.forEach(btn => btn.disabled = true);
-    
-    const isCorrect = selectedOptionIndex === question.correct;
-    
-    if (isCorrect) {
-        buttons[selectedOptionIndex].classList.add('correct');
-        currentSessionScore++;
-        document.getElementById('total-score').textContent = currentSessionScore;
-        
-        feedbackDiv.innerHTML = `
-            <div class="feedback-box correct">
-                <strong>✓ Correct!</strong>
-                <div class="feedback-details">${escapeHtml(question.explanation)}</div>
-            </div>
-        `;
-        
-        feedbackDiv.style.display = 'block';
-        submitBtn.style.display = 'none';
-        nextBtn.style.display = 'block';
-    } else {
-        buttons[selectedOptionIndex].classList.add('incorrect');
-        buttons[question.correct].classList.add('correct');
-        
-        feedbackDiv.innerHTML = `
-            <div class="feedback-box incorrect">
-                <strong>✗ Incorrect</strong>
-                <div class="feedback-details">Correct answer: <strong>${escapeHtml(question.options[question.correct])}</strong></div>
-            </div>
-        `;
-        
-        feedbackDiv.style.display = 'block';
-        submitBtn.disabled = true;
-        
-        // UPDATE LEADERBOARD EVEN ON FAILURE
-        setTimeout(() => {
-            addOrUpdateLeaderboard(currentPlayerName, currentSessionScore);
-            alert('Quiz restarting. Try again!');
-            quizInProgress = false;
-            currentCourseId = '';
-            showCourseSelection();
-        }, 2000);
-    }
-}
-
-// ===== SUBMIT ERROR ANSWER =====
-function submitErrorAnswer() {
-    const errorInput = document.getElementById('error-input');
-    const userAnswer = errorInput.value.trim().toLowerCase();
-    const question = shuffledQuestions[currentQuestionIndex];
-    const feedbackDiv = document.getElementById('feedback-error');
-    const submitBtn = document.querySelector('.btn-submit');
-    const nextBtn = document.getElementById('next-btn-error');
-    
-    if (!userAnswer) {
-        alert('Please type your answer');
-        return;
-    }
-    
-    if (answered) return;
-    
-    answered = true;
-    const correctAnswer = question.errorAnswer.toLowerCase();
-    const isCorrect = userAnswer === correctAnswer;
-    
-    if (isCorrect) {
-        currentSessionScore++;
-        document.getElementById('total-score').textContent = currentSessionScore;
-        
-        feedbackDiv.innerHTML = `
-            <div class="feedback-box correct">
-                <strong>✓ Correct!</strong>
-                <div class="feedback-details">${escapeHtml(question.explanation)}</div>
-            </div>
-        `;
-        feedbackDiv.style.display = 'block';
-        
-        errorInput.disabled = true;
-        submitBtn.style.display = 'none';
-        nextBtn.style.display = 'block';
-    } else {
-        feedbackDiv.innerHTML = `
-            <div class="feedback-box incorrect">
-                <strong>✗ Incorrect</strong>
-                <div class="feedback-details">The error was: <strong>${escapeHtml(question.errorAnswer)}</strong></div>
-            </div>
-        `;
-        feedbackDiv.style.display = 'block';
-        
-        submitBtn.disabled = true;
-        
-        // UPDATE LEADERBOARD EVEN ON FAILURE
-        setTimeout(() => {
-            addOrUpdateLeaderboard(currentPlayerName, currentSessionScore);
-            alert('Quiz restarting. Try again!');
-            quizInProgress = false;
-            currentCourseId = '';
-            showCourseSelection();
-        }, 2000);
-    }
-}
-
-// ===== NEXT QUESTION =====
-function nextQuestion() {
-    currentQuestionIndex++;
-    answered = false;
-    loadQuestion();
-}
-
-// ===== UPDATE PROGRESS =====
-function updateProgress() {
-    const total = shuffledQuestions.length;
-    const current = currentQuestionIndex + 1;
-    const percentage = (current / total) * 100;
-    
-    document.getElementById('progress-fill').style.width = percentage + '%';
-    document.getElementById('progress-text').textContent = `${current}/${total}`;
-}
-
-// ===== SHOW COMPLETION =====
-function showCompletion() {
-    const contentArea = document.getElementById('content-area');
-    const total = shuffledQuestions.length;
-    const course = coursesData[currentCourseId];
-    
-    // UPDATE LEADERBOARD ON COMPLETION
-    addOrUpdateLeaderboard(currentPlayerName, currentSessionScore);
-    
-    let message = '';
-    if (currentSessionScore === total) {
-        message = 'Perfect score! You are a code master! 🚀';
-    } else if (currentSessionScore >= Math.ceil(total * 0.8)) {
-        message = 'Excellent! Strong skills! 👏';
-    } else if (currentSessionScore >= Math.ceil(total * 0.6)) {
-        message = 'Good job! Keep practicing! 📚';
-    } else {
-        message = 'Keep learning! You can do it! 💪';
-    }
-    
-    contentArea.innerHTML = `
-        <div class="completion-screen">
-            <div class="completion-badge">🎉</div>
-            <h2>${escapeHtml(course.name)} - Complete!</h2>
-            
-            <div class="completion-score">
-                Your Score: ${currentSessionScore}/${total} points
-            </div>
-            
-            <p class="completion-message">${message}</p>
-            
-            <button class="btn-restart" onclick="backToCourseSelection()">← Back to Courses</button>
-            <button class="btn-restart" onclick="location.reload()">🔄 Start Over</button>
-        </div>
-    `;
-    
-    quizInProgress = false;
-}
-
-// ===== UTILITY FUNCTION =====
-function escapeHtml(text) {
-    const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;'
-    };
-    return text.replace(/[&<>"']/g, m => map[m]);
-}
+                options: ["ID selector", "Class selector", "Tag](#)*
+
