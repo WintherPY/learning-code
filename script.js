@@ -1,8 +1,6 @@
-// ===== QUIZ DATA - Mixed Question Types =====
-
+// ===== QUIZ DATA =====
 const quizData = [
     {
-        type: "language",
         code: `<!DOCTYPE html>
 <html>
 <head>
@@ -15,148 +13,200 @@ const quizData = [
         question: "What programming language is this code written in?",
         options: ["CSS", "HTML", "JavaScript"],
         correct: 1,
-        explanation: "This is HTML (HyperText Markup Language). It's used to structure web pages with tags like <html>, <body>, and <h1>."
+        explanation: "This is HTML (HyperText Markup Language). It structures web pages using tags."
     },
     {
-        type: "function",
-        code: `const numbers = [1, 2, 3, 4, 5];
-const doubled = numbers.map(num => num * 2);
-console.log(doubled);`,
-        question: "What does this code do?",
-        options: ["Prints all numbers", "Multiplies each number by 2 and creates a new array", "Adds numbers together"],
-        correct: 1,
-        explanation: "This code uses the map() function to create a new array where each element is multiplied by 2. The result is [2, 4, 6, 8, 10]."
-    },
-    {
-        type: "language",
-        code: `body {
-    background-color: blue;
-    font-size: 16px;
-    margin: 0;
-}`,
+        code: `console.log('Hello, World!');`,
         question: "What programming language is this code written in?",
-        options: ["HTML", "CSS", "Python"],
+        options: ["Python", "JavaScript", "Java"],
         correct: 1,
-        explanation: "This is CSS (Cascading Style Sheets). It's used to style HTML elements with properties like background-color and font-size."
+        explanation: "This is JavaScript. console.log() outputs text to the console."
     },
     {
-        type: "function",
-        code: `function addNumbers(a, b) {
-    return a + b;
-}
-const result = addNumbers(5, 3);
-console.log(result);`,
-        question: "What does this code do?",
-        options: ["Prints 'addNumbers'", "Adds two numbers together and prints the sum (8)", "Multiplies two numbers"],
+        code: `print('Hello, World!')`,
+        question: "What programming language is this code written in?",
+        options: ["C#", "Python", "JavaScript"],
         correct: 1,
-        explanation: "This function takes two parameters (5 and 3), adds them together, and prints the result which is 8."
+        explanation: "This is Python. print() outputs text to the console."
     },
     {
-        type: "language",
+        code: `def greet(name):
+    return "Hello, " + name`,
+        question: "What programming language is this code written in?",
+        options: ["JavaScript", "Python", "Java"],
+        correct: 1,
+        explanation: "This is Python. Uses 'def' keyword and indentation for functions."
+    },
+    {
         code: `function greet(name) {
     return "Hello, " + name;
 }`,
         question: "What programming language is this code written in?",
         options: ["Python", "JavaScript", "Java"],
         correct: 1,
-        explanation: "This is JavaScript. It uses the 'function' keyword to define reusable blocks of code."
+        explanation: "This is JavaScript. Uses 'function' keyword and braces for code blocks."
     },
     {
-        type: "function",
-        code: `const fruits = ['apple', 'banana', 'orange'];
-fruits.forEach(fruit => {
-    console.log("I like " + fruit);
-});`,
-        question: "What does this code do?",
-        options: ["Prints the whole array", "Prints each fruit name with 'I like' before it", "Removes fruits from array"],
-        correct: 1,
-        explanation: "This code loops through each fruit in the array and prints 'I like apple', 'I like banana', 'I like orange'."
-    },
-    {
-        type: "language",
-        code: `def greet(name):
-    return "Hello, " + name`,
-        question: "What programming language is this code written in?",
-        options: ["JavaScript", "Python", "Java"],
-        correct: 1,
-        explanation: "This is Python. It uses the 'def' keyword for functions and indentation for code blocks."
-    },
-    {
-        type: "function",
-        code: `const age = 20;
-if (age >= 18) {
-    console.log("You are an adult");
-} else {
-    console.log("You are not an adult");
-}`,
-        question: "What does this code do?",
-        options: ["Prints 'You are an adult'", "Checks if age is 18 or older, prints 'You are an adult' if true", "Asks for user input"],
-        correct: 1,
-        explanation: "This code checks if the age variable is 18 or greater. Since it is 20, it prints 'You are an adult'."
-    },
-    {
-        type: "language",
         code: `<div class="container">
     <p>This is a paragraph</p>
-    <button>Click me</button>
 </div>`,
         question: "What programming language is this code written in?",
         options: ["CSS", "Python", "HTML"],
         correct: 2,
-        explanation: "This is HTML. It uses tags like <div>, <p>, and <button> to create page structure."
-    },
-    {
-        type: "function",
-        code: `const numbers = [1, 2, 3, 4, 5];
-const sum = numbers.reduce((acc, num) => acc + num, 0);
-console.log(sum);`,
-        question: "What does this code do?",
-        options: ["Counts the numbers", "Adds all numbers together and prints the sum (15)", "Prints each number"],
-        correct: 1,
-        explanation: "This code uses reduce() to add all numbers in the array together. 1+2+3+4+5 = 15."
-    },
-    {
-        type: "language",
-        code: `.header {
-    color: white;
-    background-color: #333;
-    padding: 20px;
-    border-radius: 5px;
-}`,
-        question: "What programming language is this code written in?",
-        options: ["JavaScript", "CSS", "HTML"],
-        correct: 1,
-        explanation: "This is CSS. The dot (.) indicates a class selector that styles elements with color, background-color, padding, and border-radius properties."
-    },
-    {
-        type: "function",
-        code: `const name = "Alice";
-const age = 25;
-const message = name + " is " + age + " years old";
-console.log(message);`,
-        question: "What does this code do?",
-        options: ["Prints variable names", "Combines strings and variables to print 'Alice is 25 years old'", "Creates an array"],
-        correct: 1,
-        explanation: "This code concatenates (combines) strings and variables to create a full message: 'Alice is 25 years old'."
-    },
-    {
-        type: "language",
-        code: `const numbers = [1, 2, 3, 4, 5];
-numbers.forEach(num => console.log(num));`,
-        question: "What programming language is this code written in?",
-        options: ["Python", "JavaScript", "Ruby"],
-        correct: 1,
-        explanation: "This is JavaScript. It uses 'const' for variables, array literals, and the forEach method with arrow function syntax."
-    },
-    {
-        type: "function",
-        code: `function isEven(num) {
-    return num % 2 === 0;
+        explanation: "This is HTML. Uses tags like <div> and <p> for structure."
+    }
+];
+
+// ===== QUIZ STATE =====
+let currentQuestionIndex = 0;
+let totalCorrect = 0;
+let answered = false;
+let selectedOptionIndex = null;
+
+// ===== INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', function() {
+    loadQuestion();
+});
+
+// ===== LOAD QUESTION =====
+function loadQuestion() {
+    if (currentQuestionIndex >= quizData.length) {
+        showCompletion();
+        return;
+    }
+
+    const question = quizData[currentQuestionIndex];
+    
+    // Update code display
+    const codeDisplay = document.getElementById('code-display');
+    if (codeDisplay) {
+        codeDisplay.textContent = question.code;
+    }
+    
+    // Update question
+    const questionText = document.getElementById('question-text');
+    if (questionText) {
+        questionText.textContent = question.question;
+    }
+    
+    // Create option buttons
+    const optionsContainer = document.getElementById('options-container');
+    if (optionsContainer) {
+        optionsContainer.innerHTML = '';
+        question.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.className = 'option-btn';
+            button.textContent = option;
+            button.onclick = () => selectOption(index);
+            optionsContainer.appendChild(button);
+        });
+    }
+    
+    // Reset state
+    const feedbackSection = document.getElementById('feedback-section');
+    if (feedbackSection) {
+        feedbackSection.style.display = 'none';
+    }
+    
+    const submitBtn = document.getElementById('submit-btn');
+    if (submitBtn) submitBtn.style.display = 'block';
+    
+    const nextBtn = document.getElementById('next-btn');
+    if (nextBtn) nextBtn.style.display = 'none';
+    
+    answered = false;
+    selectedOptionIndex = null;
 }
-console.log(isEven(4));
-console.log(isEven(7));`,
-        question: "What does this code do?",
-        options: ["Divides numbers by 2", "Checks if a number is even using modulo operator, prints true for 4 and false for 7", "Multiplies numbers"],
-        correct: 1,
-        explanation: "This function checks if a number is even using the modulo operator (%). If num % 2 === 0, it's even. 4 is even (prints*
-
+
+// ===== SELECT OPTION =====
+function selectOption(index) {
+    if (answered) return;
+    selectedOptionIndex = index;
+    
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(btn => btn.classList.remove('selected'));
+    buttons[index].classList.add('selected');
+}
+
+// ===== SUBMIT ANSWER =====
+function submitAnswer() {
+    if (selectedOptionIndex === null) {
+        alert('Please select an answer');
+        return;
+    }
+    
+    if (answered) return;
+    answered = true;
+    
+    const question = quizData[currentQuestionIndex];
+    const buttons = document.querySelectorAll('.option-btn');
+    const feedbackSection = document.getElementById('feedback-section');
+    const feedbackText = document.getElementById('feedback-text');
+    
+    buttons.forEach(btn => btn.disabled = true);
+    
+    if (selectedOptionIndex === question.correct) {
+        buttons[selectedOptionIndex].classList.add('correct');
+        totalCorrect++;
+        feedbackText.innerHTML = `<strong>✓ Correct!</strong><br>${question.explanation}`;
+        feedbackSection.className = 'feedback correct';
+    } else {
+        buttons[selectedOptionIndex].classList.add('incorrect');
+        buttons[question.correct].classList.add('correct');
+        feedbackText.innerHTML = `<strong>✗ Incorrect</strong><br>Correct: ${question.options[question.correct]}<br><br>${question.explanation}`;
+        feedbackSection.className = 'feedback incorrect';
+    }
+    
+    feedbackSection.style.display = 'block';
+    document.getElementById('submit-btn').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'block';
+}
+
+// ===== NEXT QUESTION =====
+function nextQuestion() {
+    currentQuestionIndex++;
+    loadQuestion();
+}
+
+// ===== SHOW COMPLETION =====
+function showCompletion() {
+    const mainContent = document.querySelector('main');
+    const percentage = Math.round((totalCorrect / quizData.length) * 100);
+    
+    mainContent.innerHTML = `
+        <div class="completion-screen">
+            <h2>Quiz Complete! 🎉</h2>
+            <p>Score: ${totalCorrect}/${quizData.length} (${percentage}%)</p>
+            <button class="restart-btn" onclick="restartQuiz()">Restart Quiz</button>
+        </div>
+    `;
+}
+
+// ===== RESTART QUIZ =====
+function restartQuiz() {
+    currentQuestionIndex = 0;
+    totalCorrect = 0;
+    answered = false;
+    selectedOptionIndex = null;
+    
+    const mainContent = document.querySelector('main');
+    mainContent.innerHTML = `
+        <section class="code-section">
+            <h2>Code Snippet:</h2>
+            <pre><code id="code-display"></code></pre>
+        </section>
+        <section class="question-section">
+            <h3 id="question-text"></h3>
+            <div class="options-container" id="options-container"></div>
+        </section>
+        <div class="feedback" id="feedback-section" style="display: none;">
+            <p id="feedback-text"></p>
+        </div>
+        <div class="action-buttons">
+            <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+            <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
+        </div>
+    `;
+    
+    loadQuestion();
+}
