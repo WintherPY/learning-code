@@ -3,22 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programming Language Identifier - Learning Tool</title>
+    <title>Programming Language Learning Tool</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Programming Language Identifier</h1>
-            <p>Test your knowledge of programming languages</p>
+            <p>Test your knowledge by identifying programming languages from code snippets</p>
         </header>
-
-        <div class="progress-section">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-            <p class="progress-text">Question <span id="progress-text">1/10</span></p>
-        </div>
 
         <main>
             <section class="code-section">
@@ -27,7 +20,7 @@
             </section>
 
             <section class="question-section">
-                <h3 id="question-text">What programming language is this?</h3>
+                <h3 id="question-text">What programming language is this code written in?</h3>
                 
                 <div class="options-container" id="options-container">
                     <!-- Options will be generated here -->
@@ -39,13 +32,13 @@
             </div>
 
             <div class="action-buttons">
-                <button class="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+                <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
                 <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
             </div>
         </main>
 
         <footer>
-            <p>&copy; 2026 Learning Code Platform | Master Programming Languages</p>
+            <p>&copy; 2026 Programming Language Learning Tool</p>
         </footer>
     </div>
 
