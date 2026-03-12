@@ -20,7 +20,7 @@ body {
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
     width: 100%;
 }
@@ -42,10 +42,10 @@ h1 {
 .score-display {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 40px;
     font-size: 1.1em;
     background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
+    padding: 15px 30px;
     border-radius: 8px;
 }
 
@@ -74,7 +74,7 @@ main {
     gap: 30px;
 }
 
-/* EDITOR SECTION */
+/* EDITOR SECTION - 50% WIDTH */
 .editor-section {
     background: #f8f8f8;
     padding: 20px;
@@ -82,6 +82,7 @@ main {
     border: 2px solid #e0e0e0;
     display: flex;
     flex-direction: column;
+    height: fit-content;
 }
 
 .editor-header {
@@ -94,6 +95,7 @@ main {
 .editor-header h3 {
     font-size: 1.2em;
     color: #333;
+    font-weight: 600;
 }
 
 .editor-info {
@@ -113,7 +115,8 @@ main {
     font-size: 0.95em;
     line-height: 1.5;
     resize: none;
-    min-height: 300px;
+    min-height: 250px;
+    max-height: 300px;
 }
 
 .code-editor:disabled {
@@ -129,16 +132,17 @@ main {
 .editor-buttons {
     display: flex;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 12px;
 }
 
 .run-btn, .clear-btn {
     flex: 1;
-    padding: 10px;
+    padding: 10px 15px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
+    font-size: 0.95em;
     transition: all 0.3s ease;
 }
 
@@ -150,6 +154,7 @@ main {
 .run-btn:hover:not(:disabled) {
     background: #218838;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
 }
 
 .run-btn:disabled {
@@ -173,10 +178,10 @@ main {
     border-left: 4px solid #ffd700;
     padding: 12px;
     border-radius: 6px;
-    margin-top: 15px;
+    margin-top: 12px;
     font-size: 0.9em;
     color: #666;
-    max-height: 100px;
+    max-height: 120px;
     overflow-y: auto;
 }
 
@@ -184,41 +189,43 @@ main {
     background: #f0f0f0;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 15px;
-    margin-top: 15px;
+    padding: 12px;
+    margin-top: 12px;
     font-family: 'Courier New', monospace;
     font-size: 0.9em;
-}
-
-.code-output strong {
-    display: block;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.code-output pre {
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 4px;
-    overflow-x: auto;
     max-height: 150px;
     overflow-y: auto;
 }
 
-/* QUESTIONS SECTION */
+.code-output strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+#output-text {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    min-height: 30px;
+}
+
+/* QUESTIONS SECTION - 50% WIDTH */
 .questions-section {
     display: flex;
     flex-direction: column;
 }
 
 .code-section {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .code-section h2 {
     font-size: 1.1em;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     color: #333;
     font-weight: 600;
 }
@@ -234,11 +241,11 @@ main {
 pre {
     background-color: #f5f5f5;
     border-left: 4px solid #1e3c72;
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
     overflow-x: auto;
     font-family: 'Courier New', monospace;
-    font-size: 0.95em;
+    font-size: 0.9em;
     line-height: 1.6;
     color: #333;
 }
@@ -246,7 +253,7 @@ pre {
 code {
     color: #333;
     font-family: 'Courier New', monospace;
-    font-size: 0.95em;
+    font-size: 0.9em;
 }
 
 .find-error-btn {
@@ -261,6 +268,7 @@ code {
     cursor: pointer;
     font-weight: 600;
     transition: all 0.3s ease;
+    font-size: 0.9em;
 }
 
 .find-error-btn:hover {
@@ -269,12 +277,12 @@ code {
 }
 
 .question-section {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .question-section h3 {
-    font-size: 1.3em;
-    margin-bottom: 25px;
+    font-size: 1.2em;
+    margin-bottom: 15px;
     color: #333;
     font-weight: 600;
 }
@@ -282,18 +290,18 @@ code {
 .options-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 25px;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .option-btn {
     background-color: #f9f9f9;
     border: 2px solid #e0e0e0;
     color: #333;
-    padding: 16px 20px;
+    padding: 14px 18px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 0.95em;
     font-weight: 500;
     transition: all 0.3s ease;
     text-align: left;
@@ -329,10 +337,10 @@ code {
 }
 
 .feedback {
-    padding: 20px;
+    padding: 18px;
     border-radius: 8px;
-    margin-bottom: 25px;
-    font-size: 1em;
+    margin-bottom: 20px;
+    font-size: 0.95em;
     line-height: 1.6;
     animation: slideDown 0.3s ease;
 }
@@ -361,21 +369,22 @@ code {
 }
 
 .additional-facts {
-    margin-top: 15px;
-    padding-top: 15px;
+    margin-top: 12px;
+    padding-top: 12px;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    font-size: 0.95em;
-    line-height: 1.7;
+    font-size: 0.93em;
+    line-height: 1.6;
 }
 
 .additional-facts strong {
     display: block;
-    margin-bottom: 8px;
-    font-size: 1em;
+    margin-bottom: 6px;
+    font-size: 0.95em;
+    color: #333;
 }
 
 .fact-item {
-    margin: 10px 0;
+    margin: 8px 0;
     padding-left: 10px;
     border-left: 3px solid rgba(0, 0, 0, 0.2);
 }
@@ -383,27 +392,38 @@ code {
 .code-suggestions {
     margin-top: 15px;
     padding: 12px;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.04);
     border-radius: 6px;
-    font-size: 0.95em;
+    font-size: 0.92em;
 }
 
 .code-suggestions strong {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    color: #333;
 }
 
 .suggestion {
     margin: 8px 0;
-    padding: 8px;
-    background: rgba(255, 255, 255, 0.6);
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 4px;
+    border-left: 3px solid #1e3c72;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.suggestion-code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin: 0 2px;
 }
 
 .action-buttons {
     display: flex;
     gap: 12px;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .submit-btn, .next-btn, .restart-btn {
@@ -412,7 +432,7 @@ code {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 0.95em;
     font-weight: 600;
     transition: all 0.3s ease;
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
@@ -472,14 +492,13 @@ footer {
     font-size: 0.9em;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .quiz-container {
         grid-template-columns: 1fr;
     }
 
-    .score-display {
-        flex-direction: column;
-        gap: 10px;
+    .editor-section {
+        height: auto;
     }
 }
 
@@ -502,10 +521,11 @@ footer {
 
     pre {
         font-size: 0.85em;
-        padding: 15px;
+        padding: 12px;
     }
 
     .code-editor {
-        min-height: 200px;
+        min-height: 180px;
+        max-height: 200px;
     }
 }
