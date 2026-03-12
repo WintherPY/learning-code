@@ -1,90 +1,167 @@
-// ===== QUIZ DATA - Programming Language Identification =====
+// ===== QUIZ DATA - Beginner to Intermediate Programming =====
 
 const quizData = [
+    // BEGINNER LEVEL
     {
-        code: `console.log("Hello, World!");`,
-        question: "What programming language is this?",
+        code: `<!DOCTYPE html>
+<html>
+<head>
+    <title>My Page</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+</body>
+</html>`,
+        question: "What programming language is this code written in?",
+        options: ["CSS", "HTML", "JavaScript"],
+        correct: 1,
+        explanation: "This is HTML (HyperText Markup Language). It's used to structure web pages with tags like <html>, <body>, and <h1>."
+    },
+    {
+        code: `body {
+    background-color: blue;
+    font-size: 16px;
+    margin: 0;
+}`,
+        question: "What programming language is this code written in?",
+        options: ["HTML", "CSS", "Python"],
+        correct: 1,
+        explanation: "This is CSS (Cascading Style Sheets). It's used to style HTML elements with properties like background-color and font-size."
+    },
+    {
+        code: `function greet(name) {
+    return "Hello, " + name;
+}`,
+        question: "What programming language is this code written in?",
         options: ["Python", "JavaScript", "Java"],
         correct: 1,
-        explanation: "This is JavaScript. The console.log() function is used for output in JavaScript."
+        explanation: "This is JavaScript. It uses the 'function' keyword to define reusable blocks of code."
     },
     {
-        code: `print("Hello, World!")`,
-        question: "What programming language is this?",
+        code: `def greet(name):
+    return "Hello, " + name`,
+        question: "What programming language is this code written in?",
+        options: ["JavaScript", "Python", "Java"],
+        correct: 1,
+        explanation: "This is Python. It uses the 'def' keyword for functions and indentation for code blocks."
+    },
+    {
+        code: `<div class="container">
+    <p>This is a paragraph</p>
+    <button>Click me</button>
+</div>`,
+        question: "What programming language is this code written in?",
+        options: ["CSS", "Python", "HTML"],
+        correct: 2,
+        explanation: "This is HTML. It uses tags like <div>, <p>, and <button> to create page structure."
+    },
+    {
+        code: `.header {
+    color: white;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 5px;
+}`,
+        question: "What programming language is this code written in?",
+        options: ["JavaScript", "CSS", "HTML"],
+        correct: 1,
+        explanation: "This is CSS. The dot (.) indicates a class selector that styles elements with color, background-color, padding, and border-radius properties."
+    },
+    {
+        code: `const numbers = [1, 2, 3, 4, 5];
+numbers.forEach(num => console.log(num));`,
+        question: "What programming language is this code written in?",
+        options: ["Python", "JavaScript", "Ruby"],
+        correct: 1,
+        explanation: "This is JavaScript. It uses 'const' for variables, array literals, and the forEach method with arrow function syntax."
+    },
+    {
+        code: `numbers = [1, 2, 3, 4, 5]
+for num in numbers:
+    print(num)`,
+        question: "What programming language is this code written in?",
+        options: ["JavaScript", "Python", "Java"],
+        correct: 1,
+        explanation: "This is Python. It uses list syntax, for-in loop, and print() function with indentation."
+    },
+    {
+        code: `<input type="text" placeholder="Enter your name" />
+<select>
+    <option>Option 1</option>
+    <option>Option 2</option>
+</select>`,
+        question: "What programming language is this code written in?",
+        options: ["CSS", "JavaScript", "HTML"],
+        correct: 2,
+        explanation: "This is HTML. It defines form elements like <input> and <select> tags for user interaction."
+    },
+    {
+        code: `button:hover {
+    background-color: green;
+    transform: scale(1.1);
+    cursor: pointer;
+}`,
+        question: "What programming language is this code written in?",
+        options: ["HTML", "CSS", "Python"],
+        correct: 1,
+        explanation: "This is CSS. The ':hover' pseudo-class applies styles when a user hovers over a button element."
+    },
+    // INTERMEDIATE LEVEL
+    {
+        code: `function fibonacci(n) {
+    if (n <= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}`,
+        question: "What programming language is this code written in?",
+        options: ["Python", "JavaScript", "Java"],
+        correct: 1,
+        explanation: "This is JavaScript. It shows a recursive function that calculates Fibonacci numbers."
+    },
+    {
+        code: `def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)`,
+        question: "What programming language is this code written in?",
         options: ["JavaScript", "Python", "C++"],
         correct: 1,
-        explanation: "This is Python. Python uses the print() function for output."
+        explanation: "This is Python. It uses 'def' for functions, colons, and indentation instead of braces."
     },
     {
-        code: `System.out.println("Hello, World!");`,
-        question: "What programming language is this?",
-        options: ["C#", "Python", "Java"],
-        correct: 2,
-        explanation: "This is Java. System.out.println() is Java's print statement."
-    },
-    {
-        code: `echo "Hello, World!";`,
-        question: "What programming language is this?",
-        options: ["JavaScript", "PHP", "Ruby"],
-        correct: 1,
-        explanation: "This is PHP. The echo statement outputs text in PHP."
-    },
-    {
-        code: `puts "Hello, World!"`,
-        question: "What programming language is this?",
-        options: ["Python", "Ruby", "Java"],
-        correct: 1,
-        explanation: "This is Ruby. The puts method outputs text in Ruby."
-    },
-    {
-        code: `#include <iostream>
-int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+        code: `class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+    speak() {
+        console.log(this.name + " makes a sound");
+    }
 }`,
-        question: "What programming language is this?",
-        options: ["Java", "C++", "C#"],
+        question: "What programming language is this code written in?",
+        options: ["Python", "JavaScript", "Java"],
         correct: 1,
-        explanation: "This is C++. It uses #include for libraries and std::cout for output."
+        explanation: "This is JavaScript (ES6 class syntax). It defines a class with a constructor and methods."
     },
     {
-        code: `package main
-import "fmt"
-func main() {
-    fmt.Println("Hello, World!")
-}`,
-        question: "What programming language is this?",
-        options: ["Rust", "Go", "Kotlin"],
-        correct: 1,
-        explanation: "This is Go. It uses package main, import, and fmt.Println for output."
-    },
-    {
-        code: `def hello():
-    print("Hello, World!")
-hello()`,
-        question: "What programming language is this?",
+        code: `class Animal:
+    def __init__(self, name):
+        self.name = name
+    def speak(self):
+        print(self.name + " makes a sound")`,
+        question: "What programming language is this code written in?",
         options: ["JavaScript", "Python", "C#"],
         correct: 1,
-        explanation: "This is Python. Functions are defined with def and use indentation for blocks."
+        explanation: "This is Python. It defines a class with __init__ constructor and methods using 'self' parameter and indentation."
     },
     {
-        code: `fn main() {
-    println!("Hello, World!");
+        code: `const fetchData = async () => {
+    const response = await fetch('/api/data');
+    const data = await response.json();
+    return data;
 }`,
-        question: "What programming language is this?",
-        options: ["Go", "Rust", "C++"],
+        question: "What programming language is this code written in?",
+        options: ["Python", "JavaScript", "Java"],
         correct: 1,
-        explanation: "This is Rust. It uses fn for functions and println! macro for output."
-    },
-    {
-        code: `function hello() {
-    console.log("Hello, World!");
-}
-hello();`,
-        question: "What programming language is this?",
-        options: ["Python", "Java", "JavaScript"],
-        correct: 2,
-        explanation: "This is JavaScript. It uses function keyword and console.log() for output."
+        explanation: "This is JavaScript. It shows async/await syntax for handling asynchronous operations like API calls."
     }
 ];
 
@@ -97,17 +174,7 @@ let selectedOptionIndex = null;
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     loadQuestion();
-    setupEventListeners();
 });
-
-// ===== SETUP EVENT LISTENERS =====
-function setupEventListeners() {
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && answered) {
-            nextQuestion();
-        }
-    });
-}
 
 // ===== LOAD QUESTION =====
 function loadQuestion() {
@@ -137,14 +204,13 @@ function loadQuestion() {
         optionsContainer.appendChild(button);
     });
     
-    // Hide feedback
+    // Hide feedback and reset buttons
     document.getElementById('feedback-section').style.display = 'none';
+    document.getElementById('submit-btn').style.display = 'block';
+    document.getElementById('next-btn').style.display = 'none';
     
     answered = false;
     selectedOptionIndex = null;
-    
-    // Update progress
-    updateProgress();
 }
 
 // ===== SELECT OPTION =====
@@ -186,6 +252,10 @@ function submitAnswer() {
         
         feedbackText.innerHTML = `<strong>✓ Correct!</strong><br>${question.explanation}`;
         feedbackSection.className = 'feedback correct';
+        
+        // Show next button
+        document.getElementById('submit-btn').style.display = 'none';
+        document.getElementById('next-btn').style.display = 'block';
     } else {
         // Incorrect answer
         buttons[selectedOptionIndex].classList.add('incorrect');
@@ -193,10 +263,13 @@ function submitAnswer() {
         
         feedbackText.innerHTML = `<strong>✗ Incorrect</strong><br>The correct answer is: <strong>${question.options[question.correct]}</strong><br><br>${question.explanation}`;
         feedbackSection.className = 'feedback incorrect';
+        
+        // Show next button anyway to continue
+        document.getElementById('submit-btn').style.display = 'none';
+        document.getElementById('next-btn').style.display = 'block';
     }
     
     feedbackSection.style.display = 'block';
-    updateProgress();
 }
 
 // ===== NEXT QUESTION =====
@@ -218,7 +291,7 @@ function showCompletion() {
                 <p>Score: <span class="score-percentage">${percentage}%</span></p>
             </div>
             <div class="performance-message">
-                ${percentage === 100 ? '<p>Perfect score! You are a programming language expert! ���</p>' : 
+                ${percentage === 100 ? '<p>Perfect score! You are a programming language expert! 🚀</p>' : 
                   percentage >= 80 ? '<p>Excellent work! You know your programming languages well! 👏</p>' :
                   percentage >= 60 ? '<p>Good job! Keep practicing to improve! 📚</p>' :
                   '<p>Keep learning! Try again to improve your score! 💪</p>'}
@@ -244,7 +317,7 @@ function restartQuiz() {
         </section>
 
         <section class="question-section">
-            <h3 id="question-text">What language is this code written in?</h3>
+            <h3 id="question-text">What programming language is this code written in?</h3>
             
             <div class="options-container" id="options-container">
                 <!-- Options will be generated here -->
@@ -256,31 +329,10 @@ function restartQuiz() {
         </div>
 
         <div class="action-buttons">
-            <button class="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+            <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
             <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
         </div>
     `;
     
     loadQuestion();
 }
-
-// ===== UPDATE PROGRESS =====
-function updateProgress() {
-    const progress = currentQuestionIndex + 1;
-    const percentage = Math.round((progress / quizData.length) * 100);
-    document.getElementById('progress-fill').style.width = percentage + '%';
-    document.getElementById('progress-text').textContent = `${progress}/${quizData.length}`;
-}
-
-// ===== SHOW NEXT BUTTON WHEN ANSWERED =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Observer to show/hide next button
-    const observer = new MutationObserver(() => {
-        const nextBtn = document.getElementById('next-btn');
-        if (nextBtn && answered) {
-            nextBtn.style.display = 'block';
-        } else if (nextBtn && !answered) {
-            nextBtn.style.display = 'none';
-        }
-    });
-});
