@@ -363,9 +363,19 @@ function loadQuestion() {
                 <div class="editor-panel">
                     <h3><span class="icon">📝</span> Code Playground</h3>
                     <div class="editor-status" id="editor-status">
-                        <span class="status-dot"></span>
-                        <span>Complete lesson to unlock</span>
+                        <span class="status-dot" id="status-dot"></span>
+                        <span id="status-text">Answer correctly to unlock</span>
                     </div>
+                    <textarea id="code-editor" class="code-editor" placeholder="Answer correctly to unlock the editor..." disabled></textarea>
+                    <div class="editor-buttons">
+                        <button class="editor-btn btn-run" id="btn-run" onclick="runCode()" disabled>▶ Run Code</button>
+                        <button class="editor-btn btn-clear" onclick="clearCode()">Clear</button>
+                    </div>
+                    <div id="code-output" class="code-output" style="display:none">
+                        <div class="output-header">Output:</div>
+                        <pre id="output-text"></pre>
+                    </div>
+                    <div id="suggestions-panel"></div>
                 </div>
             </div>
         `;
@@ -438,6 +448,48 @@ function submitAnswer() {
                 <div class="feedback-details">${escapeHtml(question.explanation)}</div>
             </div>
         `;
+
+        // Unlock code editor
+        const codeEditor = document.getElementById('code-editor');
+        if (codeEditor && question.codeEditor) {
+            codeEditor.disabled = false;
+            codeEditor.value = question.code;
+
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            const btnRun = document.getElementById('btn-run');
+
+            if (statusDot) statusDot.classList.add('active');
+
+            if (question.language === 'javascript') {
+                if (statusText) statusText.textContent = 'JavaScript — edit and click Run!';
+                if (btnRun) btnRun.disabled = false;
+            } else if (question.language === 'html') {
+                if (statusText) statusText.textContent = 'HTML — edit and click Run to preview!';
+                if (btnRun) btnRun.disabled = false;
+            } else {
+                if (statusText) statusText.textContent = `${question.language.toUpperCase()} — view only`;
+                if (btnRun) btnRun.disabled = true;
+            }
+
+            // Show suggestions with actual examples
+            if (question.suggestions && question.suggestions.length) {
+                const suggestionsPanel = document.getElementById('suggestions-panel');
+                if (suggestionsPanel) {
+                    let html = '<div class="suggestions-section"><strong>💡 Things to try in the editor:</strong>';
+                    question.suggestions.forEach(s => {
+                        html += `
+                            <div class="suggestion-item">
+                                <div class="suggestion-desc">→ ${escapeHtml(s.desc)}</div>
+                                <pre class="suggestion-code">${escapeHtml(s.example)}</pre>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                    suggestionsPanel.innerHTML = html;
+                }
+            }
+        }
     } else {
         buttons[selectedOptionIndex].classList.add('incorrect');
         buttons[question.correct].classList.add('correct');
@@ -514,6 +566,69 @@ function submitErrorAnswer() {
     document.getElementById('next-btn-error').style.display = 'block';
     document.getElementById('next-btn-error').onclick = nextQuestion;
     document.getElementById('next-btn-error').focus();
+}
+
+// ===== RUN CODE — LANGUAGE-AWARE EXECUTOR =====
+function runCode() {
+    const question = shuffledQuestions[currentQuestionIndex];
+    const codeEditor = document.getElementById('code-editor');
+    const userCode = codeEditor ? codeEditor.value.trim() : '';
+
+    if (!userCode) {
+        alert('Please write some code to run!');
+        return;
+    }
+
+    const outputText = document.getElementById('output-text');
+    const codeOutput = document.getElementById('code-output');
+
+    if (!outputText || !codeOutput) return;
+
+    try {
+        if (question.language === 'html') {
+            // Use a sandboxed iframe to safely preview HTML without executing scripts
+            outputText.textContent = '';
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('sandbox', 'allow-same-origin');
+            iframe.style.cssText = 'width:100%;min-height:80px;border:none;border-radius:4px;background:white;display:block;';
+            iframe.srcdoc = userCode;
+            outputText.appendChild(iframe);
+            codeOutput.style.display = 'block';
+        } else if (question.language === 'javascript') {
+            let output = '';
+            const originalLog = console.log;
+            console.log = (...args) => {
+                output += args.map(String).join(' ') + '\n';
+            };
+            try {
+                // Educational sandbox: intentionally runs learner-typed JS to show output
+                // eslint-disable-next-line no-eval
+                eval(userCode);
+            } finally {
+                console.log = originalLog;
+            }
+            outputText.textContent = output.trim() || 'Code ran successfully (no output)';
+            outputText.style.color = output.trim() ? '#00ff41' : '#999';
+            codeOutput.style.display = 'block';
+        } else {
+            outputText.textContent = `${question.language.toUpperCase()} cannot be executed in the browser.`;
+            outputText.style.color = '#999';
+            codeOutput.style.display = 'block';
+        }
+    } catch (error) {
+        outputText.textContent = 'Error: ' + error.message;
+        outputText.style.color = '#ef4444';
+        codeOutput.style.display = 'block';
+    }
+}
+
+// ===== CLEAR CODE =====
+function clearCode() {
+    const codeEditor = document.getElementById('code-editor');
+    if (codeEditor) codeEditor.value = '';
+
+    const codeOutput = document.getElementById('code-output');
+    if (codeOutput) codeOutput.style.display = 'none';
 }
 
 // ===== NEXT QUESTION =====
