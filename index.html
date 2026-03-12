@@ -23,7 +23,7 @@
 
             <div class="sidebar-footer">
                 <div class="user-info">
-                    <div class="avatar" id="user-avatar" onclick="showEditNameModal()">U</div>
+                    <div class="avatar" id="user-avatar">U</div>
                     <div class="user-details">
                         <p class="username" id="current-username">Guest</p>
                         <p class="user-level">Beginner</p>
@@ -62,28 +62,6 @@
                 <!-- JavaScript populates this -->
             </div>
         </main>
-    </div>
-
-    <!-- EDIT NAME MODAL -->
-    <div class="modal" id="edit-name-modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Edit Your Name</h3>
-                <button class="modal-close" onclick="closeEditNameModal()">✕</button>
-            </div>
-            <div class="modal-body">
-                <input 
-                    type="text" 
-                    id="edit-name-input" 
-                    placeholder="Enter your name"
-                    maxlength="30"
-                />
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeEditNameModal()">Cancel</button>
-                <button class="btn-primary" onclick="confirmEditName()">Save</button>
-            </div>
-        </div>
     </div>
 
     <script src="script.js"></script>
