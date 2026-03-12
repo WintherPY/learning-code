@@ -1,31 +1,62 @@
-/* ===== GENERAL STYLES ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ===== LANGUAGE-SPECIFIC SIDEBAR COLORS ===== */
+
+/* HTML - Orange/Red */
+.nav-item.nav-html {
+    border-left-color: #E34C26;
 }
 
-body {
-    background-color: #0f0f0f;
-    color: #e0e0e0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    padding: 20px;
+.nav-item.nav-html:hover {
+    background: rgba(227, 76, 38, 0.15);
+    border-left-color: #E34C26;
 }
 
-header {
-    background: linear-gradient(135deg, #1a1a1a 0%, #262626 100%);
-    padding: 30px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    border-bottom: 3px solid #0066cc;
-    text-align: center;
+.nav-item.nav-html.active {
+    background: rgba(227, 76, 38, 0.2);
+    border-left-color: #E34C26;
 }
 
-h1 {
-    color: #00d4ff;
-    font-size: 2.5em;
-    margin-bottom: 10px;
+.nav-item.nav-html.active .nav-category,
+.nav-item.nav-html.active .nav-name {
+    color: #E34C26;
 }
 
-/* ... and 500+ more lines of styling ... */
+/* JavaScript - Yellow */
+.nav-item.nav-javascript {
+    border-left-color: #F7DF1E;
+}
+
+.nav-item.nav-javascript:hover {
+    background: rgba(247, 223, 30, 0.15);
+    border-left-color: #F7DF1E;
+}
+
+.nav-item.nav-javascript.active {
+    background: rgba(247, 223, 30, 0.2);
+    border-left-color: #F7DF1E;
+}
+
+.nav-item.nav-javascript.active .nav-category,
+.nav-item.nav-javascript.active .nav-name {
+    color: #F7DF1E;
+    text-shadow: 0 0 8px rgba(247, 223, 30, 0.5);
+}
+
+/* CSS - Blue */
+.nav-item.nav-css {
+    border-left-color: #1572B6;
+}
+
+.nav-item.nav-css:hover {
+    background: rgba(21, 114, 182, 0.15);
+    border-left-color: #1572B6;
+}
+
+.nav-item.nav-css.active {
+    background: rgba(21, 114, 182, 0.2);
+    border-left-color: #1572B6;
+}
+
+.nav-item.nav-css.active .nav-category,
+.nav-item.nav-css.active .nav-name {
+    color: #1572B6;
+}
