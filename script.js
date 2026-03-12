@@ -1,1082 +1,386 @@
-// ===== COURSES DATABASE WITH COLOR CODES =====
-const coursesData = {
-    'beginner-general': {
-        id: 'beginner-general',
-        name: 'Beginner: General',
-        category: 'Beginner',
-        difficulty: 'Beginner',
-        description: 'Start from scratch with basic programming concepts',
-        color: null,
-        questions: [
-            {
-                type: "identify",
-                code: `<h1>Hello World</h1>`,
-                question: "What does this code do?",
-                options: ["Creates a large heading", "Creates a paragraph", "Creates a button"],
-                correct: 0,
-                explanation: "This creates a large heading on a webpage.",
-                codeBehavior: "Displays: Hello World as a big title"
-            },
-            {
-                type: "identify",
-                code: `console.log("Hello");`,
-                question: "What does this code do?",
-                options: ["Prints text", "Creates a variable", "Makes a button"],
-                correct: 0,
-                explanation: "This prints text to the console.",
-                codeBehavior: "Displays: Hello in the developer console"
-            },
-            {
-                type: "identify",
-                code: `const x = 5;`,
-                question: "What is this code doing?",
-                options: ["Creating a variable named x with value 5", "Creating a function", "Creating a list"],
-                correct: 0,
-                explanation: "This creates a variable that stores the number 5.",
-                codeBehavior: "Stores the value 5 in a container called x"
-            },
-            {
-                type: "identify",
-                code: `body { background-color: blue; }`,
-                question: "What does this code do?",
-                options: ["Changes background to blue", "Changes text to blue", "Creates a button"],
-                correct: 0,
-                explanation: "This CSS rule changes the page background color to blue.",
-                codeBehavior: "Makes the entire webpage background blue"
-            },
-            {
-                type: "identify",
-                code: `<button>Click Me</button>`,
-                question: "What does this create?",
-                options: ["A clickable button", "A text field", "A heading"],
-                correct: 0,
-                explanation: "This creates an interactive button on the webpage.",
-                codeBehavior: "Shows a button labeled 'Click Me'"
-            }
-        ]
-    },
-    
-    'novice-general': {
-        id: 'novice-general',
-        name: 'Novice: General',
-        category: 'Novice',
-        difficulty: 'Novice',
-        description: 'Build on basics with variables, functions, and logic',
-        color: null,
-        questions: [
-            {
-                type: "behavior",
-                code: `const message = "Hello";
-console.log(message);`,
-                question: "What does this code output?",
-                options: ["Hello", "message", "undefined"],
-                correct: 0,
-                explanation: "Variables store values. console.log prints that value.",
-                codeBehavior: "Outputs: Hello"
-            },
-            {
-                type: "error",
-                code: `const x = 10
-const y = 20
-console.log(x + y)`,
-                question: "Find the error - Type what's missing",
-                errorAnswer: "semicolon",
-                errorInfo: {
-                    errorType: "Missing Semicolons",
-                    description: "All three lines are missing semicolons at the end of statements.",
-                    errorLines: [
-                        { line: 1, original: "const x = 10", corrected: "const x = 10;", position: "end of line" },
-                        { line: 2, original: "const y = 20", corrected: "const y = 20;", position: "end of line" },
-                        { line: 3, original: "console.log(x + y)", corrected: "console.log(x + y);", position: "end of line" }
-                    ],
-                    tip: "In JavaScript, statements should end with a semicolon (;)"
-                },
-                explanation: "All statements need semicolons.",
-                codeBehavior: "Code will work but violates JavaScript best practices"
-            },
-            {
-                type: "behavior",
-                code: `if (5 > 3) { console.log("yes"); }`,
-                question: "What does this output?",
-                options: ["yes", "no", "error"],
-                correct: 0,
-                explanation: "5 is greater than 3, so the condition is true.",
-                codeBehavior: "Outputs: yes"
-            },
-            {
-                type: "identify",
-                code: `function add(a, b) { return a + b; }`,
-                question: "What does this function do?",
-                options: ["Adds two numbers", "Creates a variable", "Prints text"],
-                correct: 0,
-                explanation: "This function takes two inputs and returns their sum.",
-                codeBehavior: "When called with add(3,4), returns 7"
-            },
-            {
-                type: "behavior",
-                code: `const arr = [1, 2, 3];
-console.log(arr[0]);`,
-                question: "What does this output?",
-                options: ["1", "3", "undefined"],
-                correct: 0,
-                explanation: "Arrays are indexed starting at 0.",
-                codeBehavior: "Outputs: 1"
-            }
-        ]
-    },
+// ===== QUIZ DATA - Progressive Difficulty =====
 
-    'expert-general': {
-        id: 'expert-general',
-        name: 'Expert: General',
-        category: 'Expert',
-        difficulty: 'Expert',
-        description: 'Master advanced concepts and optimization',
-        color: null,
-        questions: [
-            {
-                type: "behavior",
-                code: `const nums = [1,2,3,4,5];
-const doubled = nums.map(n => n * 2);`,
-                question: "What is doubled?",
-                options: ["[2,4,6,8,10]", "[1,2,3,4,5]", "undefined"],
-                correct: 0,
-                explanation: "map() transforms each element.",
-                codeBehavior: "doubled = [2,4,6,8,10]"
-            },
-            {
-                type: "error",
-                code: `function test {
-    return "value";
-}`,
-                question: "Find the error - Type what's missing",
-                errorAnswer: "parentheses",
-                errorInfo: {
-                    errorType: "Missing Parentheses",
-                    description: "Function declaration requires parentheses after the function name.",
-                    errorLines: [
-                        { line: 1, original: "function test {", corrected: "function test() {", position: "after 'test'" }
-                    ],
-                    tip: "All functions need parentheses: function name() { ... }"
-                },
-                explanation: "Functions require parentheses: function name()",
-                codeBehavior: "Syntax error - code won't run"
-            },
-            {
-                type: "behavior",
-                code: `const obj = { name: "John", age: 30 };
-console.log(obj.name);`,
-                question: "What does this output?",
-                options: ["John", "30", "undefined"],
-                correct: 0,
-                explanation: "Objects store key-value pairs accessed with dot notation.",
-                codeBehavior: "Outputs: John"
-            },
-            {
-                type: "identify",
-                code: `const result = async () => {
-    const data = await fetch(url);
-    return data;
-};`,
-                question: "What is this pattern?",
-                options: ["Async/await pattern", "Loop", "Class"],
-                correct: 0,
-                explanation: "Async/await handles asynchronous operations.",
-                codeBehavior: "Fetches data asynchronously"
-            },
-            {
-                type: "behavior",
-                code: `const users = [{id:1},{id:2}];
-const ids = users.map(u => u.id);`,
-                question: "What is ids?",
-                options: ["[1, 2]", "[[1],[2]]", "undefined"],
-                correct: 0,
-                explanation: "map() extracts properties from object arrays.",
-                codeBehavior: "ids = [1, 2]"
-            }
-        ]
-    },
-
-    'html-course': {
-        id: 'html-course',
-        name: 'HTML',
-        category: 'Language',
-        difficulty: 'Mixed',
-        description: 'Master HTML markup and semantic elements',
-        color: '#E34C26',
-        questions: [
-            {
-                type: "identify",
-                code: `<!DOCTYPE html>
-<html>
-<head><title>Page</title></head>
-<body><h1>Hello</h1></body>
-</html>`,
-                question: "What does DOCTYPE do?",
-                options: ["Declares HTML version", "Creates heading", "Styles page"],
-                correct: 0,
-                explanation: "DOCTYPE tells browser it's HTML5.",
-                codeBehavior: "Ensures proper rendering"
-            },
-            {
-                type: "behavior",
-                code: `<form>
-    <input type="text" placeholder="Name">
-    <button type="submit">Send</button>
-</form>`,
-                question: "What does this create?",
-                options: ["A form with input and button", "Just a button", "Just an input"],
-                correct: 0,
-                explanation: "Forms collect user input.",
-                codeBehavior: "Creates interactive form"
-            },
-            {
-                type: "error",
-                code: `<div class=container>
-    <h1>Title</h1>
-</div>`,
-                question: "Find the error - Type what's wrong",
-                errorAnswer: "quotes",
-                errorInfo: {
-                    errorType: "Missing Quotes",
-                    description: "HTML attribute values must be enclosed in quotes.",
-                    errorLines: [
-                        { line: 1, original: '<div class=container>', corrected: '<div class="container">', position: "around 'container'" }
-                    ],
-                    tip: "Always wrap attribute values in quotes: class=\"value\""
-                },
-                explanation: "Attribute values must be in quotes.",
-                codeBehavior: "class=container should be class=\"container\""
-            },
-            {
-                type: "identify",
-                code: `<img src="photo.jpg" alt="Description">`,
-                question: "What is the alt attribute for?",
-                options: ["Describes image if not loaded", "Resizes image", "Adds border"],
-                correct: 0,
-                explanation: "alt provides alternative text for accessibility.",
-                codeBehavior: "Shows text if image fails to load"
-            },
-            {
-                type: "identify",
-                code: `<section><article><h2>News</h2></article></section>`,
-                question: "What is this semantic structure?",
-                options: ["Proper semantic HTML", "Invalid nesting", "Style tags"],
-                correct: 0,
-                explanation: "Semantic tags improve structure and SEO.",
-                codeBehavior: "Good practice for organization"
-            }
-        ]
-    },
-
-    'javascript-course': {
-        id: 'javascript-course',
-        name: 'JavaScript',
-        category: 'Language',
-        difficulty: 'Mixed',
-        description: 'Learn JavaScript ES6+ and advanced concepts',
-        color: '#F7DF1E',
-        questions: [
-            {
-                type: "behavior",
-                code: `const x = "5";
-console.log(typeof x);`,
-                question: "What does this output?",
-                options: ["string", "number", "5"],
-                correct: 0,
-                explanation: "typeof checks variable type.",
-                codeBehavior: "Outputs: string"
-            },
-            {
-                type: "error",
-                code: `const arr = [1,2,3]
-arr.push(4)
-console.log(arr)`,
-                question: "Find the error - Type what's missing",
-                errorAnswer: "semicolon",
-                errorInfo: {
-                    errorType: "Missing Semicolons",
-                    description: "All three statements are missing semicolons.",
-                    errorLines: [
-                        { line: 1, original: "const arr = [1,2,3]", corrected: "const arr = [1,2,3];", position: "end of line" },
-                        { line: 2, original: "arr.push(4)", corrected: "arr.push(4);", position: "end of line" },
-                        { line: 3, original: "console.log(arr)", corrected: "console.log(arr);", position: "end of line" }
-                    ],
-                    tip: "Missing semicolons violate JavaScript best practices"
-                },
-                explanation: "Missing semicolons.",
-                codeBehavior: "Code still runs due to automatic insertion"
-            },
-            {
-                type: "identify",
-                code: `const add = (a, b) => a + b;`,
-                question: "What is this?",
-                options: ["Arrow function", "Regular function", "Class"],
-                correct: 0,
-                explanation: "Arrow functions are concise syntax for functions.",
-                codeBehavior: "Can be called as add(3,4) returns 7"
-            },
-            {
-                type: "behavior",
-                code: `const {name} = {name: "John", age: 30};
+const quizData = [
+    // LEVEL 1 - BEGINNER (Questions 1-5)
+    {
+        difficulty: 1,
+        code: `let name = "Alice";
 console.log(name);`,
-                question: "What does this output?",
-                options: ["John", "30", "undefined"],
-                correct: 0,
-                explanation: "Destructuring extracts values from objects.",
-                codeBehavior: "Outputs: John"
-            },
-            {
-                type: "identify",
-                code: `class User {
-    constructor(name) { this.name = name; }
+        question: "What will this code print?",
+        options: ["Alice", "name", "undefined", "null"],
+        correct: 0,
+        hint: "The variable 'name' contains the string 'Alice'. Console.log prints its value.",
+        explanation: "This code prints 'Alice' because the variable name holds that string value."
+    },
+    {
+        difficulty: 1,
+        code: `let num = 5;
+let result = num + 3;
+console.log(result);`,
+        question: "What is the output?",
+        options: ["5", "3", "8", "53"],
+        correct: 2,
+        hint: "Add 5 + 3 together.",
+        explanation: "5 + 3 = 8. The variable 'result' stores this sum."
+    },
+    {
+        difficulty: 1,
+        code: `let x = 10;
+let y = 20;
+console.log(x + y);`,
+        question: "What does console.log display?",
+        options: ["10", "20", "30", "1020"],
+        correct: 2,
+        hint: "10 + 20 equals what?",
+        explanation: "10 + 20 = 30. This is basic addition in JavaScript."
+    },
+    {
+        difficulty: 1,
+        code: `let fruit = "apple";
+console.log(fruit.length);`,
+        question: "What does .length return?",
+        options: ["a", "5", "apple", "error"],
+        correct: 1,
+        hint: "Count the characters in 'apple': a-p-p-l-e",
+        explanation: "The string 'apple' has 5 characters, so .length returns 5."
+    },
+    {
+        difficulty: 1,
+        code: `let age = 25;
+if (age > 18) {
+    console.log("Adult");
+} else {
+    console.log("Not Adult");
 }`,
-                question: "What is this?",
-                options: ["Class definition", "Object", "Function"],
-                correct: 0,
-                explanation: "Classes are blueprints for objects.",
-                codeBehavior: "Creates reusable object templates"
-            }
-        ]
+        question: "What will print?",
+        options: ["Not Adult", "Adult", "25", "error"],
+        correct: 1,
+        hint: "Is 25 greater than 18?",
+        explanation: "Since 25 > 18 is true, the if block executes and prints 'Adult'."
     },
 
-    'css-course': {
-        id: 'css-course',
-        name: 'CSS',
-        category: 'Language',
-        difficulty: 'Mixed',
-        description: 'Master CSS styling and layout techniques',
-        color: '#1572B6',
-        questions: [
-            {
-                type: "identify",
-                code: `#header { color: red; }`,
-                question: "What does # mean?",
-                options: ["ID selector", "Class selector", "Tag selector"],
-                correct: 0,
-                explanation: "# selects elements by ID.",
-                codeBehavior: "Targets element with id=\"header\""
-            },
-            {
-                type: "behavior",
-                code: `.box { 
-    display: flex;
-    justify-content: center;
+    // LEVEL 2 - EASY (Questions 6-10)
+    {
+        difficulty: 2,
+        code: `let numbers = [1, 2, 3, 4, 5];
+console.log(numbers[2]);`,
+        question: "What is printed?",
+        options: ["1", "2", "3", "5"],
+        correct: 2,
+        hint: "Arrays start at index 0. Index 2 is the third element.",
+        explanation: "Arrays are zero-indexed. Index 0=1, 1=2, 2=3. So numbers[2] is 3."
+    },
+    {
+        difficulty: 2,
+        code: `for (let i = 0; i < 3; i++) {
+    console.log(i);
 }`,
-                question: "What does this do?",
-                options: ["Centers content horizontally", "Makes box red", "Hides box"],
-                correct: 0,
-                explanation: "Flexbox centers items.",
-                codeBehavior: "Centers child elements"
-            },
-            {
-                type: "identify",
-                code: `button:hover { background: blue; }`,
-                question: "What is :hover?",
-                options: ["Pseudo-class for mouse over", "Class name", "ID selector"],
-                correct: 0,
-                explanation: "Pseudo-classes target element states.",
-                codeBehavior: "Changes background when hovering"
-            },
-            {
-                type: "error",
-                code: `body color: red;`,
-                question: "Find the error - Type what's missing",
-                errorAnswer: "braces",
-                errorInfo: {
-                    errorType: "Missing Braces",
-                    description: "CSS rules require curly braces to enclose the property definitions.",
-                    errorLines: [
-                        { line: 1, original: "body color: red;", corrected: "body { color: red; }", position: "needs { } around properties" }
-                    ],
-                    tip: "CSS syntax: selector { property: value; }"
-                },
-                explanation: "CSS needs { } for rules.",
-                codeBehavior: "Should be body { color: red; }"
-            },
-            {
-                type: "identify",
-                code: `div { grid-template-columns: 1fr 1fr 1fr; }`,
-                question: "What layout is this?",
-                options: ["CSS Grid with 3 equal columns", "Flexbox", "Float layout"],
-                correct: 0,
-                explanation: "Grid creates responsive layouts.",
-                codeBehavior: "Creates 3-column layout"
-            }
-        ]
-    }
-};
+        question: "What is the output?",
+        options: ["0 1 2", "1 2 3", "0 1 2 3", "3"],
+        correct: 0,
+        hint: "The loop runs while i < 3, starting from 0.",
+        explanation: "i starts at 0. Loop runs: i=0, i=1, i=2. Then i=3 stops the loop."
+    },
+    {
+        difficulty: 2,
+        code: `function greet(name) {
+    return "Hello " + name;
+}
+console.log(greet("Bob"));`,
+        question: "What is the output?",
+        options: ["Hello", "Bob", "Hello Bob", "function"],
+        correct: 2,
+        hint: "The function concatenates 'Hello ' with the name parameter.",
+        explanation: "The function returns 'Hello ' + 'Bob' = 'Hello Bob'."
+    },
+    {
+        difficulty: 2,
+        code: `let obj = {name: "John", age: 30};
+console.log(obj.name);`,
+        question: "What prints?",
+        options: ["John", "{name: 'John'}", "30", "undefined"],
+        correct: 0,
+        hint: "Use dot notation to access object properties.",
+        explanation: "obj.name accesses the 'name' property of the object, which is 'John'."
+    },
+    {
+        difficulty: 2,
+        code: `let arr = [10, 20, 30];
+arr.push(40);
+console.log(arr.length);`,
+        question: "What is arr.length?",
+        options: ["3", "4", "40", "undefined"],
+        correct: 1,
+        hint: "push() adds an element to the array. What's the new length?",
+        explanation: "The array started with 3 elements. push(40) adds one more, so length is 4."
+    },
 
-// ===== QUIZ STATE =====
-let leaderboard = [];
-let currentPlayerName = '';
-let currentCourseId = '';
-let shuffledQuestions = [];
-let currentQuestionIndex = 0;
-let currentSessionScore = 0;
-let answered = false;
-let selectedOptionIndex = null;
-let quizInProgress = false;
+    // LEVEL 3 - INTERMEDIATE (Questions 11-15)
+    {
+        difficulty: 3,
+        code: `let arr = [1, 2, 3, 4, 5];
+let doubled = arr.map(x => x * 2);
+console.log(doubled);`,
+        question: "What is the output?",
+        options: ["[2, 4, 6, 8, 10]", "[1, 2, 3, 4, 5]", "[1, 4, 9, 16, 25]", "error"],
+        correct: 0,
+        hint: "map() applies the arrow function to each element.",
+        explanation: "map() multiplies each element by 2: 1*2=2, 2*2=4, etc."
+    },
+    {
+        difficulty: 3,
+        code: `let arr = [1, 2, 3, 4, 5];
+let filtered = arr.filter(x => x > 2);
+console.log(filtered);`,
+        question: "What is filtered?",
+        options: ["[1, 2]", "[3, 4, 5]", "[2, 3, 4, 5]", "true"],
+        correct: 1,
+        hint: "filter() keeps only elements where the condition is true.",
+        explanation: "filter() returns only elements greater than 2: [3, 4, 5]."
+    },
+    {
+        difficulty: 3,
+        code: `const x = 5;
+x = 10;
+console.log(x);`,
+        question: "What happens?",
+        options: ["10", "5", "Error", "undefined"],
+        correct: 2,
+        hint: "const variables cannot be reassigned.",
+        explanation: "const prevents reassignment. Trying to change x causes an error."
+    },
+    {
+        difficulty: 3,
+        code: `let obj1 = {a: 1};
+let obj2 = obj1;
+obj2.a = 2;
+console.log(obj1.a);`,
+        question: "What prints?",
+        options: ["1", "2", "undefined", "error"],
+        correct: 1,
+        hint: "Objects are passed by reference in JavaScript.",
+        explanation: "obj2 references the same object as obj1. Changing obj2.a also changes obj1.a."
+    },
+    {
+        difficulty: 3,
+        code: `let str = "JavaScript";
+console.log(str.toUpperCase());`,
+        question: "What is the output?",
+        options: ["javascript", "JAVASCRIPT", "JavaScript", "error"],
+        correct: 1,
+        hint: "toUpperCase() converts all letters to uppercase.",
+        explanation: "toUpperCase() returns 'JAVASCRIPT' (all uppercase)."
+    },
 
-// ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', () => {
-    loadLeaderboard();
-    showNameEntryScreen();
+    // LEVEL 4 - ADVANCED (Questions 16-20)
+    {
+        difficulty: 4,
+        code: `function outer() {
+    let count = 0;
+    return function() {
+        count++;
+        return count;
+    };
+}
+let counter = outer();
+console.log(counter());
+console.log(counter());`,
+        question: "What is the second output?",
+        options: ["0", "1", "2", "undefined"],
+        correct: 2,
+        hint: "This is a closure. The inner function remembers 'count'.",
+        explanation: "The first call returns 1, the second returns 2. Closures maintain state."
+    },
+    {
+        difficulty: 4,
+        code: `let promise = new Promise((resolve) => {
+    resolve("Success!");
 });
-
-// ===== LEADERBOARD FUNCTIONS =====
-function loadLeaderboard() {
-    const stored = localStorage.getItem('learning-code-leaderboard');
-    leaderboard = stored ? JSON.parse(stored) : [];
-}
-
-function saveLeaderboard() {
-    localStorage.setItem('learning-code-leaderboard', JSON.stringify(leaderboard));
-}
-
-function addOrUpdateLeaderboard(name, scoreToAdd) {
-    let playerEntry = leaderboard.find(entry => entry.name.toLowerCase() === name.toLowerCase());
-    
-    if (playerEntry) {
-        playerEntry.score += scoreToAdd;
-        playerEntry.attempts = (playerEntry.attempts || 0) + 1;
-        playerEntry.lastUpdate = new Date().toLocaleDateString();
-    } else {
-        leaderboard.push({
-            name: name,
-            score: scoreToAdd,
-            attempts: 1,
-            lastUpdate: new Date().toLocaleDateString()
-        });
+promise.then(result => console.log(result));`,
+        question: "What prints?",
+        options: ["Promise", "Success!", "undefined", "null"],
+        correct: 1,
+        hint: "then() handles the resolved value.",
+        explanation: "When the promise resolves with 'Success!', then() logs it."
+    },
+    {
+        difficulty: 4,
+        code: `class Animal {
+    constructor(name) {
+        this.name = name;
     }
-    
-    saveLeaderboard();
-    updateSidebarCourses();
-}
-
-function getTop10Leaderboard() {
-    return leaderboard
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 10);
-}
-
-function renderLeaderboard() {
-    const top10 = getTop10Leaderboard();
-    if (top10.length === 0) {
-        return '<div class="empty-leaderboard">No scores yet. Be the first!</div>';
-    }
-    
-    return top10.map((entry, index) => `
-        <div class="leaderboard-item">
-            <span class="leaderboard-rank">#${index + 1}</span>
-            <span class="leaderboard-name">${escapeHtml(entry.name)}</span>
-            <span class="leaderboard-score">${entry.score} pts</span>
-        </div>
-    `).join('');
-}
-
-// ===== SIDEBAR NAVIGATION WITH COLOR CODING =====
-function updateSidebarCourses() {
-    const sidebarNav = document.getElementById('sidebar-nav');
-    if (!sidebarNav) return;
-    
-    const courses = Object.values(coursesData);
-    
-    sidebarNav.innerHTML = courses.map(course => {
-        const isActive = currentCourseId === course.id ? 'active' : '';
-        let navItemHTML = `<div class="nav-item ${isActive}" onclick="handleCourseNavClick('${course.id}')"`;
-        
-        // Apply inline styles for language courses
-        if (course.id === 'html-course') {
-            navItemHTML += ` style="border-left-color: #E34C26;"`;
-        } else if (course.id === 'javascript-course') {
-            navItemHTML += ` style="border-left-color: #F7DF1E;"`;
-        } else if (course.id === 'css-course') {
-            navItemHTML += ` style="border-left-color: #1572B6;"`;
-        }
-        
-        navItemHTML += `>
-            <div class="nav-category">${course.category}</div>
-            <div class="nav-name">${escapeHtml(course.name)}</div>
-        </div>`;
-        
-        return navItemHTML;
-    }).join('');
-}
-
-function handleCourseNavClick(courseId) {
-    if (!quizInProgress) {
-        selectCourse(courseId);
-        return;
-    }
-    
-    // If quiz in progress, show exit confirmation
-    if (courseId !== currentCourseId) {
-        showExitConfirm = true;
-        const courseName = coursesData[currentCourseId].name;
-        document.querySelector('#exit-course-modal .modal-body p:first-child').textContent = `You are exiting "${courseName}" course - Continue?`;
-        document.getElementById('exit-course-modal').style.display = 'flex';
-        window.pendingCourseId = courseId;
+    speak() {
+        console.log(this.name + " makes a sound");
     }
 }
-
-// ===== CONFIRM EXIT COURSE =====
-function confirmExitCourse() {
-    if (!quizInProgress) {
-        // Logo click when not in quiz - just refresh page
-        location.reload();
-        return;
+let dog = new Animal("Dog");
+dog.speak();`,
+        question: "What prints?",
+        options: ["makes a sound", "Dog", "Dog makes a sound", "error"],
+        correct: 2,
+        hint: "The speak method uses 'this.name' which is 'Dog'.",
+        explanation: "The speak method accesses this.name ('Dog') and concatenates the message."
+    },
+    {
+        difficulty: 4,
+        code: `let arr = [1, 2, 3, 4, 5];
+let sum = arr.reduce((acc, num) => acc + num, 0);
+console.log(sum);`,
+        question: "What is sum?",
+        options: ["15", "0", "[1, 2, 3, 4, 5]", "error"],
+        correct: 0,
+        hint: "reduce() accumulates values. Starting at 0, add each number.",
+        explanation: "reduce() sums: 0+1+2+3+4+5 = 15."
+    },
+    {
+        difficulty: 4,
+        code: `let obj1 = {x: 1, y: 2};
+let obj2 = {...obj1, y: 3};
+console.log(obj2.y);`,
+        question: "What prints?",
+        options: ["2", "3", "undefined", "error"],
+        correct: 1,
+        hint: "The spread operator creates a copy and overwrites y.",
+        explanation: "The spread operator copies obj1, but y: 3 overrides the original y: 2."
     }
-    
-    // Logo click when in quiz - show exit confirmation
-    const courseName = coursesData[currentCourseId].name;
-    document.querySelector('#exit-course-modal .modal-body p:first-child').textContent = `You are exiting "${courseName}" course - Continue?`;
-    document.getElementById('exit-course-modal').style.display = 'flex';
-    window.pendingCourseId = '';
-}
+];
 
-function closeCourseExitModal() {
-    document.getElementById('exit-course-modal').style.display = 'none';
-    window.pendingCourseId = '';
-}
+// Initialize quiz on page load
+document.addEventListener('DOMContentLoaded', initializeQuiz);
 
-function exitCourse() {
-    quizInProgress = false;
-    answered = false;
-    currentQuestionIndex = 0;
-    currentSessionScore = 0;
-    
-    const pendingCourseId = window.pendingCourseId;
-    closeCourseExitModal();
-    
-    if (pendingCourseId === '') {
-        // Refresh page to exit course
-        location.reload();
-    } else {
-        // Switching to another course
-        currentCourseId = pendingCourseId;
-        updateUserInfo();
-        updateSidebarCourses();
-        showCourseSelection();
-    }
-}
+let currentQuestionIndex = 0;
+let score = 0;
+let answeredCorrectly = false;
 
-function selectCourse(courseId) {
-    if (quizInProgress) return;
-    currentCourseId = courseId;
-    updateSidebarCourses();
-    showCourseSelection();
-}
-
-// ===== SHOW NAME ENTRY SCREEN =====
-function showNameEntryScreen() {
-    const contentArea = document.getElementById('content-area');
-    contentArea.innerHTML = `
-        <div class="name-entry-screen">
-            <h2>Welcome to Learning Code</h2>
-            <p class="tagline">Interactive Programming Quiz</p>
-            
-            <div class="input-group">
-                <label for="player-name">Enter Your Name</label>
-                <input 
-                    type="text" 
-                    id="player-name" 
-                    placeholder="Your name..." 
-                    maxlength="30"
-                    autocomplete="off"
-                />
-            </div>
-            
-            <button class="btn-start" onclick="proceedToCourses()">Continue</button>
-            
-            <div class="leaderboard-section">
-                <h3>🏆 Top 10 Players</h3>
-                <div class="leaderboard-list">
-                    ${renderLeaderboard()}
-                </div>
-            </div>
-        </div>
-    `;
-    
-    const nameInput = document.getElementById('player-name');
-    if (nameInput) {
-        nameInput.focus();
-        nameInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') proceedToCourses();
-        });
-    }
-    
-    document.getElementById('breadcrumb-course').textContent = 'Courses';
-    document.getElementById('lesson-title').textContent = 'Welcome';
-}
-
-function proceedToCourses() {
-    const nameInput = document.getElementById('player-name');
-    const name = nameInput.value.trim();
-    
-    if (!name || name.length < 2) {
-        alert('Please enter a valid name (at least 2 characters)');
-        return;
-    }
-    
-    currentPlayerName = name;
-    updateUserInfo();
-    updateSidebarCourses();
-    showCourseSelection();
-}
-
-// ===== UPDATE USER INFO =====
-function updateUserInfo() {
-    const avatar = document.getElementById('user-avatar');
-    const username = document.getElementById('current-username');
-    const userLevel = document.querySelector('.user-level');
-    
-    if (avatar) avatar.textContent = currentPlayerName.charAt(0).toUpperCase();
-    if (username) username.textContent = currentPlayerName;
-    if (userLevel) userLevel.textContent = currentCourseId ? 'In Course' : 'Select Course';
-}
-
-// ===== SHOW COURSE SELECTION =====
-function showCourseSelection() {
-    const contentArea = document.getElementById('content-area');
-    
-    if (!currentCourseId) {
-        // Show all courses
-        const courses = Object.values(coursesData);
-        contentArea.innerHTML = `
-            <div class="course-selection-screen">
-                <h2>📚 Select Your Course</h2>
-                <div class="courses-grid">
-                    ${courses.map(course => `
-                        <div class="course-card" onclick="startCourse('${course.id}')">
-                            <span class="course-badge ${course.difficulty.toLowerCase()}">${course.difficulty}</span>
-                            <h3 class="course-title">${escapeHtml(course.name)}</h3>
-                            <p class="course-description">${escapeHtml(course.description)}</p>
-                            <div class="course-info">
-                                <div class="info-item">📝 ${course.questions.length} questions</div>
-                            </div>
-                            <button class="btn-start-course">Start Course</button>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-    } else {
-        // Show selected course
-        const course = coursesData[currentCourseId];
-        contentArea.innerHTML = `
-            <div class="course-selection-screen">
-                <h2>📚 ${escapeHtml(course.name)}</h2>
-                <div class="courses-grid">
-                    <div class="course-card">
-                        <span class="course-badge ${course.difficulty.toLowerCase()}">${course.difficulty}</span>
-                        <h3 class="course-title">${escapeHtml(course.name)}</h3>
-                        <p class="course-description">${escapeHtml(course.description)}</p>
-                        <div class="course-info">
-                            <div class="info-item">📝 ${course.questions.length} questions</div>
-                        </div>
-                        <button class="btn-start-course" onclick="startCourse('${course.id}')">Start Quiz</button>
-                        <button class="btn-start-course" style="margin-top: 10px; background: #999;" onclick="backToCourseSelection()">← Back</button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-    
-    document.getElementById('breadcrumb-course').textContent = currentCourseId ? coursesData[currentCourseId].name : 'Courses';
-    document.getElementById('lesson-title').textContent = 'Select';
-}
-
-function backToCourseSelection() {
-    currentCourseId = '';
-    updateUserInfo();
-    updateSidebarCourses();
-    showCourseSelection();
-}
-
-// ===== START COURSE =====
-function startCourse(courseId) {
-    currentCourseId = courseId;
-    const course = coursesData[courseId];
-    shuffledQuestions = [...course.questions].sort(() => Math.random() - 0.5);
-    currentQuestionIndex = 0;
-    currentSessionScore = 0;
-    quizInProgress = true;
-    answered = false;
-    
-    document.getElementById('breadcrumb-course').textContent = course.name;
-    updateUserInfo();
-    updateSidebarCourses();
+function initializeQuiz() {
     loadQuestion();
 }
 
-// ===== LOAD QUESTION =====
 function loadQuestion() {
-    if (currentQuestionIndex >= shuffledQuestions.length) {
+    if (currentQuestionIndex >= quizData.length) {
         showCompletion();
         return;
     }
     
-    const question = shuffledQuestions[currentQuestionIndex];
-    const contentArea = document.getElementById('content-area');
-    const lessonNumber = currentQuestionIndex + 1;
+    const question = quizData[currentQuestionIndex];
+    document.getElementById('code-display').textContent = question.code;
+    document.getElementById('question-text').textContent = question.question;
     
-    document.getElementById('lesson-title').textContent = `Question ${lessonNumber}`;
-    updateProgress();
-    
-    let questionContent = '';
-    
-    if (question.type === 'error') {
-        questionContent = `
-            <div class="lesson-container">
-                <div class="lesson-panel">
-                    <h3><span class="icon">🔍</span> Find the Error</h3>
-                    <div class="code-display">
-                        <pre>${escapeHtml(question.code)}</pre>
-                    </div>
-                    <p class="question-title">${escapeHtml(question.question)}</p>
-                    <div class="options-list">
-                        <input 
-                            type="text" 
-                            id="error-input" 
-                            placeholder="Type what is missing or wrong..."
-                            class="error-input-field"
-                        />
-                    </div>
-                    <div id="feedback-error" style="display: none;"></div>
-                    <div class="action-buttons">
-                        <button class="btn-submit" onclick="submitErrorAnswer()">Submit Answer</button>
-                        <button class="btn-next" id="next-btn-error">Next Question</button>
-                    </div>
-                </div>
-                <div class="editor-panel">
-                    <h3><span class="icon">💻</span> Code Playground</h3>
-                    <div class="editor-status">
-                        <span class="status-dot"></span>
-                        <span>Complete to proceed</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    } else {
-        questionContent = `
-            <div class="lesson-container">
-                <div class="lesson-panel">
-                    <h3><span class="icon">❓</span> Question</h3>
-                    <div class="code-display">
-                        <pre>${escapeHtml(question.code)}</pre>
-                    </div>
-                    <p class="question-title">${escapeHtml(question.question)}</p>
-                    <div class="options-list" id="options-list"></div>
-                    <div id="feedback" style="display: none;"></div>
-                    <div class="action-buttons">
-                        <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">Submit Answer</button>
-                        <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question</button>
-                    </div>
-                </div>
-                <div class="editor-panel">
-                    <h3><span class="icon">💻</span> Code Playground</h3>
-                    <div class="editor-status">
-                        <span class="status-dot"></span>
-                        <span>Complete to proceed</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-    
-    contentArea.innerHTML = questionContent;
-    
-    if (question.type === 'error') {
-        const errorInput = document.getElementById('error-input');
-        if (errorInput) {
-            errorInput.focus();
-        }
-    } else {
-        renderOptions(question);
-    }
-    
-    answered = false;
-    selectedOptionIndex = null;
-}
-
-// ===== RENDER OPTIONS =====
-function renderOptions(question) {
-    const optionsList = document.getElementById('options-list');
-    if (!optionsList) return;
-    
-    optionsList.innerHTML = '';
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
     
     question.options.forEach((option, index) => {
         const button = document.createElement('button');
-        button.className = 'option-button';
+        button.className = 'option-btn';
         button.textContent = option;
-        button.onclick = () => selectOption(index);
-        button.dataset.index = index;
-        optionsList.appendChild(button);
+        button.onclick = () => selectOption(index, question);
+        optionsContainer.appendChild(button);
     });
+    
+    updateProgress();
+    answeredCorrectly = false;
+    document.getElementById('hint-box').style.display = 'none';
 }
 
-// ===== SELECT OPTION =====
-function selectOption(index) {
-    if (answered) return;
-    
-    selectedOptionIndex = index;
-    const buttons = document.querySelectorAll('.option-button');
+function selectOption(index, question) {
+    const buttons = document.querySelectorAll('.option-btn');
     buttons.forEach(btn => btn.classList.remove('selected'));
-    if (buttons[index]) {
-        buttons[index].classList.add('selected');
-    }
+    buttons[index].classList.add('selected');
 }
 
-// ===== SUBMIT ANSWER =====
 function submitAnswer() {
-    if (selectedOptionIndex === null) {
-        alert('Please select an answer first');
+    const selectedButton = document.querySelector('.option-btn.selected');
+    if (!selectedButton) {
+        alert('Please select an option');
         return;
     }
     
-    if (answered) return;
+    const question = quizData[currentQuestionIndex];
+    const buttons = document.querySelectorAll('.option-btn');
+    const selectedIndex = Array.from(buttons).indexOf(selectedButton);
     
-    answered = true;
-    const question = shuffledQuestions[currentQuestionIndex];
-    const buttons = document.querySelectorAll('.option-button');
-    const feedbackDiv = document.getElementById('feedback');
-    const submitBtn = document.getElementById('btn-submit');
-    const nextBtn = document.getElementById('btn-next');
+    const feedbackDiv = document.getElementById('feedback-message');
+    const feedbackSection = document.getElementById('feedback-section');
     
-    buttons.forEach(btn => btn.disabled = true);
-    
-    const isCorrect = selectedOptionIndex === question.correct;
-    
-    if (isCorrect) {
-        buttons[selectedOptionIndex].classList.add('correct');
-        currentSessionScore++;
-        document.getElementById('total-score').textContent = currentSessionScore;
-        
-        feedbackDiv.innerHTML = `
-            <div class="feedback-box correct">
-                <strong>✓ Correct!</strong>
-                <div class="feedback-details">${escapeHtml(question.explanation)}</div>
-            </div>
-        `;
-        
-        feedbackDiv.style.display = 'block';
-        submitBtn.style.display = 'none';
-        nextBtn.style.display = 'block';
+    if (selectedIndex === question.correct) {
+        score++;
+        answeredCorrectly = true;
+        selectedButton.classList.add('correct');
+        feedbackDiv.textContent = '✓ Correct! ' + question.explanation;
+        feedbackDiv.className = 'feedback correct';
     } else {
-        buttons[selectedOptionIndex].classList.add('incorrect');
+        selectedButton.classList.add('incorrect');
         buttons[question.correct].classList.add('correct');
-        
-        feedbackDiv.innerHTML = `
-            <div class="feedback-box incorrect">
-                <strong>✗ Incorrect</strong>
-                <div class="feedback-details">Correct answer: <strong>${escapeHtml(question.options[question.correct])}</strong></div>
-            </div>
-        `;
-        
-        feedbackDiv.style.display = 'block';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            addOrUpdateLeaderboard(currentPlayerName, currentSessionScore);
-            alert('Quiz restarting. Try again!');
-            quizInProgress = false;
-            currentCourseId = '';
-            showCourseSelection();
-        }, 2000);
+        feedbackDiv.textContent = '✗ Incorrect. ' + question.explanation;
+        feedbackDiv.className = 'feedback incorrect';
     }
+    
+    feedbackSection.style.display = 'block';
+    document.getElementById('score').textContent = score;
+    document.getElementById('submit-btn').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'block';
+    buttons.forEach(btn => btn.disabled = true);
 }
 
-// ===== SUBMIT ERROR ANSWER =====
-function submitErrorAnswer() {
-    const errorInput = document.getElementById('error-input');
-    const userAnswer = errorInput.value.trim().toLowerCase();
-    const question = shuffledQuestions[currentQuestionIndex];
-    const feedbackDiv = document.getElementById('feedback-error');
-    const submitBtn = document.querySelector('.btn-submit');
-    const nextBtn = document.getElementById('next-btn-error');
-    
-    if (!userAnswer) {
-        alert('Please type your answer');
-        return;
-    }
-    
-    if (answered) return;
-    
-    answered = true;
-    const correctAnswer = question.errorAnswer.toLowerCase();
-    const isCorrect = userAnswer === correctAnswer;
-    
-    if (isCorrect) {
-        currentSessionScore++;
-        document.getElementById('total-score').textContent = currentSessionScore;
-        
-        let detailedFeedback = `
-            <div class="feedback-box correct">
-                <strong>✓ Correct! You found the error!</strong>
-                <div class="feedback-details">
-                    <strong style="color: inherit; display: block; margin-top: 12px;">Error Type:</strong>
-                    ${escapeHtml(question.errorInfo.errorType)}
-                    
-                    <strong style="color: inherit; display: block; margin-top: 12px;">Problem:</strong>
-                    ${escapeHtml(question.errorInfo.description)}
-        `;
-        
-        if (question.errorInfo.errorLines && question.errorInfo.errorLines.length > 0) {
-            detailedFeedback += '<strong style="color: inherit; display: block; margin-top: 12px;">Error Location(s):</strong>';
-            
-            question.errorInfo.errorLines.forEach((errorLine) => {
-                detailedFeedback += `
-                    <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.1); border-radius: 6px; font-family: 'Fira Code', monospace; font-size: 0.9em;">
-                        <div style="color: #ef4444; margin-bottom: 5px;"><strong>Line ${errorLine.line} ❌</strong></div>
-                        <div style="margin-bottom: 8px;">${escapeHtml(errorLine.original)}</div>
-                        <div style="text-align: center; color: #666;">↓ Position: ${escapeHtml(errorLine.position)}</div>
-                        <div style="color: #10b981; margin-top: 8px;"><strong>✓ Corrected:</strong></div>
-                        <div>${escapeHtml(errorLine.corrected)}</div>
-                    </div>
-                `;
-            });
-        }
-        
-        detailedFeedback += `
-                    <strong style="color: inherit; display: block; margin-top: 12px;">💡 Tip:</strong>
-                    ${escapeHtml(question.errorInfo.tip)}
-                    
-                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.1);">
-                        <strong style="color: inherit;">Explanation:</strong>
-                        <div>${escapeHtml(question.explanation)}</div>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        feedbackDiv.innerHTML = detailedFeedback;
-        feedbackDiv.style.display = 'block';
-        
-        errorInput.disabled = true;
-        submitBtn.style.display = 'none';
-        nextBtn.style.display = 'block';
-    } else {
-        let detailedFeedback = `
-            <div class="feedback-box incorrect">
-                <strong>✗ Incorrect</strong>
-                <div class="feedback-details">
-                    <strong style="color: inherit; display: block; margin-top: 12px;">The error was:</strong>
-                    <strong style="color: inherit; display: block; margin-top: 8px; font-size: 1.1em;">${escapeHtml(question.errorAnswer)}</strong>
-                    
-                    <strong style="color: inherit; display: block; margin-top: 12px;">Error Type:</strong>
-                    ${escapeHtml(question.errorInfo.errorType)}
-                    
-                    <strong style="color: inherit; display: block; margin-top: 12px;">Look for:</strong>
-                    ${escapeHtml(question.errorInfo.description)}
-        `;
-        
-        if (question.errorInfo.errorLines && question.errorInfo.errorLines.length > 0) {
-            detailedFeedback += '<strong style="color: inherit; display: block; margin-top: 12px;">Error Location(s):</strong>';
-            
-            question.errorInfo.errorLines.forEach((errorLine) => {
-                detailedFeedback += `
-                    <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.1); border-radius: 6px; font-family: 'Fira Code', monospace; font-size: 0.9em;">
-                        <div style="color: #ef4444; margin-bottom: 5px;"><strong>Line ${errorLine.line} ❌</strong></div>
-                        <div style="margin-bottom: 8px;">${escapeHtml(errorLine.original)}</div>
-                        <div style="text-align: center; color: #666;">↓ Position: ${escapeHtml(errorLine.position)}</div>
-                        <div style="color: #10b981; margin-top: 8px;"><strong>✓ Corrected:</strong></div>
-                        <div>${escapeHtml(errorLine.corrected)}</div>
-                    </div>
-                `;
-            });
-        }
-        
-        detailedFeedback += `
-                    <strong style="color: inherit; display: block; margin-top: 12px;">💡 Tip:</strong>
-                    ${escapeHtml(question.errorInfo.tip)}
-                </div>
-            </div>
-        `;
-        
-        feedbackDiv.innerHTML = detailedFeedback;
-        feedbackDiv.style.display = 'block';
-        
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            addOrUpdateLeaderboard(currentPlayerName, currentSessionScore);
-            alert('Quiz restarting. Try again!');
-            quizInProgress = false;
-            currentCourseId = '';
-            showCourseSelection();
-        }, 3000);
-    }
-}
-
-// ===== NEXT QUESTION =====
 function nextQuestion() {
     currentQuestionIndex++;
-    answered = false;
+    document.getElementById('feedback-section').style.display = 'none';
+    document.getElementById('submit-btn').style.display = 'block';
+    document.getElementById('next-btn').style.display = 'none';
     loadQuestion();
 }
 
-// ===== UPDATE PROGRESS =====
 function updateProgress() {
-    const total = shuffledQuestions.length;
-    const current = currentQuestionIndex + 1;
-    const percentage = (current / total) * 100;
-    
-    document.getElementById('progress-fill').style.width = percentage + '%';
-    document.getElementById('progress-text').textContent = `${current}/${total}`;
+    const progress = ((currentQuestionIndex) / quizData.length) * 100;
+    document.getElementById('progress-fill').style.width = progress + '%';
+    document.getElementById('progress-text').textContent = Math.round(progress) + '%';
 }
 
-// ===== SHOW COMPLETION =====
-function showCompletion() {
-    const contentArea = document.getElementById('content-area');
-    const total = shuffledQuestions.length;
-    const course = coursesData[currentCourseId];
+function showHint() {
+    const question = quizData[currentQuestionIndex];
+    document.getElementById('hint-text').textContent = question.hint;
+    document.getElementById('hint-box').style.display = 'block';
+}
+
+function runCode() {
+    const code = document.getElementById('code-editor').value;
+    const outputDiv = document.getElementById('output');
     
-    addOrUpdateLeaderboard(currentPlayerName, currentSessionScore);
-    
-    let message = '';
-    if (currentSessionScore === total) {
-        message = 'Perfect score! You are a code master! 🚀';
-    } else if (currentSessionScore >= Math.ceil(total * 0.8)) {
-        message = 'Excellent! Strong skills! 👏';
-    } else if (currentSessionScore >= Math.ceil(total * 0.6)) {
-        message = 'Good job! Keep practicing! 📚';
-    } else {
-        message = 'Keep learning! You can do it! 💪';
+    try {
+        let output = '';
+        const originalLog = console.log;
+        console.log = function(...args) {
+            output += args.join(' ') + '\n';
+        };
+        
+        eval(code);
+        console.log = originalLog;
+        
+        outputDiv.innerHTML = '<span class="success">' + (output || 'Code executed successfully') + '</span>';
+    } catch (e) {
+        outputDiv.innerHTML = '<span class="error">Error: ' + e.message + '</span>';
     }
-    
-    contentArea.innerHTML = `
-        <div class="completion-screen">
-            <div class="completion-badge">🎉</div>
-            <h2>${escapeHtml(course.name)} - Complete!</h2>
-            
-            <div class="completion-score">
-                Your Score: ${currentSessionScore}/${total} points
-            </div>
-            
-            <p class="completion-message">${message}</p>
-            
-            <button class="btn-restart" onclick="backToCourseSelection()">← Back to Courses</button>
-            <button class="btn-restart" onclick="location.reload()">🔄 Start Over</button>
+}
+
+function resetQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById('score').textContent = '0';
+    document.getElementById('feedback-section').style.display = 'none';
+    document.getElementById('submit-btn').style.display = 'block';
+    document.getElementById('next-btn').style.display = 'none';
+    loadQuestion();
+}
+
+function showCompletion() {
+    const percentage = (score / quizData.length) * 100;
+    const mainContent = document.querySelector('main');
+    mainContent.innerHTML = `
+        <div style="text-align: center; padding: 50px;">
+            <h2>Quiz Complete! 🎉</h2>
+            <p style="font-size: 24px; color: #00d4ff;">Score: ${score}/${quizData.length}</p>
+            <p style="font-size: 18px;">Percentage: ${Math.round(percentage)}%</p>
+            <button class="btn btn-reset" onclick="location.reload()">Try Again</button>
         </div>
     `;
-    
-    quizInProgress = false;
-}
-
-// ===== CLOSE CODE CHECK MODAL =====
-function closeCodeCheckModal() {
-    document.getElementById('code-check-modal').style.display = 'none';
-}
-
-// ===== UTILITY FUNCTION =====
-function escapeHtml(text) {
-    const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;'
-    };
-    return text.replace(/[&<>"']/g, m => map[m]);
 }
