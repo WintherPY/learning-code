@@ -161,12 +161,17 @@ let answered = false;
 let selectedOptionIndex = null;
 
 // ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', initializeQuiz);
+
+function initializeQuiz() {
+    console.log('Quiz initializing...');
     loadQuestion();
-});
+}
 
 // ===== LOAD QUESTION =====
 function loadQuestion() {
+    console.log('Loading question', currentQuestionIndex);
+    
     if (currentQuestionIndex >= quizData.length) {
         showCompletion();
         return;
@@ -174,16 +179,25 @@ function loadQuestion() {
 
     const question = quizData[currentQuestionIndex];
     
+    if (!question || !question.code) {
+        console.error('Invalid question data');
+        return;
+    }
+    
     // Update code display
     const codeDisplay = document.getElementById('code-display');
     if (codeDisplay) {
         codeDisplay.textContent = question.code;
+    } else {
+        console.error('Code display element not found');
     }
     
     // Update question text
     const questionText = document.getElementById('question-text');
     if (questionText) {
         questionText.textContent = question.question;
+    } else {
+        console.error('Question text element not found');
     }
     
     // Create option buttons
@@ -195,9 +209,12 @@ function loadQuestion() {
             const button = document.createElement('button');
             button.className = 'option-btn';
             button.textContent = option;
-            button.onclick = () => selectOption(index);
+            button.setAttribute('data-index', index);
+            button.addEventListener('click', () => selectOption(index));
             optionsContainer.appendChild(button);
         });
+    } else {
+        console.error('Options container not found');
     }
     
     // Hide feedback
@@ -209,8 +226,14 @@ function loadQuestion() {
     // Reset button states
     const submitBtn = document.getElementById('submit-btn');
     const nextBtn = document.getElementById('next-btn');
-    if (submitBtn) submitBtn.style.display = 'block';
-    if (nextBtn) nextBtn.style.display = 'none';
+    if (submitBtn) {
+        submitBtn.style.display = 'block';
+        submitBtn.disabled = false;
+    }
+    if (nextBtn) {
+        nextBtn.style.display = 'none';
+        nextBtn.disabled = false;
+    }
     
     answered = false;
     selectedOptionIndex = null;
@@ -224,7 +247,9 @@ function selectOption(index) {
     const buttons = document.querySelectorAll('.option-btn');
     
     buttons.forEach(btn => btn.classList.remove('selected'));
-    buttons[index].classList.add('selected');
+    if (buttons[index]) {
+        buttons[index].classList.add('selected');
+    }
 }
 
 // ===== SUBMIT ANSWER =====
@@ -242,7 +267,10 @@ function submitAnswer() {
     const feedbackSection = document.getElementById('feedback-section');
     const feedbackText = document.getElementById('feedback-text');
     
-    if (!feedbackSection || !feedbackText) return;
+    if (!feedbackSection || !feedbackText) {
+        console.error('Feedback elements not found');
+        return;
+    }
     
     buttons.forEach(btn => btn.disabled = true);
     
@@ -274,8 +302,11 @@ function nextQuestion() {
 
 // ===== SHOW COMPLETION =====
 function showCompletion() {
-    const mainContent = document.querySelector('main');
-    if (!mainContent) return;
+    const mainContent = document.getElementById('main-content');
+    if (!mainContent) {
+        console.error('Main content not found');
+        return;
+    }
     
     const percentage = Math.round((totalCorrect / quizData.length) * 100);
     
@@ -307,12 +338,12 @@ function restartQuiz() {
     answered = false;
     selectedOptionIndex = null;
     
-    const mainContent = document.querySelector('main');
+    const mainContent = document.getElementById('main-content');
     if (mainContent) {
         mainContent.innerHTML = `
             <section class="code-section">
                 <h2>Code Snippet:</h2>
-                <pre><code id="code-display">// Loading...</code></pre>
+                <pre id="code-wrapper"><code id="code-display">// Loading...</code></pre>
             </section>
 
             <section class="question-section">
