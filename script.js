@@ -651,7 +651,7 @@ function loadQuestion() {
                     <h3><span class="icon">💻</span> Code Playground</h3>
                     <div class="editor-status">
                         <span class="status-dot"></span>
-                        <span>Complete to proceed</span>
+                        <span>Try the code here</span>
                     </div>
                     <textarea id="code-editor" class="code-editor" placeholder="Write your code here..."></textarea>
                     <button class="btn-submit" onclick="runCode()">▶️ Run Code</button>
@@ -958,6 +958,50 @@ function runCode() {
     }
 
     try {
+        // Check if it's CSS code (contains CSS properties)
+        if ((code.includes('{') && code.includes('}')) || code.includes(':')) {
+            // Check if it looks like CSS (has selectors and properties)
+            if (!code.includes('function') && !code.includes('const') && !code.includes('let') && !code.includes('var')) {
+                // It's CSS - wrap it in HTML and render in iframe
+                outputDiv.style.display = 'block';
+                
+                let htmlContent = `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <style>
+                            ${code}
+                        </style>
+                    </head>
+                    <body>
+                        <h1>CSS Preview</h1>
+                        <p>This is a paragraph styled with your CSS.</p>
+                        <div style="margin: 20px 0;">Sample content area</div>
+                        <button>Sample Button</button>
+                    </body>
+                    </html>
+                `;
+                
+                let iframe = document.getElementById('code-iframe');
+                if (!iframe) {
+                    iframe = document.createElement('iframe');
+                    iframe.id = 'code-iframe';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '200px';
+                    iframe.style.border = '1px solid #2a2d3a';
+                    iframe.style.borderRadius = '6px';
+                    iframe.style.background = '#ffffff';
+                    outputContent.innerHTML = '';
+                    outputContent.appendChild(iframe);
+                }
+                
+                iframe.contentDocument.open();
+                iframe.contentDocument.write(htmlContent);
+                iframe.contentDocument.close();
+                return;
+            }
+        }
+        
         // Check if it's HTML code (contains HTML tags)
         if (code.includes('<') && code.includes('>')) {
             // It's HTML - render it in an iframe
