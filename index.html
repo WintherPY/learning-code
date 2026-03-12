@@ -19,7 +19,7 @@
 
         <main id="main-content">
             <div class="quiz-container">
-                <!-- LEFT SIDE: VIRTUAL CODE EDITOR -->
+                <!-- LEFT SIDE: VIRTUAL CODE EDITOR (50% width) -->
                 <div class="editor-section">
                     <div class="editor-header">
                         <h3>Virtual Code Editor</h3>
@@ -27,23 +27,23 @@
                     </div>
                     <textarea id="code-editor" class="code-editor" placeholder="Write your code here..." disabled></textarea>
                     <div class="editor-buttons">
-                        <button id="run-code-btn" class="run-btn" onclick="runCode()" disabled>Run Code</button>
-                        <button id="clear-code-btn" class="clear-btn" onclick="clearCode()">Clear</button>
+                        <button id="run-code-btn" class="run-btn" onclick="runCode()" disabled>▶ Run Code</button>
+                        <button id="clear-code-btn" class="clear-btn" onclick="clearCode()">🗑 Clear</button>
                     </div>
                     <div id="editor-hints" class="editor-hints"></div>
                     <div id="code-output" class="code-output" style="display: none;">
-                        <strong>Output:</strong>
-                        <pre id="output-text"></pre>
+                        <strong>📤 Output:</strong>
+                        <div id="output-text"></div>
                     </div>
                 </div>
 
-                <!-- RIGHT SIDE: QUESTIONS -->
+                <!-- RIGHT SIDE: QUESTIONS (50% width) -->
                 <div class="questions-section">
                     <section class="code-section">
                         <h2>Code Snippet:</h2>
                         <div class="code-display-wrapper">
                             <pre id="code-wrapper"><code id="code-display">// Loading...</code></pre>
-                            <button id="find-error-btn" class="find-error-btn" style="display: none;" onclick="checkForError()">Find Error</button>
+                            <button id="find-error-btn" class="find-error-btn" style="display: none;" onclick="checkForError()">🔍 Find Error</button>
                         </div>
                     </section>
 
