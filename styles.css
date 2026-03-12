@@ -464,24 +464,6 @@ body {
     opacity: 0.6;
 }
 
-/* ===== ERROR INPUT ===== */
-.error-input-field {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 1em;
-    font-family: 'Inter', sans-serif;
-    margin-bottom: 15px;
-    transition: all 0.3s ease;
-}
-
-.error-input-field:focus {
-    outline: none;
-    border-color: #0369a1;
-    box-shadow: 0 0 0 3px rgba(3, 105, 161, 0.1);
-}
-
 /* ===== FEEDBACK BOX ===== */
 .feedback-box {
     padding: 16px;
@@ -528,7 +510,7 @@ body {
     margin-top: 10px;
 }
 
-/* ===== EDITOR PANEL (RIGHT) - BLACK ===== */
+/* ===== EDITOR PANEL (RIGHT) - NEW CODE EDITOR ===== */
 .editor-panel {
     background: #0f1419;
     border-radius: 12px;
@@ -565,9 +547,10 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #ef4444;
+    background: #06b6d4;
 }
 
+/* ===== CODE EDITOR TEXTAREA ===== */
 .code-editor {
     background: #1a1a2e;
     color: #00ff41;
@@ -581,6 +564,8 @@ body {
     min-height: 300px;
     margin-bottom: 12px;
     transition: all 0.3s ease;
+    display: block;
+    width: 100%;
 }
 
 .code-editor:disabled {
@@ -594,6 +579,7 @@ body {
     outline: none;
     border-color: #06b6d4;
     box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+    color: #c3e88d;
 }
 
 .code-editor::placeholder {
@@ -650,6 +636,37 @@ body {
 .btn-next:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* ===== CODE OUTPUT ===== */
+#code-output {
+    margin-top: 15px;
+    padding: 15px;
+    background: #0f1419;
+    border-radius: 8px;
+    border: 1px solid #2a2d3a;
+    display: none;
+}
+
+#code-output h4 {
+    color: #ffffff;
+    margin: 0 0 10px 0;
+    font-size: 0.95em;
+}
+
+.code-output {
+    color: #c3e88d;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9em;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    min-height: 50px;
+    padding: 10px;
+    background: #1a1a2e;
+    border-radius: 6px;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 /* ===== NAME ENTRY SCREEN ===== */
@@ -727,6 +744,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-bottom: 30px;
+    font-family: 'Inter', sans-serif;
 }
 
 .btn-start:hover {
@@ -838,6 +856,7 @@ body {
     font-size: 1em;
     transition: all 0.3s ease;
     font-family: 'Inter', sans-serif;
+    margin-left: 10px;
 }
 
 .btn-restart:hover {
@@ -856,7 +875,6 @@ body {
     font-size: 1em;
     transition: all 0.3s ease;
     font-family: 'Inter', sans-serif;
-    margin-left: 10px;
 }
 
 .btn-back-to-courses:hover {
