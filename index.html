@@ -3,79 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearningCode | Nerd Terminal</title>
+    <title>Learning Code - Interactive Quiz</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="terminal">
-        <div class="terminal-header">
-            <div class="terminal-buttons">
-                <span class="terminal-btn red">●</span>
-                <span class="terminal-btn yellow">●</span>
-                <span class="terminal-btn green">●</span>
+    <div class="container">
+        <header>
+            <h1>Learning Code</h1>
+            <div class="score-display">
+                <span>Q&A Points: <strong id="qa-points">0</strong></span>
+                <span>Code Points: <strong id="code-points">0</strong></span>
+                <span>Total: <strong id="total-points">0</strong></span>
             </div>
-            <div class="terminal-title">
-                <span class="cursor">$</span> LearningCode.exe
-            </div>
-            <div class="terminal-spacer"></div>
-        </div>
+        </header>
 
-        <div class="terminal-content">
-            <!-- HEADER/TITLE -->
-            <header class="neon-header">
-                <div class="header-line">╔════════════════════════════════════════╗</div>
-                <div class="header-title">
-                    <span class="neon-text">>> LEARNING CODE <</span>
-                    <span class="blink">█</span>
-                </div>
-                <div class="header-line">╚════════════════════════════════════════╝</div>
-            </header>
-
-            <!-- STATS BAR -->
-            <div class="stats-bar">
-                <span class="stat-item"><span class="neon-cyan">[Q&A]</span> <span id="qa-points">0</span>pts</span>
-                <span class="stat-item"><span class="neon-magenta">[CODE]</span> <span id="code-points">0</span>pts</span>
-                <span class="stat-item"><span class="neon-green">[TOTAL]</span> <span id="total-points">0</span>pts</span>
-            </div>
-
-            <!-- MAIN CONTENT - SPLIT PANE -->
-            <main id="main-content" class="split-pane">
-                <div class="editor-pane">
-                    <div class="pane-header">
-                        <span class="pane-title">💻 CODE EDITOR</span>
-                        <span class="connection-dot">●</span>
+        <main id="main-content">
+            <div class="quiz-container">
+                <!-- LEFT SIDE: VIRTUAL CODE EDITOR -->
+                <div class="editor-section">
+                    <div class="editor-header">
+                        <h3>Virtual Code Editor</h3>
+                        <div class="editor-info" id="editor-info">(Available after correct answer)</div>
                     </div>
-                    
-                    <textarea id="code-editor" class="code-editor" placeholder="// Write your code here..." disabled></textarea>
-                    
-                    <div class="editor-controls">
-                        <button id="run-code-btn" class="btn btn-primary" onclick="runCode()" disabled>▶ RUN</button>
-                        <button id="clear-code-btn" class="btn btn-secondary" onclick="clearCode()">CLEAR</button>
+                    <textarea id="code-editor" class="code-editor" placeholder="Write your code here..." disabled></textarea>
+                    <div class="editor-buttons">
+                        <button id="run-code-btn" class="run-btn" onclick="runCode()" disabled>▶ Run Code</button>
+                        <button id="clear-code-btn" class="clear-btn" onclick="clearCode()">🗑 Clear</button>
                     </div>
-
+                    <div id="editor-hints" class="editor-hints"></div>
                     <div id="code-output" class="code-output" style="display: none;">
-                        <div class="output-header">
-                            <span>📤 OUTPUT</span>
-                            <span class="output-cursor">_</span>
-                        </div>
-                        <pre id="output-text"></pre>
+                        <strong>📤 Output:</strong>
+                        <div id="output-text"></div>
                     </div>
                 </div>
 
-                <div class="quiz-pane">
-                    <div class="pane-header">
-                        <span class="pane-title">❓ QUIZ</span>
-                        <span class="connection-dot">●</span>
-                    </div>
-
+                <!-- RIGHT SIDE: QUESTIONS -->
+                <div class="questions-section">
                     <section class="code-section">
-                        <h2 class="section-label">[ CODE SNIPPET ]</h2>
-                        <pre id="code-wrapper" class="code-display"><code id="code-display">// Loading...</code></pre>
-                        <button id="find-error-btn" class="btn btn-error" style="display: none;" onclick="checkForError()">🔍 FIND ERROR</button>
+                        <h2>Code Snippet:</h2>
+                        <div class="code-display-wrapper">
+                            <pre id="code-wrapper"><code id="code-display">// Loading...</code></pre>
+                            <button id="find-error-btn" class="find-error-btn" style="display: none;" onclick="checkForError()">🔍 Find Error</button>
+                        </div>
                     </section>
 
                     <section class="question-section">
-                        <h3 id="question-text" class="question-text">> What is this?</h3>
+                        <h3 id="question-text">Loading question...</h3>
                         <div class="options-container" id="options-container"></div>
                     </section>
 
@@ -86,20 +59,16 @@
                     </div>
 
                     <div class="action-buttons">
-                        <button class="btn btn-success" id="submit-btn" onclick="submitAnswer()">SUBMIT</button>
-                        <button class="btn btn-next" id="next-btn" onclick="nextQuestion()" style="display: none;">NEXT ➜</button>
+                        <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+                        <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
                     </div>
                 </div>
-            </main>
+            </div>
+        </main>
 
-            <!-- FOOTER -->
-            <footer class="terminal-footer">
-                <div class="footer-line">═══════════════════════════════════════</div>
-                <div class="footer-text">
-                    <span class="neon-cyan">root@learningcode</span>:<span class="neon-green">~/quiz#</span> <span class="blink">_</span>
-                </div>
-            </footer>
-        </div>
+        <footer>
+            <p>&copy; 2026 Learning Code - Interactive Programming Quiz</p>
+        </footer>
     </div>
 
     <script src="script.js"></script>
