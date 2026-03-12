@@ -1,13 +1,13 @@
-// ===== BEGINNER-FRIENDLY QUIZ DATA WITH RANDOMIZATION =====
+// ===== BEGINNER-FRIENDLY QUIZ DATA =====
 const allQuizQuestions = [
-    // EASY QUESTIONS (Start with these)
+    // EASY - Module 1
     {
         type: "identify",
         code: `<h1>Hello World</h1>`,
         question: "What does this code do?",
         options: ["Creates a large heading", "Creates a paragraph", "Creates a button"],
         correct: 0,
-        explanation: "This is HTML. The &lt;h1&gt; tag creates the largest heading on a webpage.",
+        explanation: "This is HTML. The <h1> tag creates the largest heading on a webpage.",
         facts: "Headings help organize content. H1 is the most important, H2 is smaller, H3 is even smaller!",
         codeBehavior: "This displays: Hello World as a big title on the page.",
         codeEditor: false,
@@ -24,8 +24,8 @@ const allQuizQuestions = [
         question: "What does this code do?",
         options: ["Creates text/paragraph", "Creates a heading", "Creates a button"],
         correct: 0,
-        explanation: "The &lt;p&gt; tag creates a paragraph - normal text content.",
-        facts: "Paragraphs are used for regular text on websites. Every article you read uses &lt;p&gt; tags!",
+        explanation: "The <p> tag creates a paragraph - normal text content.",
+        facts: "Paragraphs are used for regular text on websites. Every article you read uses <p> tags!",
         codeBehavior: "This displays: This is a paragraph as normal readable text.",
         codeEditor: false,
         language: "html",
@@ -41,7 +41,7 @@ const allQuizQuestions = [
         question: "What does this code create?",
         options: ["A clickable button", "A text input", "A link"],
         correct: 0,
-        explanation: "The &lt;button&gt; tag creates a button that users can click.",
+        explanation: "The <button> tag creates a button that users can click.",
         facts: "Buttons are interactive! When you click 'Login' or 'Submit', that's a button!",
         codeBehavior: "This displays: Click me as a clickable button.",
         codeEditor: false,
@@ -80,7 +80,7 @@ const allQuizQuestions = [
             { example: 'console.log("I am learning!");', desc: "Print a message" }
         ]
     },
-    // MEDIUM QUESTIONS (Introduced after easy ones)
+    // MEDIUM - Module 2
     {
         type: "identify",
         code: `const x = 5;
@@ -117,10 +117,10 @@ console.log(name)`,
   <h1>Title</h1>
   <p>Text here</p>
 </div>`,
-        question: "What is the &lt;div&gt; doing?",
+        question: "What is the <div> doing?",
         options: ["Creating a container to group other elements", "Creating a paragraph", "Creating a heading"],
         correct: 0,
-        explanation: "&lt;div&gt; is a container/box. It groups other elements together for organization.",
+        explanation: "<div> is a container/box. It groups other elements together for organization.",
         facts: "Divs are like invisible boxes - they organize your webpage layout!",
         codeBehavior: "This creates a box containing a heading and a paragraph.",
         codeEditor: false,
@@ -137,7 +137,7 @@ console.log(name)`,
 <p>Paragraph</p>`,
         question: "Find the error - what tag is not closed?",
         errorAnswer: "h1",
-        explanation: "The &lt;h1&gt; tag is missing its closing tag &lt;/h1&gt;",
+        explanation: "The <h1> tag is missing its closing tag </h1>",
         facts: "In HTML, almost every opening tag needs a closing tag!",
         codeBehavior: "Without proper closing, the page might look wrong.",
         codeEditor: false,
@@ -165,258 +165,263 @@ console.log(name)`,
 ];
 
 // ===== LEADERBOARD STORAGE =====
-let leaderboard = JSON.parse(localStorage.getItem('codeQuizLeaderboard')) || [];
+let leaderboard = [];
 let currentPlayerName = '';
 let shuffledQuestions = [];
-
-// ===== QUIZ STATE =====
 let currentQuestionIndex = 0;
-let qaPoints = 0;
-let codePoints = 0;
+let totalScore = 0;
 let answered = false;
 let selectedOptionIndex = null;
-let currentQuestionCorrect = false;
-let codeSubmitted = false;
-let quizStarted = false;
+let errorInputValue = '';
+let quizInProgress = false;
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
-    showNameEntry();
+    loadLeaderboard();
+    showNameEntryScreen();
 });
 
-function showNameEntry() {
-    const mainContent = document.getElementById('main-content');
-    mainContent.innerHTML = `
-        <div style="text-align: center; padding: 50px 20px; background: #000; border-radius: 8px; max-width: 500px; margin: 50px auto;">
-            <h2 style="color: #fff; margin-bottom: 30px;">🚀 Welcome to Learning Code!</h2>
-            
-            <div style="margin-bottom: 30px;">
-                <input 
-                    type="text" 
-                    id="player-name-input" 
-                    placeholder="Enter your name..." 
-                    style="width: 100%; padding: 12px; font-size: 16px; border: 2px solid #00d4ff; 
-                           border-radius: 6px; background: #0f1419; color: #00ff41;"
-                    maxlength="20"
-                />
-            </div>
-            
-            <button 
-                onclick="startQuizWithName()" 
-                style="width: 100%; padding: 12px; font-size: 16px; font-weight: 600; 
-                       background: #00d4ff; color: #000; border: none; border-radius: 6px; 
-                       cursor: pointer; margin-bottom: 20px;"
-            >
-                Start Quiz
-            </button>
-            
-            <div id="leaderboard-container" style="margin-top: 40px; text-align: left; color: #fff;">
-                <h3 style="color: #00d4ff; margin-bottom: 15px;">🏆 Top 5 Players</h3>
-                <div id="leaderboard" style="background: #0f1419; padding: 15px; border-radius: 6px; border: 1px solid #2a2d3a;">
-                    ${getLeaderboardHTML()}
-                </div>
-            </div>
-        </div>
-    `;
-    document.getElementById('player-name-input').focus();
+// ===== LEADERBOARD FUNCTIONS =====
+function loadLeaderboard() {
+    const stored = localStorage.getItem('codemaster-leaderboard');
+    leaderboard = stored ? JSON.parse(stored) : [];
 }
 
-function getLeaderboardHTML() {
-    if (leaderboard.length === 0) {
-        return '<p style="color: #999; margin: 0;">No scores yet. Be the first!</p>';
+function saveLeaderboard() {
+    localStorage.setItem('codemaster-leaderboard', JSON.stringify(leaderboard));
+}
+
+function addToLeaderboard(name, score) {
+    leaderboard.push({
+        name: name,
+        score: score,
+        date: new Date().toLocaleDateString()
+    });
+    saveLeaderboard();
+}
+
+function getTop5Leaderboard() {
+    return leaderboard
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5);
+}
+
+function renderLeaderboard() {
+    const top5 = getTop5Leaderboard();
+    if (top5.length === 0) {
+        return '<div class="empty-leaderboard">No scores yet. Be the first to take the course!</div>';
     }
     
-    const top5 = leaderboard.sort((a, b) => b.score - a.score).slice(0, 5);
     return top5.map((entry, index) => `
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2a2d3a;">
-            <span>#${index + 1} ${entry.name}</span>
-            <span style="color: #00d4ff; font-weight: 600;">${entry.score} pts</span>
+        <div class="leaderboard-item">
+            <span class="leaderboard-rank">#${index + 1}</span>
+            <span class="leaderboard-name">${escapeHtml(entry.name)}</span>
+            <span class="leaderboard-score">${entry.score} pts</span>
         </div>
     `).join('');
 }
 
-function startQuizWithName() {
-    const nameInput = document.getElementById('player-name-input');
-    const name = nameInput.value.trim();
-    
-    if (!name) {
-        alert('Please enter your name!');
-        return;
-    }
-    
-    currentPlayerName = name;
-    quizStarted = true;
-    
-    // Shuffle questions
-    shuffledQuestions = [...allQuizQuestions].sort(() => Math.random() - 0.5);
-    
-    currentQuestionIndex = 0;
-    qaPoints = 0;
-    codePoints = 0;
-    
-    initializeQuiz();
-}
-
-function initializeQuiz() {
-    const mainContent = document.getElementById('main-content');
-    mainContent.innerHTML = `
-        <div class="score-display">
-            <span>Player: <strong id="player-name">${currentPlayerName}</strong></span>
-            <span>Q&A: <strong id="qa-points">0</strong></span>
-            <span>Code: <strong id="code-points">0</strong></span>
-            <span>Total: <strong id="total-points">0</strong></span>
-        </div>
-        
-        <div class="quiz-container">
-            <div class="code-section">
-                <h2>Code Snippet:</h2>
-                <pre id="code-wrapper"><code id="code-display">// Loading...</code></pre>
-                <div id="error-input-section" style="display: none; margin-top: 15px;">
-                    <input 
-                        type="text" 
-                        id="error-answer-input" 
-                        placeholder="Type the error you found..."
-                        style="width: 100%; padding: 10px; border: 2px solid #00d4ff; border-radius: 6px; background: #000; color: #00ff41; font-family: monospace;"
-                    />
-                    <button 
-                        onclick="submitErrorAnswer()" 
-                        style="width: 100%; margin-top: 10px; padding: 10px; background: #00d4ff; color: #000; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;"
-                    >
-                        Submit Answer
-                    </button>
+// ===== NAME ENTRY SCREEN =====
+function showNameEntryScreen() {
+    const contentArea = document.getElementById('content-area');
+    contentArea.innerHTML = `
+        <div class="name-entry-screen">
+            <h2>Welcome to CodeMaster</h2>
+            <p class="tagline">Professional Coding Training Platform</p>
+            
+            <div class="input-group">
+                <label for="player-name">Enter Your Name</label>
+                <input 
+                    type="text" 
+                    id="player-name" 
+                    placeholder="Your name..." 
+                    maxlength="30"
+                    autocomplete="off"
+                />
+            </div>
+            
+            <button class="btn-start" onclick="startQuiz()">Start Course</button>
+            
+            <div class="leaderboard-section">
+                <h3>🏆 Top 5 Players</h3>
+                <div class="leaderboard-list">
+                    ${renderLeaderboard()}
                 </div>
-            </div>
-
-            <section class="question-section">
-                <h3 id="question-text">Loading question...</h3>
-                <div class="options-container" id="options-container"></div>
-            </section>
-
-            <div class="feedback" id="feedback-section" style="display: none;">
-                <p id="feedback-text"></p>
-                <div id="additional-facts"></div>
-            </div>
-
-            <div class="action-buttons">
-                <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
-                <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
             </div>
         </div>
     `;
     
+    document.getElementById('player-name').focus();
+    document.getElementById('player-name').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') startQuiz();
+    });
+}
+
+// ===== START QUIZ =====
+function startQuiz() {
+    const nameInput = document.getElementById('player-name');
+    const name = nameInput.value.trim();
+    
+    if (!name || name.length < 2) {
+        alert('Please enter a valid name (at least 2 characters)');
+        return;
+    }
+    
+    currentPlayerName = name;
+    shuffledQuestions = [...allQuizQuestions].sort(() => Math.random() - 0.5);
+    currentQuestionIndex = 0;
+    totalScore = 0;
+    quizInProgress = true;
+    
+    updateUserInfo();
     loadQuestion();
 }
 
+// ===== UPDATE USER INFO =====
+function updateUserInfo() {
+    const avatar = document.getElementById('user-avatar');
+    const username = document.getElementById('current-username');
+    
+    if (avatar) avatar.textContent = currentPlayerName.charAt(0).toUpperCase();
+    if (username) username.textContent = currentPlayerName;
+}
+
+// ===== LOAD QUESTION =====
 function loadQuestion() {
     if (currentQuestionIndex >= shuffledQuestions.length) {
         showCompletion();
         return;
     }
-
+    
     const question = shuffledQuestions[currentQuestionIndex];
+    const contentArea = document.getElementById('content-area');
     
-    // Update code display
-    document.getElementById('code-display').textContent = question.code;
-    document.getElementById('question-text').textContent = question.question;
+    let lesssonNumber = currentQuestionIndex + 1;
+    document.getElementById('lesson-title').textContent = `Lesson ${lesssonNumber}`;
+    updateProgress();
     
-    // Show/hide error input
-    const errorSection = document.getElementById('error-input-section');
+    let questionContent = '';
+    
     if (question.type === 'error-find') {
-        errorSection.style.display = 'block';
-        document.getElementById('error-answer-input').value = '';
-        document.getElementById('options-container').innerHTML = '';
+        questionContent = `
+            <div class="lesson-container">
+                <div class="lesson-panel">
+                    <h3><span class="icon">🔍</span> Find the Error</h3>
+                    <div class="code-display">
+                        <pre>${escapeHtml(question.code)}</pre>
+                    </div>
+                    
+                    <p class="question-title">${escapeHtml(question.question)}</p>
+                    
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="error-input" 
+                            placeholder="Type the error you found..."
+                            class="error-input"
+                        />
+                    </div>
+                    
+                    <div id="feedback-error" style="display: none;"></div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn-submit" onclick="submitErrorAnswer()">Submit Answer</button>
+                        <button class="btn-next" id="next-btn-error">Next Question</button>
+                    </div>
+                </div>
+                
+                <div class="editor-panel">
+                    <h3><span class="icon">📝</span> Code Playground</h3>
+                    <div class="editor-status">
+                        <span class="status-dot"></span>
+                        <span>Complete lesson to unlock</span>
+                    </div>
+                </div>
+            </div>
+        `;
     } else {
-        errorSection.style.display = 'none';
-        
-        const optionsContainer = document.getElementById('options-container');
-        optionsContainer.innerHTML = '';
-        
-        question.options.forEach((option, index) => {
-            const button = document.createElement('button');
-            button.className = 'option-btn';
-            button.textContent = option;
-            button.setAttribute('data-index', index);
-            button.addEventListener('click', () => selectOption(index));
-            optionsContainer.appendChild(button);
-        });
+        questionContent = `
+            <div class="lesson-container">
+                <div class="lesson-panel">
+                    <h3><span class="icon">❓</span> Question</h3>
+                    <div class="code-display">
+                        <pre>${escapeHtml(question.code)}</pre>
+                    </div>
+                    
+                    <p class="question-title">${escapeHtml(question.question)}</p>
+                    
+                    <div class="options-list" id="options-list"></div>
+                    
+                    <div id="feedback" style="display: none;"></div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">Submit Answer</button>
+                        <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question</button>
+                    </div>
+                </div>
+                
+                <div class="editor-panel">
+                    <h3><span class="icon">📝</span> Code Playground</h3>
+                    <div class="editor-status" id="editor-status">
+                        <span class="status-dot"></span>
+                        <span>Complete lesson to unlock</span>
+                    </div>
+                </div>
+            </div>
+        `;
     }
     
-    // Reset states
-    document.getElementById('feedback-section').style.display = 'none';
-    document.getElementById('submit-btn').style.display = 'block';
-    document.getElementById('next-btn').style.display = 'none';
+    contentArea.innerHTML = questionContent;
+    
+    if (question.type === 'error-find') {
+        document.getElementById('error-input').focus();
+    } else {
+        renderOptions(question);
+    }
     
     answered = false;
     selectedOptionIndex = null;
-    currentQuestionCorrect = false;
+    errorInputValue = '';
 }
 
+// ===== RENDER OPTIONS =====
+function renderOptions(question) {
+    const optionsList = document.getElementById('options-list');
+    optionsList.innerHTML = '';
+    
+    question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-button';
+        button.textContent = option;
+        button.onclick = () => selectOption(index);
+        button.dataset.index = index;
+        optionsList.appendChild(button);
+    });
+}
+
+// ===== SELECT OPTION =====
 function selectOption(index) {
     if (answered) return;
     
     selectedOptionIndex = index;
-    const buttons = document.querySelectorAll('.option-btn');
+    const buttons = document.querySelectorAll('.option-button');
     buttons.forEach(btn => btn.classList.remove('selected'));
-    if (buttons[index]) {
-        buttons[index].classList.add('selected');
-    }
+    buttons[index].classList.add('selected');
 }
 
-function submitErrorAnswer() {
-    const question = shuffledQuestions[currentQuestionIndex];
-    const userAnswer = document.getElementById('error-answer-input').value.trim().toLowerCase();
-    const correctAnswer = question.errorAnswer.toLowerCase();
-    
-    const feedbackSection = document.getElementById('feedback-section');
-    const feedbackText = document.getElementById('feedback-text');
-    
-    answered = true;
-    
-    if (userAnswer === correctAnswer) {
-        qaPoints++;
-        currentQuestionCorrect = true;
-        feedbackText.innerHTML = `<strong style="color: #00ff41;">✓ Correct! Well done!</strong>`;
-        feedbackSection.className = 'feedback correct';
-    } else {
-        feedbackText.innerHTML = `<strong style="color: #ff5555;">✗ Incorrect</strong><br>The error was: <strong>${question.errorAnswer}</strong>`;
-        feedbackSection.className = 'feedback incorrect';
-        
-        // Restart on wrong answer
-        setTimeout(() => {
-            alert('Quiz restarting... Answer carefully next time!');
-            showNameEntry();
-        }, 2000);
-        return;
-    }
-    
-    feedbackSection.style.display = 'block';
-    updateScores();
-    
-    document.getElementById('submit-btn').style.display = 'none';
-    document.getElementById('next-btn').style.display = 'block';
-    document.getElementById('next-btn').textContent = 'Next Question →';
-    
-    document.getElementById('error-answer-input').disabled = true;
-}
-
+// ===== SUBMIT ANSWER =====
 function submitAnswer() {
-    const question = shuffledQuestions[currentQuestionIndex];
-    
-    if (question.type === 'error-find') {
-        return;
-    }
-    
     if (selectedOptionIndex === null) {
-        alert('Please select an answer!');
+        alert('Please select an answer first');
         return;
     }
     
     if (answered) return;
     
     answered = true;
-    const buttons = document.querySelectorAll('.option-btn');
-    const feedbackSection = document.getElementById('feedback-section');
-    const feedbackText = document.getElementById('feedback-text');
+    const question = shuffledQuestions[currentQuestionIndex];
+    const buttons = document.querySelectorAll('.option-button');
+    const feedbackDiv = document.getElementById('feedback');
     
     buttons.forEach(btn => btn.disabled = true);
     
@@ -424,73 +429,153 @@ function submitAnswer() {
     
     if (isCorrect) {
         buttons[selectedOptionIndex].classList.add('correct');
-        qaPoints++;
-        currentQuestionCorrect = true;
-        feedbackText.innerHTML = `<strong style="color: #00ff41;">✓ Correct!</strong>`;
-        feedbackSection.className = 'feedback correct';
+        totalScore++;
+        document.getElementById('total-score').textContent = totalScore;
+        
+        feedbackDiv.innerHTML = `
+            <div class="feedback-box correct">
+                <strong>✓ Correct! Well done!</strong>
+                <div class="feedback-details">${escapeHtml(question.explanation)}</div>
+            </div>
+        `;
     } else {
         buttons[selectedOptionIndex].classList.add('incorrect');
         buttons[question.correct].classList.add('correct');
-        feedbackText.innerHTML = `<strong style="color: #ff5555;">✗ Incorrect</strong><br>The correct answer is: <strong>${question.options[question.correct]}</strong>`;
-        feedbackSection.className = 'feedback incorrect';
+        
+        feedbackDiv.innerHTML = `
+            <div class="feedback-box incorrect">
+                <strong>✗ Incorrect</strong>
+                <div class="feedback-details">The correct answer is: <strong>${escapeHtml(question.options[question.correct])}</strong></div>
+            </div>
+        `;
         
         // Restart on wrong answer
         setTimeout(() => {
-            alert('Quiz restarting... Be more careful!');
-            showNameEntry();
+            alert('Quiz restarting. Answer carefully next time!');
+            showNameEntryScreen();
         }, 2000);
         return;
     }
     
-    feedbackSection.style.display = 'block';
-    updateScores();
+    feedbackDiv.style.display = 'block';
+    document.getElementById('btn-submit').style.display = 'none';
+    document.getElementById('btn-next').style.display = 'block';
+    document.getElementById('btn-next').focus();
+}
+
+// ===== SUBMIT ERROR ANSWER =====
+function submitErrorAnswer() {
+    const errorInput = document.getElementById('error-input');
+    const userAnswer = errorInput.value.trim().toLowerCase();
+    const question = shuffledQuestions[currentQuestionIndex];
+    const feedbackDiv = document.getElementById('feedback-error');
     
-    document.getElementById('submit-btn').style.display = 'none';
-    document.getElementById('next-btn').style.display = 'block';
-    document.getElementById('next-btn').textContent = 'Next Question →';
+    if (!userAnswer) {
+        alert('Please type your answer');
+        return;
+    }
+    
+    if (answered) return;
+    
+    answered = true;
+    const correctAnswer = question.errorAnswer.toLowerCase();
+    const isCorrect = userAnswer === correctAnswer;
+    
+    if (isCorrect) {
+        totalScore++;
+        document.getElementById('total-score').textContent = totalScore;
+        
+        feedbackDiv.innerHTML = `
+            <div class="feedback-box correct">
+                <strong>✓ Correct! Well done!</strong>
+                <div class="feedback-details">${escapeHtml(question.explanation)}</div>
+            </div>
+        `;
+        feedbackDiv.style.display = 'block';
+    } else {
+        feedbackDiv.innerHTML = `
+            <div class="feedback-box incorrect">
+                <strong>✗ Incorrect</strong>
+                <div class="feedback-details">The error was: <strong>${escapeHtml(question.errorAnswer)}</strong></div>
+            </div>
+        `;
+        feedbackDiv.style.display = 'block';
+        
+        // Restart on wrong answer
+        setTimeout(() => {
+            alert('Quiz restarting. Answer carefully next time!');
+            showNameEntryScreen();
+        }, 2000);
+        return;
+    }
+    
+    errorInput.disabled = true;
+    document.querySelector('.btn-submit').style.display = 'none';
+    document.getElementById('next-btn-error').style.display = 'block';
+    document.getElementById('next-btn-error').onclick = nextQuestion;
+    document.getElementById('next-btn-error').focus();
 }
 
-function updateScores() {
-    document.getElementById('qa-points').textContent = qaPoints;
-    document.getElementById('code-points').textContent = codePoints;
-    document.getElementById('total-points').textContent = qaPoints + codePoints;
-}
-
+// ===== NEXT QUESTION =====
 function nextQuestion() {
     currentQuestionIndex++;
     loadQuestion();
 }
 
+// ===== UPDATE PROGRESS =====
+function updateProgress() {
+    const total = shuffledQuestions.length;
+    const current = currentQuestionIndex + 1;
+    const percentage = (current / total) * 100;
+    
+    document.getElementById('progress-fill').style.width = percentage + '%';
+    document.getElementById('progress-text').textContent = `${current}/${total}`;
+}
+
+// ===== SHOW COMPLETION =====
 function showCompletion() {
-    const totalScore = qaPoints + codePoints;
+    const contentArea = document.getElementById('content-area');
+    const total = shuffledQuestions.length;
     
-    // Add to leaderboard
-    leaderboard.push({
-        name: currentPlayerName,
-        score: totalScore,
-        date: new Date().toLocaleDateString()
-    });
-    localStorage.setItem('codeQuizLeaderboard', JSON.stringify(leaderboard));
+    addToLeaderboard(currentPlayerName, totalScore);
     
-    const mainContent = document.getElementById('main-content');
-    mainContent.innerHTML = `
-        <div style="text-align: center; padding: 50px 20px; background: #000; border-radius: 8px; max-width: 600px; margin: 50px auto;">
-            <h2 style="color: #00ff41; margin-bottom: 20px;">🎉 Quiz Complete!</h2>
+    let message = '';
+    if (totalScore === total) {
+        message = 'Perfect score! You are a coding master! 🚀';
+    } else if (totalScore >= Math.ceil(total * 0.8)) {
+        message = 'Excellent! You have strong coding skills! 👏';
+    } else if (totalScore >= Math.ceil(total * 0.6)) {
+        message = 'Good job! Keep practicing! 📚';
+    } else {
+        message = 'Keep learning and practicing! 💪';
+    }
+    
+    contentArea.innerHTML = `
+        <div class="completion-screen">
+            <div class="completion-badge">🎉</div>
+            <h2>Course Complete!</h2>
             
-            <div style="background: #0f1419; padding: 30px; border-radius: 6px; border: 1px solid #2a2d3a; margin-bottom: 30px;">
-                <p style="color: #fff; font-size: 18px; margin: 10px 0;">Player: <strong>${currentPlayerName}</strong></p>
-                <p style="color: #fff; font-size: 18px; margin: 10px 0;">Total Score: <strong style="color: #00d4ff;">${totalScore} points</strong></p>
-                <p style="color: #999; font-size: 14px; margin-top: 20px;">Questions answered: ${shuffledQuestions.length}</p>
+            <div class="completion-score">
+                Your Score: ${totalScore}/${total} points
             </div>
             
-            <button 
-                onclick="location.reload()" 
-                style="width: 100%; padding: 12px; font-size: 16px; font-weight: 600; 
-                       background: #00d4ff; color: #000; border: none; border-radius: 6px; 
-                       cursor: pointer; margin-bottom: 20px;"
-            >
-                Play Again
-            </button>
+            <p class="completion-message">${message}</p>
+            
+            <button class="btn-restart" onclick="location.reload()">Try Again</button>
         </div>
     `;
+    
+    quizInProgress = false;
+}
+
+// ===== UTILITY FUNCTION =====
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
 }
