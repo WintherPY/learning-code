@@ -10,8 +10,8 @@
     <div class="app-wrapper">
         <!-- SIDEBAR -->
         <aside class="sidebar">
-            <div class="logo">
-                <h2>Learning Code</h2>
+            <div class="logo" onclick="confirmExitCourse()" title="Click to return to main menu">
+                <h2>📚 Learning Code</h2>
             </div>
             
             <nav class="sidebar-nav" id="sidebar-nav">
@@ -59,6 +59,40 @@
                 <!-- JavaScript populates this -->
             </div>
         </main>
+    </div>
+
+    <!-- EXIT COURSE MODAL -->
+    <div class="modal" id="exit-course-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚠️ Exit Course?</h3>
+            </div>
+            <div class="modal-body">
+                <p id="exit-message">You are exiting the course - Continue?</p>
+                <p style="font-size: 0.9em; color: #999; margin-top: 10px;">Any progress will not be saved.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeExitCourseModal()">No, Stay</button>
+                <button class="btn-danger" onclick="exitCourse()">Yes, Exit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN PAGE EXIT MODAL -->
+    <div class="modal" id="main-page-exit-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🏠 Return to Main Menu?</h3>
+            </div>
+            <div class="modal-body">
+                <p>You are returning to the main page - Continue?</p>
+                <p style="font-size: 0.9em; color: #999; margin-top: 10px;">You will need to enter your name again.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeMainPageExitModal()">No</button>
+                <button class="btn-danger" onclick="confirmMainPageExit()">Yes, Return</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
