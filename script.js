@@ -483,23 +483,29 @@ function updateSidebarCourses() {
     
     sidebarNav.innerHTML = courses.map(course => {
         const isActive = currentCourseId === course.id ? 'active' : '';
-        let navItemHTML = `<div class="nav-item ${isActive}" onclick="handleCourseNavClick('${course.id}')"`;
+        let textColor = '#fff';
+        let borderColor = 'transparent';
         
-        // Apply inline styles for language courses
+        // Apply colors for language courses
         if (course.id === 'html-course') {
-            navItemHTML += ` style="border-left-color: #E34C26;"`;
+            textColor = '#E34C26';
+            borderColor = '#E34C26';
         } else if (course.id === 'javascript-course') {
-            navItemHTML += ` style="border-left-color: #F7DF1E;"`;
+            textColor = '#F7DF1E';
+            borderColor = '#F7DF1E';
         } else if (course.id === 'css-course') {
-            navItemHTML += ` style="border-left-color: #1572B6;"`;
+            textColor = '#1572B6';
+            borderColor = '#1572B6';
         }
         
-        navItemHTML += `>
-            <div class="nav-category">${course.category}</div>
-            <div class="nav-name">${escapeHtml(course.name)}</div>
-        </div>`;
-        
-        return navItemHTML;
+        return `
+            <div class="nav-item ${isActive}" 
+                 onclick="handleCourseNavClick('${course.id}')"
+                 style="border-left-color: ${borderColor};">
+                <div class="nav-category" style="color: ${textColor};">${course.category}</div>
+                <div class="nav-name" style="color: ${textColor};">${escapeHtml(course.name)}</div>
+            </div>
+        `;
     }).join('');
 }
 
@@ -511,52 +517,10 @@ function handleCourseNavClick(courseId) {
     
     // If quiz in progress, show exit confirmation
     if (courseId !== currentCourseId) {
-        showExitConfirm = true;
-        const courseName = coursesData[currentCourseId].name;
-        document.querySelector('#exit-course-modal .modal-body p:first-child').textContent = `You are exiting "${courseName}" course - Continue?`;
+        const exitingCourse = coursesData[currentCourseId].name;
+        document.getElementById('exit-message').textContent = `You are exiting "${exitingCourse}" course - Continue?`;
         document.getElementById('exit-course-modal').style.display = 'flex';
         window.pendingCourseId = courseId;
-    }
-}
-
-// ===== CONFIRM EXIT COURSE =====
-function confirmExitCourse() {
-    if (!quizInProgress) {
-        // Logo click when not in quiz - just refresh page
-        location.reload();
-        return;
-    }
-    
-    // Logo click when in quiz - show exit confirmation
-    const courseName = coursesData[currentCourseId].name;
-    document.querySelector('#exit-course-modal .modal-body p:first-child').textContent = `You are exiting "${courseName}" course - Continue?`;
-    document.getElementById('exit-course-modal').style.display = 'flex';
-    window.pendingCourseId = '';
-}
-
-function closeCourseExitModal() {
-    document.getElementById('exit-course-modal').style.display = 'none';
-    window.pendingCourseId = '';
-}
-
-function exitCourse() {
-    quizInProgress = false;
-    answered = false;
-    currentQuestionIndex = 0;
-    currentSessionScore = 0;
-    
-    const pendingCourseId = window.pendingCourseId;
-    closeCourseExitModal();
-    
-    if (pendingCourseId === '') {
-        // Refresh page to exit course
-        location.reload();
-    } else {
-        // Switching to another course
-        currentCourseId = pendingCourseId;
-        updateUserInfo();
-        updateSidebarCourses();
-        showCourseSelection();
     }
 }
 
@@ -567,13 +531,66 @@ function selectCourse(courseId) {
     showCourseSelection();
 }
 
+// ===== EXIT COURSE FUNCTIONS =====
+function confirmExitCourse() {
+    if (!quizInProgress && !currentPlayerName) {
+        showNameEntryScreen();
+        return;
+    }
+    
+    if (!quizInProgress) {
+        document.getElementById('main-page-exit-modal').style.display = 'flex';
+        return;
+    }
+    
+    const exitingCourse = coursesData[currentCourseId].name;
+    document.getElementById('exit-message').textContent = `You are exiting "${exitingCourse}" course - Continue?`;
+    document.getElementById('exit-course-modal').style.display = 'flex';
+    window.pendingCourseId = '';
+}
+
+function closeExitCourseModal() {
+    document.getElementById('exit-course-modal').style.display = 'none';
+    window.pendingCourseId = '';
+}
+
+function closeMainPageExitModal() {
+    document.getElementById('main-page-exit-modal').style.display = 'none';
+}
+
+function exitCourse() {
+    quizInProgress = false;
+    answered = false;
+    currentQuestionIndex = 0;
+    currentSessionScore = 0;
+    
+    const pendingCourseId = window.pendingCourseId;
+    closeExitCourseModal();
+    
+    if (pendingCourseId === '') {
+        location.reload();
+    } else {
+        currentCourseId = pendingCourseId;
+        updateUserInfo();
+        updateSidebarCourses();
+        showCourseSelection();
+    }
+}
+
+function confirmMainPageExit() {
+    currentPlayerName = '';
+    currentCourseId = '';
+    closeMainPageExitModal();
+    showNameEntryScreen();
+}
+
 // ===== SHOW NAME ENTRY SCREEN =====
 function showNameEntryScreen() {
     const contentArea = document.getElementById('content-area');
     contentArea.innerHTML = `
         <div class="name-entry-screen">
             <h2>Welcome to Learning Code</h2>
-            <p class="tagline">Interactive Programming Quiz</p>
+            <p class="tagline">Interactive Programming Quiz Platform</p>
             
             <div class="input-group">
                 <label for="player-name">Enter Your Name</label>
@@ -646,36 +663,85 @@ function showCourseSelection() {
             <div class="course-selection-screen">
                 <h2>📚 Select Your Course</h2>
                 <div class="courses-grid">
-                    ${courses.map(course => `
-                        <div class="course-card" onclick="startCourse('${course.id}')">
-                            <span class="course-badge ${course.difficulty.toLowerCase()}">${course.difficulty}</span>
-                            <h3 class="course-title">${escapeHtml(course.name)}</h3>
-                            <p class="course-description">${escapeHtml(course.description)}</p>
-                            <div class="course-info">
-                                <div class="info-item">📝 ${course.questions.length} questions</div>
+                    ${courses.map(course => {
+                        let badgeClass = course.difficulty.toLowerCase();
+                        let cardClass = '';
+                        let titleClass = '';
+                        let badgeHTML = '';
+                        
+                        if (course.id === 'html-course') {
+                            badgeClass = 'html';
+                            cardClass = ' html-course';
+                            titleClass = ' html-title';
+                            badgeHTML = `<span style="color: #E34C26; font-size: 1.3em;">📄</span>`;
+                        } else if (course.id === 'javascript-course') {
+                            badgeClass = 'javascript';
+                            cardClass = ' javascript-course';
+                            titleClass = ' javascript-title';
+                            badgeHTML = `<span style="color: #F7DF1E; font-size: 1.3em;">⚡</span>`;
+                        } else if (course.id === 'css-course') {
+                            badgeClass = 'css';
+                            cardClass = ' css-course';
+                            titleClass = ' css-title';
+                            badgeHTML = `<span style="color: #1572B6; font-size: 1.3em;">🎨</span>`;
+                        }
+                        
+                        return `
+                            <div class="course-card${cardClass}" onclick="startCourse('${course.id}')">
+                                ${badgeHTML}
+                                <span class="course-badge ${badgeClass}">${course.difficulty}</span>
+                                <h3 class="course-title${titleClass}">${escapeHtml(course.name)}</h3>
+                                <p class="course-description">${escapeHtml(course.description)}</p>
+                                <div class="course-info">
+                                    <div class="info-item">📝 ${course.questions.length} questions</div>
+                                </div>
+                                <button class="btn-start-course">Start Course</button>
                             </div>
-                            <button class="btn-start-course">Start Course</button>
-                        </div>
-                    `).join('')}
+                        `;
+                    }).join('')}
                 </div>
             </div>
         `;
     } else {
         // Show selected course
         const course = coursesData[currentCourseId];
+        let badgeClass = course.difficulty.toLowerCase();
+        let cardClass = '';
+        let titleClass = '';
+        let badgeHTML = '';
+        
+        if (currentCourseId === 'html-course') {
+            badgeClass = 'html';
+            cardClass = ' html-course';
+            titleClass = ' html-title';
+            badgeHTML = `<span style="color: #E34C26; font-size: 1.3em;">📄</span>`;
+        } else if (currentCourseId === 'javascript-course') {
+            badgeClass = 'javascript';
+            cardClass = ' javascript-course';
+            titleClass = ' javascript-title';
+            badgeHTML = `<span style="color: #F7DF1E; font-size: 1.3em;">⚡</span>`;
+        } else if (currentCourseId === 'css-course') {
+            badgeClass = 'css';
+            cardClass = ' css-course';
+            titleClass = ' css-title';
+            badgeHTML = `<span style="color: #1572B6; font-size: 1.3em;">🎨</span>`;
+        }
+        
         contentArea.innerHTML = `
             <div class="course-selection-screen">
                 <h2>📚 ${escapeHtml(course.name)}</h2>
                 <div class="courses-grid">
-                    <div class="course-card">
-                        <span class="course-badge ${course.difficulty.toLowerCase()}">${course.difficulty}</span>
-                        <h3 class="course-title">${escapeHtml(course.name)}</h3>
+                    <div class="course-card${cardClass}">
+                        ${badgeHTML}
+                        <span class="course-badge ${badgeClass}">${course.difficulty}</span>
+                        <h3 class="course-title${titleClass}">${escapeHtml(course.name)}</h3>
                         <p class="course-description">${escapeHtml(course.description)}</p>
                         <div class="course-info">
                             <div class="info-item">📝 ${course.questions.length} questions</div>
                         </div>
                         <button class="btn-start-course" onclick="startCourse('${course.id}')">Start Quiz</button>
-                        <button class="btn-start-course" style="margin-top: 10px; background: #999;" onclick="backToCourseSelection()">← Back</button>
+                        <button class="btn-start-course" style="margin-top: 10px; background: #0369a1;" onclick="backToCourseSelection()">← Back to Courses</button>
+                        <button class="btn-start-course" style="margin-top: 10px; background: #dc2626;" onclick="exitCourseSelection()">❌ Exit Course</button>
                     </div>
                 </div>
             </div>
@@ -691,6 +757,14 @@ function backToCourseSelection() {
     updateUserInfo();
     updateSidebarCourses();
     showCourseSelection();
+}
+
+function exitCourseSelection() {
+    currentCourseId = '';
+    currentPlayerName = '';
+    updateUserInfo();
+    updateSidebarCourses();
+    showNameEntryScreen();
 }
 
 // ===== START COURSE =====
@@ -1062,11 +1136,6 @@ function showCompletion() {
     `;
     
     quizInProgress = false;
-}
-
-// ===== CLOSE CODE CHECK MODAL =====
-function closeCodeCheckModal() {
-    document.getElementById('code-check-modal').style.display = 'none';
 }
 
 // ===== UTILITY FUNCTION =====
