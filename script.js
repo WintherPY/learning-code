@@ -75,26 +75,6 @@ console.log(message);`,
                 codeBehavior: "Outputs: Hello"
             },
             {
-                type: "error",
-                code: `const x = 10
-const y = 20
-console.log(x + y)`,
-                question: "Find the error - Type what's missing",
-                errorAnswer: "semicolon",
-                errorInfo: {
-                    errorType: "Missing Semicolons",
-                    description: "All three lines are missing semicolons at the end of statements.",
-                    errorLines: [
-                        { line: 1, original: "const x = 10", corrected: "const x = 10;", position: "end of line" },
-                        { line: 2, original: "const y = 20", corrected: "const y = 20;", position: "end of line" },
-                        { line: 3, original: "console.log(x + y)", corrected: "console.log(x + y);", position: "end of line" }
-                    ],
-                    tip: "In JavaScript, statements should end with a semicolon (;)"
-                },
-                explanation: "All statements need semicolons.",
-                codeBehavior: "Code will work but violates JavaScript best practices"
-            },
-            {
                 type: "behavior",
                 code: `if (5 > 3) { console.log("yes"); }`,
                 question: "What does this output?",
@@ -121,6 +101,16 @@ console.log(arr[0]);`,
                 correct: 0,
                 explanation: "Arrays are indexed starting at 0.",
                 codeBehavior: "Outputs: 1"
+            },
+            {
+                type: "behavior",
+                code: `const x = "5";
+console.log(typeof x);`,
+                question: "What does this output?",
+                options: ["string", "number", "5"],
+                correct: 0,
+                explanation: "typeof checks variable type. '5' in quotes is a string.",
+                codeBehavior: "Outputs: string"
             }
         ]
     },
@@ -136,30 +126,13 @@ console.log(arr[0]);`,
             {
                 type: "behavior",
                 code: `const nums = [1,2,3,4,5];
-const doubled = nums.map(n => n * 2);`,
+const doubled = nums.map(n => n * 2);
+console.log(doubled);`,
                 question: "What is doubled?",
                 options: ["[2,4,6,8,10]", "[1,2,3,4,5]", "undefined"],
                 correct: 0,
-                explanation: "map() transforms each element.",
+                explanation: "map() transforms each element by multiplying by 2.",
                 codeBehavior: "doubled = [2,4,6,8,10]"
-            },
-            {
-                type: "error",
-                code: `function test {
-    return "value";
-}`,
-                question: "Find the error - Type what's missing",
-                errorAnswer: "parentheses",
-                errorInfo: {
-                    errorType: "Missing Parentheses",
-                    description: "Function declaration requires parentheses after the function name.",
-                    errorLines: [
-                        { line: 1, original: "function test {", corrected: "function test() {", position: "after 'test'" }
-                    ],
-                    tip: "All functions need parentheses: function name() { ... }"
-                },
-                explanation: "Functions require parentheses: function name()",
-                codeBehavior: "Syntax error - code won't run"
             },
             {
                 type: "behavior",
@@ -186,12 +159,23 @@ console.log(obj.name);`,
             {
                 type: "behavior",
                 code: `const users = [{id:1},{id:2}];
-const ids = users.map(u => u.id);`,
+const ids = users.map(u => u.id);
+console.log(ids);`,
                 question: "What is ids?",
                 options: ["[1, 2]", "[[1],[2]]", "undefined"],
                 correct: 0,
                 explanation: "map() extracts properties from object arrays.",
                 codeBehavior: "ids = [1, 2]"
+            },
+            {
+                type: "behavior",
+                code: `const sum = [1,2,3,4].reduce((a,b) => a + b, 0);
+console.log(sum);`,
+                question: "What does this output?",
+                options: ["10", "[1,2,3,4]", "undefined"],
+                correct: 0,
+                explanation: "reduce() sums all array elements together.",
+                codeBehavior: "Outputs: 10"
             }
         ]
     },
@@ -218,36 +202,6 @@ const ids = users.map(u => u.id);`,
                 codeBehavior: "Ensures proper rendering"
             },
             {
-                type: "behavior",
-                code: `<form>
-    <input type="text" placeholder="Name">
-    <button type="submit">Send</button>
-</form>`,
-                question: "What does this create?",
-                options: ["A form with input and button", "Just a button", "Just an input"],
-                correct: 0,
-                explanation: "Forms collect user input.",
-                codeBehavior: "Creates interactive form"
-            },
-            {
-                type: "error",
-                code: `<div class=container>
-    <h1>Title</h1>
-</div>`,
-                question: "Find the error - Type what's wrong",
-                errorAnswer: "quotes",
-                errorInfo: {
-                    errorType: "Missing Quotes",
-                    description: "HTML attribute values must be enclosed in quotes.",
-                    errorLines: [
-                        { line: 1, original: '<div class=container>', corrected: '<div class="container">', position: "around 'container'" }
-                    ],
-                    tip: "Always wrap attribute values in quotes: class=\"value\""
-                },
-                explanation: "Attribute values must be in quotes.",
-                codeBehavior: "class=container should be class=\"container\""
-            },
-            {
                 type: "identify",
                 code: `<img src="photo.jpg" alt="Description">`,
                 question: "What is the alt attribute for?",
@@ -264,6 +218,27 @@ const ids = users.map(u => u.id);`,
                 correct: 0,
                 explanation: "Semantic tags improve structure and SEO.",
                 codeBehavior: "Good practice for organization"
+            },
+            {
+                type: "identify",
+                code: `<form>
+    <input type="text" placeholder="Name">
+    <button type="submit">Send</button>
+</form>`,
+                question: "What does this create?",
+                options: ["A form with input and button", "Just a button", "Just an input"],
+                correct: 0,
+                explanation: "Forms collect user input.",
+                codeBehavior: "Creates interactive form"
+            },
+            {
+                type: "identify",
+                code: `<a href="page.html">Click here</a>`,
+                question: "What does this create?",
+                options: ["A hyperlink", "A button", "A heading"],
+                correct: 0,
+                explanation: "The <a> tag creates links to other pages.",
+                codeBehavior: "Creates clickable link"
             }
         ]
     },
@@ -285,26 +260,6 @@ console.log(typeof x);`,
                 correct: 0,
                 explanation: "typeof checks variable type.",
                 codeBehavior: "Outputs: string"
-            },
-            {
-                type: "error",
-                code: `const arr = [1,2,3]
-arr.push(4)
-console.log(arr)`,
-                question: "Find the error - Type what's missing",
-                errorAnswer: "semicolon",
-                errorInfo: {
-                    errorType: "Missing Semicolons",
-                    description: "All three statements are missing semicolons.",
-                    errorLines: [
-                        { line: 1, original: "const arr = [1,2,3]", corrected: "const arr = [1,2,3];", position: "end of line" },
-                        { line: 2, original: "arr.push(4)", corrected: "arr.push(4);", position: "end of line" },
-                        { line: 3, original: "console.log(arr)", corrected: "console.log(arr);", position: "end of line" }
-                    ],
-                    tip: "Missing semicolons violate JavaScript best practices"
-                },
-                explanation: "Missing semicolons.",
-                codeBehavior: "Code still runs due to automatic insertion"
             },
             {
                 type: "identify",
@@ -335,6 +290,16 @@ console.log(name);`,
                 correct: 0,
                 explanation: "Classes are blueprints for objects.",
                 codeBehavior: "Creates reusable object templates"
+            },
+            {
+                type: "behavior",
+                code: `const arr = [1, 2, 3];
+console.log(arr.length);`,
+                question: "What does this output?",
+                options: ["3", "undefined", "1"],
+                correct: 0,
+                explanation: "The length property tells us how many items are in an array.",
+                codeBehavior: "Outputs: 3"
             }
         ]
     },
@@ -357,7 +322,7 @@ console.log(name);`,
                 codeBehavior: "Targets element with id=\"header\""
             },
             {
-                type: "behavior",
+                type: "identify",
                 code: `.box { 
     display: flex;
     justify-content: center;
@@ -378,22 +343,6 @@ console.log(name);`,
                 codeBehavior: "Changes background when hovering"
             },
             {
-                type: "error",
-                code: `body color: red;`,
-                question: "Find the error - Type what's missing",
-                errorAnswer: "braces",
-                errorInfo: {
-                    errorType: "Missing Braces",
-                    description: "CSS rules require curly braces to enclose the property definitions.",
-                    errorLines: [
-                        { line: 1, original: "body color: red;", corrected: "body { color: red; }", position: "needs { } around properties" }
-                    ],
-                    tip: "CSS syntax: selector { property: value; }"
-                },
-                explanation: "CSS needs { } for rules.",
-                codeBehavior: "Should be body { color: red; }"
-            },
-            {
                 type: "identify",
                 code: `div { grid-template-columns: 1fr 1fr 1fr; }`,
                 question: "What layout is this?",
@@ -401,6 +350,15 @@ console.log(name);`,
                 correct: 0,
                 explanation: "Grid creates responsive layouts.",
                 codeBehavior: "Creates 3-column layout"
+            },
+            {
+                type: "identify",
+                code: `body { background-color: #f0f0f0; }`,
+                question: "What does this do?",
+                options: ["Sets background to light gray", "Sets text color", "Creates border"],
+                correct: 0,
+                explanation: "#f0f0f0 is a hex color code for light gray.",
+                codeBehavior: "Changes page background color"
             }
         ]
     }
@@ -638,6 +596,98 @@ function startCourse(courseId) {
     loadQuestion();
 }
 
+// ===== NEW CODE EDITOR FUNCTIONS =====
+// This detects what programming language is in the code snippet
+function detectLanguageFromCode(code) {
+    code = code.toLowerCase();
+    if (code.includes('<!doctype') || code.includes('<html') || code.includes('</')) {
+        return 'HTML';
+    }
+    if (code.includes('body {') || code.includes('color:') || code.includes('background')) {
+        return 'CSS';
+    }
+    return 'JavaScript';
+}
+
+// This gets a helpful placeholder text based on the language
+function getPlaceholderForLanguage(language) {
+    const placeholders = {
+        'JavaScript': `// Try running the example code!\nconst message = "Hello!";\nconsole.log(message);`,
+        'HTML': `<!-- Try modifying the example! -->\n<h1>Hello World</h1>\n<p>Welcome!</p>`,
+        'CSS': `/* Try changing the colors! */\nbody {\n  background-color: #f0f0f0;\n}`
+    };
+    return placeholders[language] || placeholders['JavaScript'];
+}
+
+// This safely runs the code the user writes
+function runCode() {
+    const code = document.getElementById('code-editor').value;
+    const outputDiv = document.getElementById('code-output');
+    const outputContent = document.getElementById('output-content');
+    
+    if (!code.trim()) {
+        outputContent.innerHTML = '<span style="color: #ff6b6b;">⚠️ Please write some code first!</span>';
+        outputDiv.style.display = 'block';
+        return;
+    }
+
+    try {
+        // Capture console output
+        let capturedOutput = '';
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        // When user uses console.log, capture the text
+        console.log = function(...args) {
+            capturedOutput += args.map(arg => {
+                if (typeof arg === 'object') return JSON.stringify(arg, null, 2);
+                return String(arg);
+            }).join(' ') + '\n';
+        };
+
+        // When user uses console.error, capture it
+        console.error = function(...args) {
+            capturedOutput += '❌ Error: ' + args.join(' ') + '\n';
+        };
+
+        // When user uses console.warn, capture it
+        console.warn = function(...args) {
+            capturedOutput += '⚠️ Warning: ' + args.join(' ') + '\n';
+        };
+
+        // Actually run the code (in a safe way)
+        new Function(code)();
+
+        // Restore the original console functions
+        console.log = originalLog;
+        console.error = originalError;
+        console.warn = originalWarn;
+
+        // Show the output
+        outputDiv.style.display = 'block';
+        if (capturedOutput) {
+            outputContent.innerHTML = '<span style="color: #c3e88d;">' + capturedOutput.replace(/\n/g, '<br>') + '</span>';
+        } else {
+            outputContent.innerHTML = '<span style="color: #00d680;">✓ Code executed successfully (no console output)</span>';
+        }
+
+    } catch (error) {
+        // If there's an error, show it to the user
+        console.log = originalLog;
+        console.error = originalError;
+        console.warn = originalWarn;
+        
+        outputDiv.style.display = 'block';
+        outputContent.innerHTML = `
+            <span style="color: #ff6b6b;">
+                <strong>❌ Error:</strong><br/>
+                ${error.name}: ${error.message}
+            </span>
+        `;
+    }
+}
+
 // ===== LOAD QUESTION =====
 function loadQuestion() {
     if (currentQuestionIndex >= shuffledQuestions.length) {
@@ -652,77 +702,56 @@ function loadQuestion() {
     document.getElementById('lesson-title').textContent = `Question ${lessonNumber}`;
     updateProgress();
     
-    let questionContent = '';
+    // Detect what language this code is
+    const language = detectLanguageFromCode(question.code);
     
-    if (question.type === 'error') {
-        questionContent = `
-            <div class="lesson-container">
-                <div class="lesson-panel">
-                    <h3><span class="icon">🔍</span> Find the Error</h3>
-                    <div class="code-display">
-                        <pre>${escapeHtml(question.code)}</pre>
-                    </div>
-                    <p class="question-title">${escapeHtml(question.question)}</p>
-                    <div class="options-list">
-                        <input 
-                            type="text" 
-                            id="error-input" 
-                            placeholder="Type what is missing or wrong..."
-                            class="error-input-field"
-                        />
-                    </div>
-                    <div id="feedback-error" style="display: none;"></div>
-                    <div class="action-buttons">
-                        <button class="btn-submit" onclick="submitErrorAnswer()">Submit Answer</button>
-                        <button class="btn-next" id="next-btn-error">Next Question</button>
-                    </div>
+    // Create the HTML for the question (left side) and editor (right side)
+    let questionContent = `
+        <div class="lesson-container">
+            <div class="lesson-panel">
+                <h3><span class="icon">❓</span> Question</h3>
+                <div class="code-display">
+                    <pre>${escapeHtml(question.code)}</pre>
                 </div>
-                <div class="editor-panel">
-                    <h3><span class="icon">💻</span> Code Playground</h3>
-                    <div class="editor-status">
-                        <span class="status-dot"></span>
-                        <span>Complete to proceed</span>
-                    </div>
+                <p class="question-title">${escapeHtml(question.question)}</p>
+                <div class="options-list" id="options-list"></div>
+                <div id="feedback" style="display: none;"></div>
+                <div class="action-buttons">
+                    <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">Submit Answer</button>
+                    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question</button>
                 </div>
             </div>
-        `;
-    } else {
-        questionContent = `
-            <div class="lesson-container">
-                <div class="lesson-panel">
-                    <h3><span class="icon">❓</span> Question</h3>
-                    <div class="code-display">
-                        <pre>${escapeHtml(question.code)}</pre>
-                    </div>
-                    <p class="question-title">${escapeHtml(question.question)}</p>
-                    <div class="options-list" id="options-list"></div>
-                    <div id="feedback" style="display: none;"></div>
-                    <div class="action-buttons">
-                        <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">Submit Answer</button>
-                        <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question</button>
-                    </div>
+            
+            <div class="editor-panel">
+                <h3><span class="icon">💻</span> Code Editor</h3>
+                <div class="editor-status">
+                    <span class="status-dot"></span>
+                    <span id="language-badge">${language}</span>
                 </div>
-                <div class="editor-panel">
-                    <h3><span class="icon">💻</span> Code Playground</h3>
-                    <div class="editor-status">
-                        <span class="status-dot"></span>
-                        <span>Complete to proceed</span>
-                    </div>
+                
+                <textarea 
+                    id="code-editor" 
+                    class="code-editor" 
+                    placeholder="${getPlaceholderForLanguage(language)}"
+                    spellcheck="false">
+                </textarea>
+                
+                <div class="action-buttons">
+                    <button class="btn-submit" onclick="runCode()">▶️ Run Code</button>
+                </div>
+                
+                <div id="code-output" style="display:none;">
+                    <h4 style="color: #ffffff; margin: 10px 0;">Output:</h4>
+                    <div id="output-content" class="code-output"></div>
                 </div>
             </div>
-        `;
-    }
+        </div>
+    `;
     
     contentArea.innerHTML = questionContent;
     
-    if (question.type === 'error') {
-        const errorInput = document.getElementById('error-input');
-        if (errorInput) {
-            errorInput.focus();
-        }
-    } else {
-        renderOptions(question);
-    }
+    // Fill in the answer options
+    renderOptions(question);
     
     answered = false;
     selectedOptionIndex = null;
@@ -800,13 +829,14 @@ function submitAnswer() {
             <div class="feedback-box incorrect">
                 <strong>✗ Incorrect</strong>
                 <div class="feedback-details">Correct answer: <strong>${escapeHtml(question.options[question.correct])}</strong></div>
+                <div class="feedback-details">${escapeHtml(question.explanation)}</div>
             </div>
         `;
         
         feedbackDiv.style.display = 'block';
         submitBtn.disabled = true;
         
-        // UPDATE LEADERBOARD EVEN ON FAILURE
+        // Update leaderboard and restart quiz
         setTimeout(() => {
             addOrUpdateLeaderboard(currentPlayerName, currentSessionScore);
             alert('Quiz restarting. Try again!');
@@ -814,134 +844,6 @@ function submitAnswer() {
             currentCourseId = '';
             showCourseSelection();
         }, 2000);
-    }
-}
-
-// ===== SUBMIT ERROR ANSWER - WITH DETAILED FEEDBACK =====
-function submitErrorAnswer() {
-    const errorInput = document.getElementById('error-input');
-    const userAnswer = errorInput.value.trim().toLowerCase();
-    const question = shuffledQuestions[currentQuestionIndex];
-    const feedbackDiv = document.getElementById('feedback-error');
-    const submitBtn = document.querySelector('.btn-submit');
-    const nextBtn = document.getElementById('next-btn-error');
-    
-    if (!userAnswer) {
-        alert('Please type your answer');
-        return;
-    }
-    
-    if (answered) return;
-    
-    answered = true;
-    const correctAnswer = question.errorAnswer.toLowerCase();
-    const isCorrect = userAnswer === correctAnswer;
-    
-    if (isCorrect) {
-        currentSessionScore++;
-        document.getElementById('total-score').textContent = currentSessionScore;
-        
-        // Build detailed error feedback with location information
-        let detailedFeedback = `
-            <div class="feedback-box correct">
-                <strong>✓ Correct! You found the error!</strong>
-                <div class="feedback-details">
-                    <strong style="color: inherit; display: block; margin-top: 12px;">Error Type:</strong>
-                    ${escapeHtml(question.errorInfo.errorType)}
-                    
-                    <strong style="color: inherit; display: block; margin-top: 12px;">Problem:</strong>
-                    ${escapeHtml(question.errorInfo.description)}
-        `;
-        
-        // Show error locations
-        if (question.errorInfo.errorLines && question.errorInfo.errorLines.length > 0) {
-            detailedFeedback += '<strong style="color: inherit; display: block; margin-top: 12px;">Error Location(s):</strong>';
-            
-            question.errorInfo.errorLines.forEach((errorLine, idx) => {
-                detailedFeedback += `
-                    <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.1); border-radius: 6px; font-family: 'Fira Code', monospace; font-size: 0.9em;">
-                        <div style="color: #ef4444; margin-bottom: 5px;"><strong>Line ${errorLine.line} ❌</strong></div>
-                        <div style="margin-bottom: 8px;">${escapeHtml(errorLine.original)}</div>
-                        <div style="text-align: center; color: #666;">↓ Position: ${escapeHtml(errorLine.position)}</div>
-                        <div style="color: #10b981; margin-top: 8px;"><strong>✓ Corrected:</strong></div>
-                        <div>${escapeHtml(errorLine.corrected)}</div>
-                    </div>
-                `;
-            });
-        }
-        
-        // Add tip
-        detailedFeedback += `
-                    <strong style="color: inherit; display: block; margin-top: 12px;">💡 Tip:</strong>
-                    ${escapeHtml(question.errorInfo.tip)}
-                    
-                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.1);">
-                        <strong style="color: inherit;">Explanation:</strong>
-                        <div>${escapeHtml(question.explanation)}</div>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        feedbackDiv.innerHTML = detailedFeedback;
-        feedbackDiv.style.display = 'block';
-        
-        errorInput.disabled = true;
-        submitBtn.style.display = 'none';
-        nextBtn.style.display = 'block';
-    } else {
-        // Show incorrect feedback with hint about correct answer
-        let detailedFeedback = `
-            <div class="feedback-box incorrect">
-                <strong>✗ Incorrect</strong>
-                <div class="feedback-details">
-                    <strong style="color: inherit; display: block; margin-top: 12px;">The error was:</strong>
-                    <strong style="color: inherit; display: block; margin-top: 8px; font-size: 1.1em;">${escapeHtml(question.errorAnswer)}</strong>
-                    
-                    <strong style="color: inherit; display: block; margin-top: 12px;">Error Type:</strong>
-                    ${escapeHtml(question.errorInfo.errorType)}
-                    
-                    <strong style="color: inherit; display: block; margin-top: 12px;">Look for:</strong>
-                    ${escapeHtml(question.errorInfo.description)}
-        `;
-        
-        // Show error locations
-        if (question.errorInfo.errorLines && question.errorInfo.errorLines.length > 0) {
-            detailedFeedback += '<strong style="color: inherit; display: block; margin-top: 12px;">Error Location(s):</strong>';
-            
-            question.errorInfo.errorLines.forEach((errorLine, idx) => {
-                detailedFeedback += `
-                    <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.1); border-radius: 6px; font-family: 'Fira Code', monospace; font-size: 0.9em;">
-                        <div style="color: #ef4444; margin-bottom: 5px;"><strong>Line ${errorLine.line} ❌</strong></div>
-                        <div style="margin-bottom: 8px;">${escapeHtml(errorLine.original)}</div>
-                        <div style="text-align: center; color: #666;">↓ Position: ${escapeHtml(errorLine.position)}</div>
-                        <div style="color: #10b981; margin-top: 8px;"><strong>✓ Corrected:</strong></div>
-                        <div>${escapeHtml(errorLine.corrected)}</div>
-                    </div>
-                `;
-            });
-        }
-        
-        detailedFeedback += `
-                    <strong style="color: inherit; display: block; margin-top: 12px;">💡 Tip:</strong>
-                    ${escapeHtml(question.errorInfo.tip)}
-                </div>
-            </div>
-        `;
-        
-        feedbackDiv.innerHTML = detailedFeedback;
-        feedbackDiv.style.display = 'block';
-        
-        submitBtn.disabled = true;
-        
-        // UPDATE LEADERBOARD EVEN ON FAILURE
-        setTimeout(() => {
-            addOrUpdateLeaderboard(currentPlayerName, currentSessionScore);
-            alert('Quiz restarting. Try again!');
-            quizInProgress = false;
-            currentCourseId = '';
-            showCourseSelection();
-        }, 3000);
     }
 }
 
@@ -968,7 +870,7 @@ function showCompletion() {
     const total = shuffledQuestions.length;
     const course = coursesData[currentCourseId];
     
-    // UPDATE LEADERBOARD ON COMPLETION
+    // Update leaderboard
     addOrUpdateLeaderboard(currentPlayerName, currentSessionScore);
     
     let message = '';
