@@ -1229,15 +1229,16 @@ function showExitConfirmation() {
 // Function to actually exit the course
 function exitCourse() {
     // Reset course data (don't save score)
-    currentCourseId = null;
+    currentCourseId = '';
     currentQuestionIndex = 0;
-    totalScore = 0;
-
+    currentSessionScore = 0;
+    quizInProgress = false;
+    
     // Hide the exit button
     hideExitButton();
-
+    
     // Show the course selection screen
-    displayCourseSelection();
+    showCourseSelection();
 }
 
 // Add click event listener to the exit button
