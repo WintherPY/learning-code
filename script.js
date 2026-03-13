@@ -606,6 +606,7 @@ function startCourse(courseId) {
     updateUserInfo();
     updateSidebarCourses();
     loadQuestion();
+    showExitButton();
 }
 
 // ===== LOAD QUESTION =====
