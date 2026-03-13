@@ -3,7 +3,7 @@ const coursesData = {
     // BEGINNER COURSES
     'beginner-general': {
         id: 'beginner-general',
-        name: 'Beginner: General',
+        name: 'Beginner: Programming Fundamentals',
         category: 'Beginner',
         difficulty: 'Beginner',
         description: 'Start from scratch with basic programming concepts',
@@ -156,7 +156,7 @@ const coursesData = {
     // NOVICE COURSES
     'novice-general': {
         id: 'novice-general',
-        name: 'Novice: General',
+        name: 'Novice: Variables, Functions & Logic',
         category: 'Novice',
         difficulty: 'Novice',
         description: 'Build on basics with variables, functions, and logic',
@@ -325,7 +325,7 @@ const coursesData = {
     // EXPERT COURSES
     'expert-general': {
         id: 'expert-general',
-        name: 'Expert: General',
+        name: 'Expert: Advanced Concepts & Optimization',
         category: 'Expert',
         difficulty: 'Expert',
         description: 'Master advanced concepts and optimization',
@@ -486,7 +486,7 @@ const coursesData = {
     // HTML COURSE
     'html-course': {
         id: 'html-course',
-        name: 'HTML',
+        name: 'HTML: Markup & Semantic Elements',
         category: 'Language',
         difficulty: 'Mixed',
         description: 'Master HTML markup and semantic elements',
@@ -654,7 +654,7 @@ const coursesData = {
     // JAVASCRIPT COURSE
     'javascript-course': {
         id: 'javascript-course',
-        name: 'JavaScript',
+        name: 'JavaScript: ES6+ & Advanced Concepts',
         category: 'Language',
         difficulty: 'Mixed',
         description: 'Learn JavaScript ES6+ and advanced concepts',
@@ -823,7 +823,7 @@ const coursesData = {
     // CSS COURSE
     'css-course': {
         id: 'css-course',
-        name: 'CSS',
+        name: 'CSS: Styling & Layout Techniques',
         category: 'Language',
         difficulty: 'Mixed',
         description: 'Master CSS styling and layout techniques',
