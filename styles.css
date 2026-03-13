@@ -943,3 +943,30 @@ body {
         padding: 20px;
     }
 }
+/* ===== EXIT BUTTON ===== */
+.topbar-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-exit {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-exit:hover {
+    background-color: #dc2626;
+    transform: translateX(-2px);
+}
+
+.btn-exit:active {
+    transform: scale(0.98);
+}
