@@ -1115,8 +1115,19 @@ function showNameEntryScreen() {
     const nameInput = document.getElementById('player-name');
     if (nameInput) {
         nameInput.focus();
-        nameInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') proceedToCourses();
+        nameInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { proceedToCourses(); return; }
+            if (e.key.length === 1 && !/^[a-zA-Z ]$/.test(e.key)) e.preventDefault();
+        });
+        nameInput.addEventListener('input', () => {
+            const pos = nameInput.selectionStart;
+            const original = nameInput.value;
+            const cleaned = original.replace(/[^a-zA-Z ]/g, '');
+            if (original !== cleaned) {
+                const removedCount = original.length - cleaned.length;
+                nameInput.value = cleaned;
+                nameInput.setSelectionRange(pos - removedCount, pos - removedCount);
+            }
         });
     }
 }
