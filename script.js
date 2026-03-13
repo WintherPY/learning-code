@@ -1106,3 +1106,141 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
+// ===== EXIT COURSE FUNCTIONALITY =====
+
+// Get the exit button element
+const exitBtn = document.getElementById('exit-course-btn');
+
+// Function to show the exit button (called when course starts)
+function showExitButton() {
+    if (exitBtn) {
+        exitBtn.style.display = 'block';
+    }
+}
+
+// Function to hide the exit button (called when returning to menu)
+function hideExitButton() {
+    if (exitBtn) {
+        exitBtn.style.display = 'none';
+    }
+}
+
+// Function to create and show the confirmation dialog
+function showExitConfirmation() {
+    // Create a modal/overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    `;
+
+    // Create the dialog box
+    const dialog = document.createElement('div');
+    dialog.style.cssText = `
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        max-width: 400px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    `;
+
+    // Add content to the dialog
+    dialog.innerHTML = `
+        <h2 style="color: #1a1a1a; margin-bottom: 15px; font-size: 1.5em;">Exit Course?</h2>
+        <p style="color: #666; margin-bottom: 20px; font-size: 1em; line-height: 1.5;">
+            Are you sure you want to exit? Your progress will <strong>NOT</strong> be saved.
+        </p>
+        <div style="display: flex; gap: 12px;">
+            <button id="cancel-exit-btn" style="
+                flex: 1;
+                padding: 12px 20px;
+                background: #666;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                font-size: 0.95em;
+                transition: all 0.3s ease;
+                font-family: 'Inter', sans-serif;
+            ">
+                Cancel
+            </button>
+            <button id="confirm-exit-btn" style="
+                flex: 1;
+                padding: 12px 20px;
+                background: #ef4444;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                font-size: 0.95em;
+                transition: all 0.3s ease;
+                font-family: 'Inter', sans-serif;
+            ">
+                Exit Course
+            </button>
+        </div>
+    `;
+
+    // Add the dialog to the overlay
+    overlay.appendChild(dialog);
+
+    // Add the overlay to the page
+    document.body.appendChild(overlay);
+
+    // Handle Cancel button
+    document.getElementById('cancel-exit-btn').addEventListener('click', () => {
+        overlay.remove();
+    });
+
+    // Handle Confirm Exit button
+    document.getElementById('confirm-exit-btn').addEventListener('click', () => {
+        overlay.remove();
+        exitCourse();
+    });
+
+    // Add hover effects to buttons
+    document.getElementById('cancel-exit-btn').addEventListener('mouseover', (e) => {
+        e.target.style.background = '#555';
+    });
+    document.getElementById('cancel-exit-btn').addEventListener('mouseout', (e) => {
+        e.target.style.background = '#666';
+    });
+
+    document.getElementById('confirm-exit-btn').addEventListener('mouseover', (e) => {
+        e.target.style.background = '#dc2626';
+    });
+    document.getElementById('confirm-exit-btn').addEventListener('mouseout', (e) => {
+        e.target.style.background = '#ef4444';
+    });
+}
+
+// Function to actually exit the course
+function exitCourse() {
+    // Reset course data (don't save score)
+    currentCourseId = null;
+    currentQuestionIndex = 0;
+    totalScore = 0;
+
+    // Hide the exit button
+    hideExitButton();
+
+    // Show the course selection screen
+    displayCourseSelection();
+}
+
+// Add click event listener to the exit button
+if (exitBtn) {
+    exitBtn.addEventListener('click', showExitConfirmation);
+}
