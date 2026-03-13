@@ -995,7 +995,15 @@ let quizInProgress = false;
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
     loadLeaderboard();
-    showNameEntryScreen();
+    const savedName = localStorage.getItem('userName');
+    if (savedName) {
+        currentPlayerName = savedName;
+        updateUserInfo();
+        updateSidebarCourses();
+        showCourseSelection();
+    } else {
+        showNameEntryScreen();
+    }
 });
 
 // ===== LEADERBOARD FUNCTIONS =====
@@ -1123,6 +1131,7 @@ function proceedToCourses() {
     }
     
     currentPlayerName = name;
+    localStorage.setItem('userName', currentPlayerName);
     updateUserInfo();
     updateSidebarCourses();
     showCourseSelection();
@@ -1162,6 +1171,9 @@ function showCourseSelection() {
                         </div>
                     `).join('')}
                 </div>
+                <div class="logout-section">
+                    <button class="btn-logout" onclick="logOut()">🚪 Log Out</button>
+                </div>
             </div>
         `;
     } else {
@@ -1195,6 +1207,17 @@ function backToCourseSelection() {
     updateUserInfo();
     updateSidebarCourses();
     showCourseSelection();
+}
+
+// ===== LOG OUT =====
+function logOut() {
+    localStorage.removeItem('userName');
+    currentPlayerName = '';
+    currentCourseId = '';
+    quizInProgress = false;
+    updateUserInfo();
+    updateSidebarCourses();
+    showNameEntryScreen();
 }
 
 // ===== START COURSE =====
