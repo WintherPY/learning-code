@@ -52,6 +52,103 @@ const coursesData = {
                 correct: 0,
                 explanation: "This creates an interactive button on the webpage.",
                 codeBehavior: "Shows a button labeled 'Click Me'"
+            },
+            {
+                type: "identify",
+                code: `<p>This is a paragraph.</p>`,
+                question: "What does the <p> tag create?",
+                options: ["A paragraph of text", "A heading", "A list item"],
+                correct: 0,
+                explanation: "<p> defines a paragraph element in HTML.",
+                codeBehavior: "Renders a block of text with top and bottom spacing"
+            },
+            {
+                type: "identify",
+                code: `<a href="https://example.com">Visit Site</a>`,
+                question: "What does this HTML create?",
+                options: ["A clickable hyperlink", "An image", "A button"],
+                correct: 0,
+                explanation: "The <a> tag creates a hyperlink. The href attribute defines the destination URL.",
+                codeBehavior: "Shows a clickable link labeled 'Visit Site'"
+            },
+            {
+                type: "behavior",
+                code: `let x = 10;\nlet y = 5;\nconsole.log(x - y);`,
+                question: "What does this output?",
+                options: ["5", "15", "10"],
+                correct: 0,
+                explanation: "The minus operator subtracts y from x. 10 - 5 = 5.",
+                codeBehavior: "Outputs: 5"
+            },
+            {
+                type: "identify",
+                code: `<ul>\n  <li>Apples</li>\n  <li>Bananas</li>\n</ul>`,
+                question: "What does this HTML create?",
+                options: ["An unordered bullet list", "A numbered list", "A table"],
+                correct: 0,
+                explanation: "<ul> creates an unordered list and <li> defines each list item.",
+                codeBehavior: "Renders a bullet list with Apples and Bananas"
+            },
+            {
+                type: "behavior",
+                code: `let name = "Alice";\nconsole.log("Hello " + name);`,
+                question: "What does this output?",
+                options: ["Hello Alice", "Hello name", "Alice"],
+                correct: 0,
+                explanation: "The + operator joins strings together (concatenation).",
+                codeBehavior: "Outputs: Hello Alice"
+            },
+            {
+                type: "identify",
+                code: `p { font-size: 16px; }`,
+                question: "What does font-size do in CSS?",
+                options: ["Sets the text size", "Sets the text color", "Makes text bold"],
+                correct: 0,
+                explanation: "font-size controls how large the text appears on screen.",
+                codeBehavior: "Makes all <p> text 16 pixels tall"
+            },
+            {
+                type: "behavior",
+                code: `console.log(2 + "3");`,
+                question: "What does this output?",
+                options: ["23", "5", "error"],
+                correct: 0,
+                explanation: "When a number is added to a string, JavaScript converts the number to a string and concatenates them.",
+                codeBehavior: "Outputs: 23 (string)"
+            },
+            {
+                type: "identify",
+                code: `.container { margin: 0 auto; }`,
+                question: "What does margin: 0 auto do?",
+                options: ["Centers the element horizontally", "Removes all spacing", "Adds padding"],
+                correct: 0,
+                explanation: "margin: 0 auto sets top/bottom margin to 0 and automatically centers the element horizontally.",
+                codeBehavior: "Centers .container inside its parent"
+            },
+            {
+                type: "error",
+                code: `<img src="cat.jpg">`,
+                question: "Find the accessibility error - Type what's missing",
+                errorAnswer: "alt",
+                errorInfo: {
+                    errorType: "Missing Alt Attribute",
+                    description: "Images must have an alt attribute for accessibility and in case the image fails to load.",
+                    errorLines: [
+                        { line: 1, original: '<img src="cat.jpg">', corrected: '<img src="cat.jpg" alt="A cat">', position: "inside the <img> tag" }
+                    ],
+                    tip: "Always add alt=\"description\" to every <img> element"
+                },
+                explanation: "Every <img> needs an alt attribute for accessibility.",
+                codeBehavior: "Screen readers cannot describe the image without alt text"
+            },
+            {
+                type: "identify",
+                code: `h2 { color: #ff0000; }`,
+                question: "What color does #ff0000 represent?",
+                options: ["Red", "Blue", "Green"],
+                correct: 0,
+                explanation: "#ff0000 is a hex color code representing pure red (maximum red, no green, no blue).",
+                codeBehavior: "Makes all <h2> headings red"
             }
         ]
     },
@@ -117,6 +214,110 @@ const coursesData = {
                 correct: 0,
                 explanation: "Arrays are indexed starting at 0.",
                 codeBehavior: "Outputs: 1"
+            },
+            {
+                type: "behavior",
+                code: `const nums = [1, 2, 3];\nconsole.log(nums.length);`,
+                question: "What does this output?",
+                options: ["3", "1", "0"],
+                correct: 0,
+                explanation: "The length property returns how many items are in the array.",
+                codeBehavior: "Outputs: 3"
+            },
+            {
+                type: "identify",
+                code: `<label for="email">Email</label>\n<input id="email" type="text">`,
+                question: "What does the for attribute on <label> do?",
+                options: ["Links the label to the input with matching id", "Creates a loop", "Styles the label"],
+                correct: 0,
+                explanation: "for=\"email\" links the label to the <input id=\"email\">, so clicking the label focuses the input.",
+                codeBehavior: "Clicking 'Email' label focuses the text input"
+            },
+            {
+                type: "behavior",
+                code: `let count = 0;\nfor (let i = 0; i < 3; i++) {\n    count++;\n}\nconsole.log(count);`,
+                question: "What does this output?",
+                options: ["3", "0", "2"],
+                correct: 0,
+                explanation: "The loop runs 3 times (i = 0, 1, 2) and count is incremented each time.",
+                codeBehavior: "Outputs: 3"
+            },
+            {
+                type: "identify",
+                code: `.flex { \n    display: flex;\n    flex-wrap: wrap;\n}`,
+                question: "What does flex-wrap: wrap do?",
+                options: ["Allows items to wrap to the next line", "Hides overflow", "Centers items"],
+                correct: 0,
+                explanation: "flex-wrap: wrap allows flex items to wrap onto multiple lines when they exceed the container width.",
+                codeBehavior: "Items wrap to a new row instead of overflowing"
+            },
+            {
+                type: "error",
+                code: `function greet(name) {\n    return "Hello " name;\n}`,
+                question: "Find the error - Type what's missing",
+                errorAnswer: "+",
+                errorInfo: {
+                    errorType: "Missing Concatenation Operator",
+                    description: "Two string values cannot be placed next to each other without an operator.",
+                    errorLines: [
+                        { line: 2, original: 'return "Hello " name;', corrected: 'return "Hello " + name;', position: "between the string and the variable" }
+                    ],
+                    tip: "Use + to join strings and variables together"
+                },
+                explanation: "Strings and variables must be joined with the + operator.",
+                codeBehavior: "SyntaxError - missing + between string and variable"
+            },
+            {
+                type: "behavior",
+                code: `const arr = [5, 3, 1];\narr.sort((a, b) => a - b);\nconsole.log(arr[0]);`,
+                question: "What does this output?",
+                options: ["1", "5", "3"],
+                correct: 0,
+                explanation: "sort((a, b) => a - b) sorts the array in ascending order. The smallest value (1) moves to index 0.",
+                codeBehavior: "Outputs: 1"
+            },
+            {
+                type: "identify",
+                code: `const person = {\n    name: "Bob",\n    greet() { return "Hi, I'm " + this.name; }\n};`,
+                question: "What is this JavaScript pattern?",
+                options: ["Object with a method", "A class definition", "An arrow function"],
+                correct: 0,
+                explanation: "This is an object literal with a method. greet() is a function stored as a property of the object.",
+                codeBehavior: "person.greet() returns \"Hi, I'm Bob\""
+            },
+            {
+                type: "behavior",
+                code: `const x = null;\nconsole.log(x === null);`,
+                question: "What does this output?",
+                options: ["true", "false", "null"],
+                correct: 0,
+                explanation: "=== is strict equality. null strictly equals null, so the result is true.",
+                codeBehavior: "Outputs: true"
+            },
+            {
+                type: "identify",
+                code: `input:focus {\n    border: 2px solid blue;\n}`,
+                question: "What does the :focus pseudo-class do?",
+                options: ["Styles the input when it is selected/active", "Styles on mouse hover", "Hides the input"],
+                correct: 0,
+                explanation: ":focus applies styles when a user clicks or tabs into an element.",
+                codeBehavior: "Input gets a blue border when the user clicks on it"
+            },
+            {
+                type: "error",
+                code: `<div>\n    <p>Hello</p>\n</dvi>`,
+                question: "Find the HTML error - Type what's wrong",
+                errorAnswer: "closing tag",
+                errorInfo: {
+                    errorType: "Typo in Closing Tag",
+                    description: "The closing </dvi> is misspelled. It should be </div>.",
+                    errorLines: [
+                        { line: 3, original: "</dvi>", corrected: "</div>", position: "closing tag" }
+                    ],
+                    tip: "Opening and closing tags must match exactly: <div>...</div>"
+                },
+                explanation: "</dvi> is a typo — the correct closing tag is </div>.",
+                codeBehavior: "Browser may misinterpret the structure; the div is never properly closed"
             }
         ]
     },
@@ -180,6 +381,104 @@ const coursesData = {
                 correct: 0,
                 explanation: "map() extracts properties from object arrays.",
                 codeBehavior: "ids = [1, 2]"
+            },
+            {
+                type: "behavior",
+                code: `const nums = [1, 2, 3, 4, 5];\nconst evens = nums.filter(n => n % 2 === 0);\nconsole.log(evens);`,
+                question: "What is evens?",
+                options: ["[2, 4]", "[1, 3, 5]", "[1, 2, 3, 4, 5]"],
+                correct: 0,
+                explanation: "filter() keeps only elements where the callback returns true. Even numbers have remainder 0 when divided by 2.",
+                codeBehavior: "evens = [2, 4]"
+            },
+            {
+                type: "behavior",
+                code: `const nums = [1, 2, 3, 4];\nconst total = nums.reduce((acc, n) => acc + n, 0);\nconsole.log(total);`,
+                question: "What does total equal?",
+                options: ["10", "0", "4"],
+                correct: 0,
+                explanation: "reduce() accumulates values. It starts at 0 and adds each number: 0+1+2+3+4 = 10.",
+                codeBehavior: "Outputs: 10"
+            },
+            {
+                type: "identify",
+                code: `function outer() {\n    const secret = 42;\n    return function inner() {\n        return secret;\n    };\n}`,
+                question: "What JavaScript concept does this demonstrate?",
+                options: ["Closure", "Recursion", "Prototype"],
+                correct: 0,
+                explanation: "A closure is when an inner function retains access to the outer function's variables even after the outer function has returned.",
+                codeBehavior: "outer()() returns 42"
+            },
+            {
+                type: "identify",
+                code: `Promise.all([fetch('/api/a'), fetch('/api/b')])\n    .then(([a, b]) => console.log(a, b));`,
+                question: "What does Promise.all do?",
+                options: ["Runs all promises in parallel and waits for all to resolve", "Runs promises one by one", "Returns the first resolved promise"],
+                correct: 0,
+                explanation: "Promise.all takes an array of promises and resolves when all of them complete, returning an array of results.",
+                codeBehavior: "Fetches /api/a and /api/b simultaneously"
+            },
+            {
+                type: "error",
+                code: `async function loadData() {\n    const res = fetch('https://api.example.com/data');\n    const data = res.json();\n    return data;\n}`,
+                question: "Find the error - Type what's missing",
+                errorAnswer: "await",
+                errorInfo: {
+                    errorType: "Missing await",
+                    description: "fetch() and res.json() both return Promises. Without await, res and data will be Promise objects, not actual values.",
+                    errorLines: [
+                        { line: 2, original: "const res = fetch('https://api.example.com/data');", corrected: "const res = await fetch('https://api.example.com/data');", position: "before fetch()" },
+                        { line: 3, original: "const data = res.json();", corrected: "const data = await res.json();", position: "before res.json()" }
+                    ],
+                    tip: "Inside an async function, use await before any Promise-returning call"
+                },
+                explanation: "await is required before fetch() and res.json() to get the resolved values.",
+                codeBehavior: "Without await, res is a Promise object, causing res.json is not a function error"
+            },
+            {
+                type: "identify",
+                code: `:root {\n    --primary-color: #3498db;\n}\n\n.btn { background: var(--primary-color); }`,
+                question: "What is --primary-color?",
+                options: ["A CSS custom property (variable)", "A class name", "A pseudo-class"],
+                correct: 0,
+                explanation: "CSS custom properties (variables) are defined with -- prefix and used with var(). They make it easy to reuse values.",
+                codeBehavior: ".btn gets background color #3498db from the variable"
+            },
+            {
+                type: "behavior",
+                code: `const user = { profile: { name: "Sam" } };\nconsole.log(user?.profile?.name);`,
+                question: "What does this output?",
+                options: ["Sam", "undefined", "error"],
+                correct: 0,
+                explanation: "Optional chaining (?.) safely accesses nested properties without throwing if an intermediate value is null or undefined.",
+                codeBehavior: "Outputs: Sam"
+            },
+            {
+                type: "identify",
+                code: `document.querySelector('#btn').addEventListener('click', (e) => {\n    console.log(e.target);\n});`,
+                question: "What is e.target?",
+                options: ["The element that was clicked", "The event type", "The parent element"],
+                correct: 0,
+                explanation: "e.target refers to the specific DOM element that triggered the event.",
+                codeBehavior: "Logs the #btn element when clicked"
+            },
+            {
+                type: "behavior",
+                code: `class Animal {\n    constructor(name) { this.name = name; }\n    speak() { return this.name + ' makes a sound.'; }\n}\nclass Dog extends Animal {\n    speak() { return this.name + ' barks.'; }\n}\nconsole.log(new Dog('Rex').speak());`,
+                question: "What does this output?",
+                options: ["Rex barks.", "Rex makes a sound.", "undefined"],
+                correct: 0,
+                explanation: "Dog extends Animal and overrides the speak() method. Method overriding is a key OOP concept.",
+                codeBehavior: "Outputs: Rex barks."
+            },
+            {
+                type: "identify",
+                code: `const [first, ...rest] = [10, 20, 30, 40];\nconsole.log(first);\nconsole.log(rest);`,
+                question: "What does the rest parameter (...rest) collect?",
+                options: ["All remaining array elements after first", "Only the last element", "A copy of the whole array"],
+                correct: 0,
+                explanation: "Array destructuring with ...rest collects all remaining elements. first = 10, rest = [20, 30, 40].",
+                codeBehavior: "Outputs: 10 then [20, 30, 40]"
             }
         ]
     },
@@ -243,6 +542,111 @@ const coursesData = {
                 correct: 0,
                 explanation: "Semantic tags improve structure and SEO.",
                 codeBehavior: "Good practice for organization"
+            },
+            {
+                type: "identify",
+                code: `<nav>\n    <a href="/">Home</a>\n    <a href="/about">About</a>\n</nav>`,
+                question: "What does the <nav> element represent?",
+                options: ["A navigation block with links", "A header area", "A sidebar"],
+                correct: 0,
+                explanation: "<nav> is a semantic element that wraps navigation links, helping browsers and assistive technologies identify the navigation area.",
+                codeBehavior: "Groups navigation links with semantic meaning"
+            },
+            {
+                type: "identify",
+                code: `<meta charset="UTF-8">`,
+                question: "What does this <meta> tag do?",
+                options: ["Sets the character encoding for the page", "Sets the page title", "Links a stylesheet"],
+                correct: 0,
+                explanation: "charset=\"UTF-8\" tells the browser which character encoding to use, allowing it to display all Unicode characters correctly.",
+                codeBehavior: "Ensures special characters display correctly"
+            },
+            {
+                type: "error",
+                code: `<ul>\n    <li>Item 1\n    <li>Item 2\n</ul>`,
+                question: "Find the HTML error - Type what's missing",
+                errorAnswer: "closing tag",
+                errorInfo: {
+                    errorType: "Missing Closing Tags",
+                    description: "Each <li> element should have a matching </li> closing tag.",
+                    errorLines: [
+                        { line: 2, original: "<li>Item 1", corrected: "<li>Item 1</li>", position: "end of line 2" },
+                        { line: 3, original: "<li>Item 2", corrected: "<li>Item 2</li>", position: "end of line 3" }
+                    ],
+                    tip: "Always close HTML elements with a matching closing tag"
+                },
+                explanation: "Every <li> needs a </li> closing tag.",
+                codeBehavior: "Browser may render incorrectly without proper closing tags"
+            },
+            {
+                type: "identify",
+                code: `<input type="email" required placeholder="Enter email">`,
+                question: "What does the required attribute do?",
+                options: ["Prevents form submission if the field is empty", "Adds a placeholder label", "Validates email format only"],
+                correct: 0,
+                explanation: "required prevents the HTML form from being submitted unless the field has a value.",
+                codeBehavior: "Browser shows an error if user tries to submit without entering an email"
+            },
+            {
+                type: "behavior",
+                code: `<details>\n    <summary>Click to expand</summary>\n    <p>Hidden content here.</p>\n</details>`,
+                question: "What does this create?",
+                options: ["An expandable/collapsible section", "A tooltip", "A dialog box"],
+                correct: 0,
+                explanation: "<details> creates a disclosure widget. The <summary> is always visible; clicking it shows or hides the rest.",
+                codeBehavior: "Shows 'Click to expand'; clicking reveals the hidden paragraph"
+            },
+            {
+                type: "identify",
+                code: `<header>\n    <h1>Site Title</h1>\n</header>\n<main>\n    <p>Content</p>\n</main>\n<footer>\n    <p>Copyright</p>\n</footer>`,
+                question: "What is the purpose of <header>, <main>, and <footer>?",
+                options: ["Semantic landmark elements that structure page regions", "CSS layout containers", "JavaScript hooks"],
+                correct: 0,
+                explanation: "These are semantic HTML5 landmark elements that divide the page into meaningful regions for accessibility and SEO.",
+                codeBehavior: "Provides structured page layout with semantic meaning"
+            },
+            {
+                type: "error",
+                code: `<label>Username</label>\n<input type="text" id="username">`,
+                question: "Find the accessibility error - Type what's missing",
+                errorAnswer: "for",
+                errorInfo: {
+                    errorType: "Missing for Attribute on Label",
+                    description: "The <label> is not linked to the <input>. Adding for=\"username\" connects them.",
+                    errorLines: [
+                        { line: 1, original: "<label>Username</label>", corrected: '<label for="username">Username</label>', position: "inside the <label> tag" }
+                    ],
+                    tip: "Always link labels to inputs using for=\"inputId\" to improve accessibility"
+                },
+                explanation: "The <label> needs for=\"username\" to be linked to the input.",
+                codeBehavior: "Without for, clicking the label does not focus the input"
+            },
+            {
+                type: "identify",
+                code: `<figure>\n    <img src="chart.png" alt="Sales chart">\n    <figcaption>Q1 Sales Data</figcaption>\n</figure>`,
+                question: "What does <figcaption> do?",
+                options: ["Provides a caption for the figure element", "Adds a title attribute", "Creates a tooltip"],
+                correct: 0,
+                explanation: "<figcaption> gives a visible caption to its parent <figure>, associating descriptive text with images or diagrams.",
+                codeBehavior: "Displays 'Q1 Sales Data' as a caption below the image"
+            },
+            {
+                type: "behavior",
+                code: `<select name="color">\n    <option value="red">Red</option>\n    <option value="blue" selected>Blue</option>\n</select>`,
+                question: "Which option is pre-selected when the page loads?",
+                options: ["Blue", "Red", "Neither"],
+                correct: 0,
+                explanation: "The selected attribute on an <option> makes it the default selected value when the page first loads.",
+                codeBehavior: "Dropdown shows 'Blue' as the default selected option"
+            },
+            {
+                type: "identify",
+                code: `<table>\n    <thead><tr><th>Name</th><th>Age</th></tr></thead>\n    <tbody><tr><td>Alice</td><td>30</td></tr></tbody>\n</table>`,
+                question: "What is the purpose of <thead> and <tbody>?",
+                options: ["Semantically separate the header row from the data rows", "Style the table automatically", "Create scrollable rows"],
+                correct: 0,
+                explanation: "<thead> wraps the header row(s) and <tbody> wraps the data rows, making tables more semantic and accessible.",
+                codeBehavior: "Renders a table with a header row and one data row"
             }
         ]
     },
@@ -308,6 +712,110 @@ const coursesData = {
                 correct: 0,
                 explanation: "Classes are blueprints for objects.",
                 codeBehavior: "Creates reusable object templates"
+            },
+            {
+                type: "behavior",
+                code: `console.log(Array.isArray([1, 2, 3]));\nconsole.log(Array.isArray("hello"));`,
+                question: "What does this output?",
+                options: ["true then false", "false then true", "true then true"],
+                correct: 0,
+                explanation: "Array.isArray() returns true only for real arrays. Strings are not arrays.",
+                codeBehavior: "Outputs: true\nfalse"
+            },
+            {
+                type: "identify",
+                code: `const a = [1, 2];\nconst b = [3, 4];\nconst merged = [...a, ...b];`,
+                question: "What is the spread operator (...) doing here?",
+                options: ["Spreading array elements into a new array", "Copying by reference", "Filtering values"],
+                correct: 0,
+                explanation: "The spread operator expands an iterable (like an array) into individual elements. merged = [1, 2, 3, 4].",
+                codeBehavior: "merged = [1, 2, 3, 4]"
+            },
+            {
+                type: "error",
+                code: `const double = (n) => {\n    n * 2;\n};\nconsole.log(double(5));`,
+                question: "Find the error - Type what's missing",
+                errorAnswer: "return",
+                errorInfo: {
+                    errorType: "Missing return Statement",
+                    description: "When using a function body with { }, the return keyword is required to send back a value.",
+                    errorLines: [
+                        { line: 2, original: "    n * 2;", corrected: "    return n * 2;", position: "before n * 2" }
+                    ],
+                    tip: "Arrow functions with { } need an explicit return statement"
+                },
+                explanation: "Without return, the function returns undefined. Use return n * 2;",
+                codeBehavior: "double(5) returns undefined instead of 10"
+            },
+            {
+                type: "behavior",
+                code: `const obj = { a: 1, b: 2, c: 3 };\nconsole.log(Object.keys(obj));`,
+                question: "What does this output?",
+                options: ["['a', 'b', 'c']", "[1, 2, 3]", "3"],
+                correct: 0,
+                explanation: "Object.keys() returns an array of the object's property names (keys).",
+                codeBehavior: "Outputs: ['a', 'b', 'c']"
+            },
+            {
+                type: "identify",
+                code: `const name = "World";\nconsole.log(\`Hello, \${name}!\`);`,
+                question: "What are backticks and ${} called?",
+                options: ["Template literals", "String concatenation", "Comment syntax"],
+                correct: 0,
+                explanation: "Template literals use backticks and ${} to embed expressions directly inside strings.",
+                codeBehavior: "Outputs: Hello, World!"
+            },
+            {
+                type: "behavior",
+                code: `const nums = [1, 2, 3, 4, 5];\nconst big = nums.filter(n => n > 3);\nconsole.log(big);`,
+                question: "What does big contain?",
+                options: ["[4, 5]", "[1, 2, 3]", "[3, 4, 5]"],
+                correct: 0,
+                explanation: "filter() returns a new array with only the elements where the callback returns true. Numbers greater than 3 are 4 and 5.",
+                codeBehavior: "Outputs: [4, 5]"
+            },
+            {
+                type: "error",
+                code: `const counter = {\n    count: 0,\n    increment: () => {\n        this.count++;\n    }\n};`,
+                question: "Find the error - Type what's wrong",
+                errorAnswer: "this",
+                errorInfo: {
+                    errorType: "Incorrect this in Arrow Function",
+                    description: "Arrow functions do not have their own 'this'. Inside an arrow function method, 'this' refers to the outer scope (window/undefined), not the object.",
+                    errorLines: [
+                        { line: 3, original: "    increment: () => {", corrected: "    increment() {", position: "method definition" }
+                    ],
+                    tip: "Use regular function syntax for object methods that need to access 'this'"
+                },
+                explanation: "Arrow functions don't bind their own 'this'. Use a regular method: increment() { this.count++; }",
+                codeBehavior: "this.count++ throws a TypeError or modifies the wrong scope"
+            },
+            {
+                type: "identify",
+                code: `const age = 20;\nconst status = age >= 18 ? "adult" : "minor";`,
+                question: "What is this pattern called?",
+                options: ["Ternary operator", "Arrow function", "Short-circuit"],
+                correct: 0,
+                explanation: "The ternary operator (condition ? ifTrue : ifFalse) is a concise one-line alternative to an if/else statement.",
+                codeBehavior: "status = 'adult' because 20 >= 18 is true"
+            },
+            {
+                type: "behavior",
+                code: `const str = "  hello world  ";\nconsole.log(str.trim().toUpperCase());`,
+                question: "What does this output?",
+                options: ["HELLO WORLD", "  HELLO WORLD  ", "hello world"],
+                correct: 0,
+                explanation: "trim() removes leading/trailing whitespace. toUpperCase() converts to uppercase. Methods chain left to right.",
+                codeBehavior: "Outputs: HELLO WORLD"
+            },
+            {
+                type: "behavior",
+                code: `const p = new Promise((resolve) => {\n    setTimeout(() => resolve("done"), 1000);\n});\np.then(val => console.log(val));`,
+                question: "What does this log after 1 second?",
+                options: ["done", "undefined", "Promise {}"],
+                correct: 0,
+                explanation: "A Promise resolves with the value passed to resolve(). .then() receives that value. After 1 second the timeout fires and logs 'done'.",
+                codeBehavior: "Logs: done (after a 1 second delay)"
             }
         ]
     },
@@ -371,6 +879,103 @@ const coursesData = {
                 correct: 0,
                 explanation: "Grid creates responsive layouts.",
                 codeBehavior: "Creates 3-column layout"
+            },
+            {
+                type: "identify",
+                code: `/* Specificity comparison */\n#nav { color: red; }      /* wins */\n.nav { color: blue; }\ntag { color: green; }`,
+                question: "Which rule wins (highest specificity)?",
+                options: ["#nav (ID selector)", ".nav (class selector)", "tag (element selector)"],
+                correct: 0,
+                explanation: "CSS specificity order from highest to lowest: ID (#) > class (.) > element tag. IDs always override classes and tags.",
+                codeBehavior: "#nav has highest specificity and applies color: red"
+            },
+            {
+                type: "behavior",
+                code: `.box {\n    width: 100px;\n    padding: 10px;\n    border: 5px solid;\n    box-sizing: border-box;\n}`,
+                question: "With box-sizing: border-box, what is the total rendered width?",
+                options: ["100px", "130px", "110px"],
+                correct: 0,
+                explanation: "box-sizing: border-box makes padding and border included inside the specified width, keeping the element at exactly 100px.",
+                codeBehavior: "Total width stays at 100px"
+            },
+            {
+                type: "error",
+                code: `h1 {\n    font-size: 24;\n    color: blue;\n}`,
+                question: "Find the CSS error - Type what's missing",
+                errorAnswer: "unit",
+                errorInfo: {
+                    errorType: "Missing Unit on font-size",
+                    description: "CSS length values require a unit (px, em, rem, etc.). A bare number like 24 is invalid for font-size.",
+                    errorLines: [
+                        { line: 2, original: "    font-size: 24;", corrected: "    font-size: 24px;", position: "after the number 24" }
+                    ],
+                    tip: "Always include a unit for length values in CSS: px, em, rem, %, vh, vw"
+                },
+                explanation: "font-size needs a unit. Use font-size: 24px; or 24rem; etc.",
+                codeBehavior: "font-size is ignored by the browser without a unit"
+            },
+            {
+                type: "identify",
+                code: `@media (max-width: 768px) {\n    .menu { display: none; }\n}`,
+                question: "What does this CSS rule do?",
+                options: ["Hides .menu on screens narrower than 768px", "Hides .menu on all screens", "Applies only on large screens"],
+                correct: 0,
+                explanation: "@media queries apply styles conditionally. max-width: 768px means the rule only activates when the viewport is 768px wide or narrower.",
+                codeBehavior: ".menu becomes hidden on mobile-sized screens"
+            },
+            {
+                type: "behavior",
+                code: `.btn {\n    background: blue;\n    transition: background 0.3s ease;\n}\n.btn:hover { background: red; }`,
+                question: "What does the transition property do here?",
+                options: ["Smoothly animates the background color change over 0.3 seconds", "Instantly changes the color", "Disables hover effects"],
+                correct: 0,
+                explanation: "transition defines how a property change is animated. 0.3s is the duration and ease is the timing function.",
+                codeBehavior: "Background fades from blue to red smoothly when hovered"
+            },
+            {
+                type: "identify",
+                code: `.parent { position: relative; }\n.child {\n    position: absolute;\n    top: 0;\n    right: 0;\n}`,
+                question: "Where is .child positioned?",
+                options: ["Top-right corner of .parent", "Top-right of the page", "Bottom-right of .parent"],
+                correct: 0,
+                explanation: "position: absolute places an element relative to its nearest positioned ancestor. Since .parent has position: relative, .child anchors to its top-right corner.",
+                codeBehavior: ".child appears in the top-right corner of .parent"
+            },
+            {
+                type: "behavior",
+                code: `:root { --gap: 16px; }\n.card { margin: var(--gap); }`,
+                question: "What value does margin get?",
+                options: ["16px", "0", "var"],
+                correct: 0,
+                explanation: "var(--gap) reads the CSS custom property --gap defined in :root and uses its value (16px).",
+                codeBehavior: ".card gets margin: 16px"
+            },
+            {
+                type: "identify",
+                code: `.container {\n    display: flex;\n    align-items: center;\n}`,
+                question: "What does align-items: center do in flexbox?",
+                options: ["Centers items along the cross axis (vertically by default)", "Centers items horizontally", "Stretches items to fill height"],
+                correct: 0,
+                explanation: "In flexbox, align-items controls alignment on the cross axis. By default (row direction) this is vertical centering.",
+                codeBehavior: "Flex children are vertically centered inside the container"
+            },
+            {
+                type: "identify",
+                code: `@keyframes slideIn {\n    from { transform: translateX(-100%); }\n    to   { transform: translateX(0); }\n}\n.box { animation: slideIn 0.5s ease; }`,
+                question: "What does this CSS do?",
+                options: ["Slides .box in from the left over 0.5 seconds", "Rotates .box", "Fades .box in"],
+                correct: 0,
+                explanation: "@keyframes defines animation steps. translateX(-100%) starts the element off-screen to the left; translateX(0) moves it to its natural position.",
+                codeBehavior: ".box animates sliding in from the left when it appears"
+            },
+            {
+                type: "behavior",
+                code: `.gradient {\n    background: linear-gradient(to right, #ff0000, #0000ff);\n}`,
+                question: "What does this CSS create?",
+                options: ["A horizontal gradient from red to blue", "A vertical gradient", "A solid red background"],
+                correct: 0,
+                explanation: "linear-gradient(to right, ...) creates a smooth color transition flowing from left to right. The first color starts on the left and the last color ends on the right.",
+                codeBehavior: "Element shows a smooth red-to-blue gradient from left to right"
             }
         ]
     }
