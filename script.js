@@ -1198,8 +1198,7 @@ function showCourseSelection() {
         `;
     }
     
-    document.getElementById('breadcrumb-course').textContent = currentCourseId ? coursesData[currentCourseId].name : 'Courses';
-    document.getElementById('lesson-title').textContent = 'Select';
+
 }
 
 function backToCourseSelection() {
@@ -1229,9 +1228,7 @@ function startCourse(courseId) {
     currentSessionScore = 0;
     quizInProgress = true;
     answered = false;
-    
-    document.getElementById('breadcrumb-course').textContent = course.name;
-    updateUserInfo();
+        updateUserInfo();
     updateSidebarCourses();
     loadQuestion();
     showExitButton();
@@ -1247,9 +1244,7 @@ function loadQuestion() {
     const question = shuffledQuestions[currentQuestionIndex];
     const contentArea = document.getElementById('content-area');
     const lessonNumber = currentQuestionIndex + 1;
-    
-    document.getElementById('lesson-title').textContent = `Question ${lessonNumber}`;
-    updateProgress();
+        updateProgress();
     
     let questionContent = '';
     
@@ -1556,8 +1551,7 @@ function showCompletion() {
         message = 'Good job!';
     }
     
-    document.getElementById('lesson-title').textContent = 'Completed';
-    
+
     contentArea.innerHTML = `
         <div class="completion-screen">
             <h2>Quiz Complete!</h2>
