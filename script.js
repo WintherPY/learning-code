@@ -1851,3 +1851,11 @@ function exitCourse() {
 if (exitBtn) {
     exitBtn.addEventListener('click', showExitConfirmation);
 }
+
+// ===== REFRESH/UNLOAD WARNING =====
+window.addEventListener('beforeunload', (e) => {
+    if (quizInProgress) {
+        e.preventDefault();
+        e.returnValue = '';
+    }
+});
