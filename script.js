@@ -1171,9 +1171,6 @@ function showCourseSelection() {
                         </div>
                     `).join('')}
                 </div>
-                <div class="logout-section">
-                    <button class="btn-logout" onclick="logOut()">🚪 Log Out</button>
-                </div>
             </div>
         `;
     } else {
