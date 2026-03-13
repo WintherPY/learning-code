@@ -344,6 +344,30 @@ body {
     box-shadow: 0 4px 12px rgba(3, 105, 161, 0.3);
 }
 
+.logout-section {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.btn-logout {
+    padding: 10px 24px;
+    background: transparent;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+}
+
+.btn-logout:hover {
+    background: #1e293b;
+    color: #f1f5f9;
+    border-color: #475569;
+}
+
 /* ===== LESSON CONTAINER ===== */
 .lesson-container {
     max-width: 1200px;
