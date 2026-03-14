@@ -991,6 +991,7 @@ let currentSessionScore = 0;
 let answered = false;
 let selectedOptionIndex = null;
 let quizInProgress = false;
+let transformerImage = null;
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -1072,7 +1073,13 @@ function updateSidebarCourses() {
                 <div class="nav-name">${escapeHtml(course.name)}</div>
             </div>
         `;
-    }).join('');
+    }).join('') + `
+        <div class="nav-divider"></div>
+        <div class="nav-item nav-item-transformer" onclick="showImageTransformer()">
+            <div class="nav-category">Tools</div>
+            <div class="nav-name">🎨 Photo Transformer</div>
+        </div>
+    `;
 }
 
 function selectCourse(courseId) {
@@ -1737,6 +1744,307 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
+// ===== IMAGE STYLE TRANSFORMER =====
+function showImageTransformer() {
+    if (quizInProgress) return;
+    currentCourseId = '';
+    updateSidebarCourses();
+    updateUserInfo();
+    hideExitButton();
+
+    const contentArea = document.getElementById('content-area');
+    contentArea.innerHTML = `
+        <div class="image-transformer-screen">
+            <h2>🎨 Photo Style Transformer</h2>
+            <p class="transformer-tagline">Turn your photo into an action hero, anime character, and more!</p>
+
+            <div class="transformer-upload-area" id="upload-area">
+                <div class="transformer-upload-icon">📷</div>
+                <p>Drag &amp; drop your photo or click to upload</p>
+                <input type="file" id="image-upload" accept="image/*" style="display:none" onchange="loadTransformerImage(event)" />
+                <button class="btn-upload-photo" onclick="document.getElementById('image-upload').click()">Choose Photo</button>
+            </div>
+
+            <div class="transformer-workspace" id="transformer-workspace" style="display:none">
+                <div class="transformer-images">
+                    <div class="transformer-panel">
+                        <h3>📸 Original</h3>
+                        <canvas id="original-canvas"></canvas>
+                    </div>
+                    <div class="transformer-panel">
+                        <h3 id="style-title">✨ Transformed</h3>
+                        <canvas id="transformed-canvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="transformer-styles">
+                    <h3>Choose Your Style</h3>
+                    <div class="style-buttons">
+                        <button class="btn-style" data-style="anime" onclick="applyTransformerStyle('anime')">
+                            <span class="btn-style-icon">⚡</span>
+                            <span class="btn-style-name">Anime</span>
+                            <span class="btn-style-desc">Vibrant cell-shaded</span>
+                        </button>
+                        <button class="btn-style" data-style="action-hero" onclick="applyTransformerStyle('action-hero')">
+                            <span class="btn-style-icon">💥</span>
+                            <span class="btn-style-name">Action Hero</span>
+                            <span class="btn-style-desc">Cinematic high contrast</span>
+                        </button>
+                        <button class="btn-style" data-style="ultra-detailed" onclick="applyTransformerStyle('ultra-detailed')">
+                            <span class="btn-style-icon">✨</span>
+                            <span class="btn-style-name">Ultra Detailed</span>
+                            <span class="btn-style-desc">Sharp vivid realism</span>
+                        </button>
+                        <button class="btn-style" data-style="nihq" onclick="applyTransformerStyle('nihq')">
+                            <span class="btn-style-icon">🌸</span>
+                            <span class="btn-style-name">Nihq</span>
+                            <span class="btn-style-desc">Soft pastel dreamlike</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="transformer-actions">
+                    <button class="btn-download-image" id="download-btn" onclick="downloadTransformedImage()" style="display:none">
+                        ⬇️ Download Transformed
+                    </button>
+                    <button class="btn-new-photo" onclick="resetTransformer()">📷 New Photo</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    setupTransformerDragDrop();
+}
+
+function setupTransformerDragDrop() {
+    const uploadArea = document.getElementById('upload-area');
+    if (!uploadArea) return;
+
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('drag-active');
+    });
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('drag-active');
+    });
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-active');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) processTransformerFile(file);
+    });
+}
+
+function loadTransformerImage(event) {
+    const file = event.target.files[0];
+    if (file) processTransformerFile(file);
+}
+
+function processTransformerFile(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+            transformerImage = img;
+            drawOriginalCanvas(img);
+            document.getElementById('upload-area').style.display = 'none';
+            document.getElementById('transformer-workspace').style.display = 'block';
+            document.getElementById('download-btn').style.display = 'none';
+            document.getElementById('style-title').textContent = '✨ Transformed';
+            const tc = document.getElementById('transformed-canvas');
+            const tctx = tc.getContext('2d');
+            tctx.clearRect(0, 0, tc.width, tc.height);
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function drawOriginalCanvas(img) {
+    const canvas = document.getElementById('original-canvas');
+    const maxSize = 600;
+    let w = img.naturalWidth;
+    let h = img.naturalHeight;
+    if (w > maxSize || h > maxSize) {
+        const ratio = Math.min(maxSize / w, maxSize / h);
+        w = Math.round(w * ratio);
+        h = Math.round(h * ratio);
+    }
+    canvas.width = w;
+    canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+}
+
+function applyTransformerStyle(style) {
+    if (!transformerImage) return;
+
+    const oc = document.getElementById('original-canvas');
+    const w = oc.width;
+    const h = oc.height;
+    const tc = document.getElementById('transformed-canvas');
+    tc.width = w;
+    tc.height = h;
+    const ctx = tc.getContext('2d');
+
+    const styleConfigs = {
+        'anime':          { title: '⚡ Anime',         filter: 'saturate(220%) contrast(145%) brightness(108%)' },
+        'action-hero':    { title: '💥 Action Hero',   filter: 'contrast(200%) saturate(35%) brightness(88%)' },
+        'ultra-detailed': { title: '✨ Ultra Detailed', filter: 'saturate(145%) contrast(128%) brightness(106%)' },
+        'nihq':           { title: '🌸 Nihq',          filter: 'saturate(75%) hue-rotate(18deg) brightness(114%) sepia(18%)' }
+    };
+
+    const config = styleConfigs[style];
+    ctx.filter = config.filter;
+    ctx.drawImage(transformerImage, 0, 0, w, h);
+    ctx.filter = 'none';
+
+    if (style === 'anime') {
+        transformerPosterize(ctx, w, h, 7);
+        transformerAnimeOutlines(ctx, w, h);
+    } else if (style === 'action-hero') {
+        transformerActionHeroGrade(ctx, w, h);
+    } else if (style === 'ultra-detailed') {
+        transformerSharpen(ctx, w, h);
+    } else if (style === 'nihq') {
+        transformerNihqGlow(ctx, w, h);
+    }
+
+    document.querySelectorAll('.btn-style').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.style === style);
+    });
+    document.getElementById('style-title').textContent = config.title;
+    document.getElementById('download-btn').style.display = 'inline-block';
+}
+
+function transformerPosterize(ctx, width, height, levels) {
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const data = imageData.data;
+    const step = 255 / (levels - 1);
+    for (let i = 0; i < data.length; i += 4) {
+        data[i]   = Math.round(data[i]   / step) * step;
+        data[i+1] = Math.round(data[i+1] / step) * step;
+        data[i+2] = Math.round(data[i+2] / step) * step;
+    }
+    ctx.putImageData(imageData, 0, 0);
+}
+
+function transformerAnimeOutlines(ctx, width, height) {
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const src = imageData.data;
+    const threshold = 60;
+    const edges = new Uint8ClampedArray(width * height);
+
+    for (let y = 1; y < height - 1; y++) {
+        for (let x = 1; x < width - 1; x++) {
+            const gray = (px, py) => {
+                const i = (py * width + px) * 4;
+                return src[i] * 0.299 + src[i+1] * 0.587 + src[i+2] * 0.114;
+            };
+            const gx = (
+                -gray(x-1, y-1) - 2*gray(x-1, y) - gray(x-1, y+1) +
+                 gray(x+1, y-1) + 2*gray(x+1, y) + gray(x+1, y+1)
+            );
+            const gy = (
+                -gray(x-1, y-1) - 2*gray(x, y-1) - gray(x+1, y-1) +
+                 gray(x-1, y+1) + 2*gray(x, y+1) + gray(x+1, y+1)
+            );
+            edges[y * width + x] = Math.sqrt(gx*gx + gy*gy) > threshold ? 1 : 0;
+        }
+    }
+
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            if (edges[y * width + x] === 1) {
+                const i = (y * width + x) * 4;
+                src[i] = 0; src[i+1] = 0; src[i+2] = 0;
+            }
+        }
+    }
+    ctx.putImageData(imageData, 0, 0);
+}
+
+function transformerSharpen(ctx, width, height) {
+    const kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0];
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const src = imageData.data;
+    const out = new Uint8ClampedArray(src.length);
+    for (let i = 0; i < src.length; i++) out[i] = src[i];
+
+    for (let y = 1; y < height - 1; y++) {
+        for (let x = 1; x < width - 1; x++) {
+            let r = 0, g = 0, b = 0;
+            for (let ky = -1; ky <= 1; ky++) {
+                for (let kx = -1; kx <= 1; kx++) {
+                    const ki = (ky + 1) * 3 + (kx + 1);
+                    const pi = ((y + ky) * width + (x + kx)) * 4;
+                    r += src[pi]   * kernel[ki];
+                    g += src[pi+1] * kernel[ki];
+                    b += src[pi+2] * kernel[ki];
+                }
+            }
+            const idx = (y * width + x) * 4;
+            out[idx]   = Math.min(255, Math.max(0, r));
+            out[idx+1] = Math.min(255, Math.max(0, g));
+            out[idx+2] = Math.min(255, Math.max(0, b));
+            out[idx+3] = src[idx+3];
+        }
+    }
+    ctx.putImageData(new ImageData(out, width, height), 0, 0);
+}
+
+function transformerActionHeroGrade(ctx, width, height) {
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const data = imageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+        const luma = data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
+        if (luma < 100) {
+            data[i]   = Math.max(0,   data[i]   - 15);
+            data[i+2] = Math.min(255, data[i+2] + 25);
+        } else if (luma > 200) {
+            data[i]   = Math.min(255, data[i]   + 15);
+            data[i+1] = Math.min(255, data[i+1] + 8);
+        }
+    }
+    ctx.putImageData(imageData, 0, 0);
+}
+
+function transformerNihqGlow(ctx, width, height) {
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const data = imageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+        data[i]   = Math.min(255, data[i]   + 20);
+        data[i+1] = Math.min(255, data[i+1] + 12);
+        data[i+2] = Math.min(255, data[i+2] + 8);
+        const luma = data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
+        if (luma < 60) {
+            data[i]   = Math.max(data[i],   40);
+            data[i+1] = Math.max(data[i+1], 35);
+            data[i+2] = Math.max(data[i+2], 45);
+        }
+    }
+    ctx.putImageData(imageData, 0, 0);
+}
+
+function downloadTransformedImage() {
+    const canvas = document.getElementById('transformed-canvas');
+    if (!canvas) return;
+    const link = document.createElement('a');
+    link.download = 'transformed-photo.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+
+function resetTransformer() {
+    transformerImage = null;
+    const uploadArea = document.getElementById('upload-area');
+    const workspace = document.getElementById('transformer-workspace');
+    const fileInput = document.getElementById('image-upload');
+    if (uploadArea) uploadArea.style.display = 'flex';
+    if (workspace) workspace.style.display = 'none';
+    if (fileInput) fileInput.value = '';
+    document.querySelectorAll('.btn-style').forEach(btn => btn.classList.remove('active'));
+}
+
 // ===== EXIT COURSE FUNCTIONALITY =====
 
 // Get the exit button element
