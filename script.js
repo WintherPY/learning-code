@@ -1072,7 +1072,12 @@ function updateSidebarCourses() {
                 <div class="nav-name">${escapeHtml(course.name)}</div>
             </div>
         `;
-    }).join('');
+    }).join('') + `
+        <div class="nav-item nav-item-tools" onclick="showAITools()" role="button" tabindex="0">
+            <div class="nav-category">Resources</div>
+            <div class="nav-name">🤖 Free AI Image Editors</div>
+        </div>
+    `;
 }
 
 function selectCourse(courseId) {
@@ -1875,6 +1880,95 @@ function exitCourse() {
 // Add click event listener to the exit button
 if (exitBtn) {
     exitBtn.addEventListener('click', showExitConfirmation);
+}
+
+// ===== AI TOOLS PAGE =====
+function showAITools() {
+    if (quizInProgress) return;
+    // Deselect any active course so the sidebar highlights the tools link, not a course
+    currentCourseId = '';
+    updateUserInfo();
+    updateSidebarCourses();
+
+    const tools = [
+        {
+            name: 'Clipdrop',
+            url: 'https://clipdrop.co',
+            description: 'AI-powered toolkit by Stability AI. Remove backgrounds, upscale images, remove objects, and more — all for free with no account required.',
+            tags: ['Background Removal', 'Upscale', 'Object Removal'],
+            emoji: '✂️'
+        },
+        {
+            name: 'Photopea',
+            url: 'https://www.photopea.com',
+            description: 'A free, browser-based image editor that works like Photoshop. Supports PSD, AI, and many other formats. No sign-up needed.',
+            tags: ['Photo Editing', 'PSD Support', 'Layers'],
+            emoji: '🖼️'
+        },
+        {
+            name: 'Pixlr E',
+            url: 'https://pixlr.com/e/',
+            description: 'Advanced online photo editor with AI-powered tools including background removal and image enhancer. Free tier available with no registration.',
+            tags: ['AI Enhance', 'Background Removal', 'Filters'],
+            emoji: '🎨'
+        },
+        {
+            name: 'Adobe Express (Free)',
+            url: 'https://www.adobe.com/express/',
+            description: 'Free AI-powered design and image editing tool from Adobe. Remove backgrounds, resize, and apply effects — free plan requires no credit card.',
+            tags: ['Background Removal', 'Templates', 'Resize'],
+            emoji: '⚡'
+        },
+        {
+            name: 'Remove.bg',
+            url: 'https://www.remove.bg',
+            description: 'Instantly remove image backgrounds using AI. Works on photos, logos and more. Free for low-resolution output, no sign-up needed.',
+            tags: ['Background Removal', 'AI', 'Free Download'],
+            emoji: '🗑️'
+        },
+        {
+            name: 'Fotor AI',
+            url: 'https://www.fotor.com',
+            description: 'Free AI photo editor with face retouching, background remover, and HDR effects. Basic tools are available without an account.',
+            tags: ['AI Retouch', 'HDR', 'Background Removal'],
+            emoji: '📸'
+        },
+        {
+            name: 'DeepAI Image Editor',
+            url: 'https://deepai.org/machine-learning-model/text2img',
+            description: 'Free AI image generation and editing tools. Generate images from text, apply style transfers and more — no registration required.',
+            tags: ['Text-to-Image', 'Style Transfer', 'AI Generate'],
+            emoji: '🤖'
+        },
+        {
+            name: 'Img2Go AI',
+            url: 'https://www.img2go.com',
+            description: 'Free online image converter and editor with AI upscaling, compression, and format conversion tools. No account needed.',
+            tags: ['AI Upscale', 'Convert', 'Compress'],
+            emoji: '🔧'
+        }
+    ];
+
+    const contentArea = document.getElementById('content-area');
+    contentArea.innerHTML = `
+        <div class="ai-tools-screen">
+            <h2>🤖 Free Online AI Image Editors</h2>
+            <p class="ai-tools-subtitle">No registration required — open and start editing instantly!</p>
+            <div class="ai-tools-grid">
+                ${tools.map(tool => `
+                    <a class="ai-tool-card" href="${tool.url}" target="_blank" rel="noopener noreferrer">
+                        <div class="ai-tool-emoji">${tool.emoji}</div>
+                        <h3 class="ai-tool-name">${escapeHtml(tool.name)}</h3>
+                        <p class="ai-tool-description">${escapeHtml(tool.description)}</p>
+                        <div class="ai-tool-tags">
+                            ${tool.tags.map(tag => `<span class="ai-tool-tag">${escapeHtml(tag)}</span>`).join('')}
+                        </div>
+                        <span class="ai-tool-link">Open Editor →</span>
+                    </a>
+                `).join('')}
+            </div>
+        </div>
+    `;
 }
 
 // ===== REFRESH/UNLOAD WARNING =====
